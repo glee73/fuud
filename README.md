@@ -37,7 +37,8 @@ The following features would be necessary:
   so that a users' top genres/songs/playlists can be shown on their profile;
   this way, a web player could also be embedded. We anticipate that learning
   to use the Spotify Web API and querying the data will be the most challenging
-  part of this feature.
+  part of this feature. Ideally, any playlists created on this app would also
+  appear in a user's Spotify library.
 * *An accessible user interface with a backend database of users* - as this is a
   social app, it definitely needs to be fun and intuitive to use. The front end
   can be challenging depending on how many features we want to implement, and
