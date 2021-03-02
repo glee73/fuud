@@ -17,15 +17,15 @@
   * Weaknesses - JavaScript, lack of familiarity with backend
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
-### Idea 1 - Restaurant Review/Food pic sharing Social Network
-Social networks like facebook and instagram are great for sharing photos, life updates, 
-and more, but they aren't really efficient outlets for sharing food pictures and restaurant
+### Idea 1 - Restaurant Review/Food pic sharing Social Network --> (Basically) Personalized Yelp
+Social networks like facebook and instagram are great for sharing photos and life updates, 
+but they aren't the most efficient outlets for sharing food pictures and restaurant
 experiences and reviews. We plan on building a social network where users can upload photos
 of their experiences at restaurants, reviews on the food, and any recommendations on what
 their friends should order. The idea behind this app is to let your friends know which 
 restaurants are worth trying and what's worth getting there. Attached to each post will
 be some data about the location of the restaurant. Users can add restaurants that they want
-to try to their To Do List of restaurants they want to try, and they can search through
+to try to their "To Go To List" of restaurants, and they can search through
 posts in their feed by restaurant to see what their friends recommended.
 
 We plan on implementing 2 graph algorithms for the user's benefit:
@@ -75,8 +75,6 @@ The following features would be necessary:
   uses includes collaborative filtering, natural language processing, and 
   convolutional neural networks. This part would be the hardest to implement
   because we might not have the depth of knowledge in ML needed.
-
-### Idea 4
 
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
