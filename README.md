@@ -24,8 +24,9 @@
 Artificial intelligence and machine learning have gained prominence in recent years not just for their increased use in industry, but their larger place in popular knowledge and culture. We propose created a platform on which users can learn fundamental artificial intelligence methods and algorithms in the context of building bots that can play one or more games (such as connect4, checkers, chess, etc.), and then competing against other users in those games. For users that are just getting into coding, we could offer an experience where they assemple different pieces and tune parameters to build their algorithm, while more experienced programmers could write their own code but take advantage of our platform for fun and for experimenting with different ideas.
 
 We would need to include the following featues:
-* *Integration and Ability to Play Multiple Games* - for variety purposes, we would want our bots to be able to complete in more than one game. We would have to set up basic engines to run all games theat we want to include, and build the infrastructure to be able to connect in AI players. This might be challenging because of the 
-
+* *Integration and Ability to Play Multiple Games* - for variety purposes, we would want our bots to be able to complete in more than one game. We would have to set up basic engines to run all games theat we want to include, and build the infrastructure to be able to connect in AI players. This might be challenging because of our lack of experience in setting up these kinds of strutures, and just the amount of work required if we want to handle more than a couple games.
+* *A Way to Keep Track of Users and Competition Results with a Robust Backend* - we would need to have a database structure for keeping track of users, their different algorithms, and their results against each other. We could potentially use a system like Elo to rank how bots compete against each other. This might be challenging because the backend could end up being quite complex, with a large number of backend-frontend connections required to keep all elements of the site running smoothly.
+* *
 
 ### Idea 3 - Spotify
 Especially during COVID, people have been looking for ways to connect. Spotify's
