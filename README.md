@@ -41,6 +41,7 @@ Necessary features:
 -Making a post
 -Searching posts by restaurant
 
+TA Approval (dlichen): If you focus on the food crawl portion of this application this is approved! Just make sure you have enough algorithmic complexity.
 
 ### Idea 2 - AI/ML Game Competition
 Artificial intelligence and machine learning have gained prominence in recent years not just for their increased use in industry, but their larger place in popular knowledge and culture. We propose created a platform on which users can learn fundamental artificial intelligence methods and algorithms in the context of building bots that can play one or more games (such as connect4, checkers, chess, etc.), and then competing against other users in those games. For users that are just getting into coding, we could offer an experience where they assemple different pieces and tune parameters to build their algorithm, while more experienced programmers could write their own code but take advantage of our platform for fun and for experimenting with different ideas.
@@ -49,6 +50,8 @@ We would need to include the following featues:
 * *Integration and Ability to Play Multiple Games* - for variety purposes, we would want our bots to be able to complete in more than one game. We would have to set up basic engines to run all games theat we want to include, and build the infrastructure to be able to connect in AI players. This might be challenging because of our lack of experience in setting up these kinds of strutures, and just the amount of work required if we want to handle more than a couple games.
 * *A Way to Keep Track of Users and Competition Results with a Robust Backend* - we would need to have a database structure for keeping track of users, their different algorithms, and their results against each other. We could potentially use a system like Elo to rank how bots compete against each other. This might be challenging because the backend could end up being quite complex, with a large number of backend-frontend connections required to keep all elements of the site running smoothly.
 * *An Interface to Allow for Algorithm Creation and Testing* - To fulfill our aim of helping new and novice programmers learn about AI and machine learning, we'd need a way for them to construct their bots without getting too deep into the details of the algorithms (we could leave this as an option to more advanced programmers). One way to do this could be to allow users to select what type of algorithm they want to use (e.g. just a search, reinforcement learning that learns a policy, etc.) and then allow them to fine-tune the parameters, neural network setup if applicable, or heuristic if doing a search. We could find ways to do this where they wouldn't have to write too much actual, or at least complex, code, but introduce them to the ideas. The main challenge of our project lies here, and we would both need to be familiar and comfortable with ML methods ourselves, since we would have to write the base algorithms, and generate some good ideas for how to convey them to newer users.
+
+TA Approval (dlichen): I don't know how feasible this is / what algorithm you guys would be coding? A lot of these AI algorithms are very complex and I don't think just importing them from external libraries would be sufficiently complex.
 
 ### Idea 3 - Spotify
 Especially during COVID, people have been looking for ways to connect. Spotify's
@@ -76,6 +79,9 @@ The following features would be necessary:
   convolutional neural networks. This part would be the hardest to implement
   because we might not have the depth of knowledge in ML needed.
 
+TA Approval (dlichen): I think this could be a good idea if you really focused on playlist recommendation algorithms. So maybe contingent on this recommender algorithm being sufficiently complex. 
+
+No need to resubmit. 
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
 
