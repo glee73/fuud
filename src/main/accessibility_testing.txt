@@ -1,0 +1,33 @@
+1) How might a non-impaired user might benefit from increased web accessibility
+(that isn’t already discussed above)?
+
+Making a site more accessible benefits everyone. Even a non-impaired person will benefit from the
+increase readability, better design, etc. aspects of an accessible interface. Additionally, increased web
+accessibility means that it can be accessed by more people, which benefits everyone. Perhaps a non-impaired user
+will want to share a site with an impaired user
+
+
+2) What are three design choices that User Inyerface made that harmed your user experience?
+Explain how you would alter each design choice to improve accessibility and usability.
+
+        1. Unnecessary moving/changing buttons. For example the 1, 2, 3, 4, blinking for no reason
+and a profile picture icon had a loading sign. Unnecessary moving or blinking parts of the website
+are distracting and should only be used to emphasize important information. To improve usability I would remove
+these features.
+        2. The Next button was on the left hand side, this was very unintuitive. To improve usability
+I would move this to the right hand side (as this follows a more natural flow).
+        3. Buttons/choices that prevent further action are usually the default selection in User Inyerface.
+For example, to start filling in the form, a giant NO button is the first option presented. A giant cancel button
+is also bolded at the bottom of the screen for the entire form process. I do NOT accept the terms and conditions
+is the default. To improve usability, I would reverse these decisions, so that actions that encourage users
+to progress through the form are the default selections.
+
+
+3) What are three changes you made to your site to increase your Lighthouse (or other) audit score?
+Explain how each change increases your site’s performance or accessibility.
+
+        1. I added a black textbox around the words so that there was a greater contrast between
+the text and background image. This improved aspects of readability.
+        2. Increased overall font size, which again improved readability.
+        3. Increased size of the submit button. This helps for users with poor fine-motor skills
+and overall makes it easier to search for stars!

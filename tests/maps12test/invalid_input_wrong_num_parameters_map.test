@@ -1,0 +1,5 @@
+INPUT
+map data/maps/smallMaps.sqlite3 extra
+OUTPUT
+ERROR:
+END

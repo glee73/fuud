@@ -1,0 +1,5 @@
+INPUT
+stars data/stars/incorrectCsvType.csv
+OUTPUT
+ERROR:
+END

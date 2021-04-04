@@ -1,0 +1,5 @@
+INPUT
+map data/maps/fakefile
+OUTPUT
+ERROR:
+END

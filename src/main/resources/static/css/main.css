@@ -1,0 +1,38 @@
+
+body{
+    background-image: url("backgroundImage.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 0px;
+}
+
+.content-block {
+    background: rgb(0, 0, 0); /* Fallback color */
+    background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+    color: lightyellow;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.item1 label {
+    font-size: 3em;
+}
+
+input[type=submit] {
+    padding:5px 15px;
+    background: lightyellow;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-size: large;
+    font-family: abril-fatface;
+    color: red;
+}

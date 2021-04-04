@@ -1,0 +1,42 @@
+1. The dataset you created was not bias-free.
+What are some assumptions that the developers of Mockaroo made about the types you explored?
+Who might be left out of the dataset? Consider the falsehoods you explored earlier.
+
+When any data is collected or made there are always biases. One bias that the Mackaroo developers could have been
+would be in regards to the "street address" field. When randomly creating this data, there could be bias in the locations
+they used. The data they listed only includes the street address, but if they are real streets its unclear whether they
+sampled this from a diverse set of areas, regions, countries, etc.
+
+One bias I had originally made was when considering parsing the data. I originally thought to make the field for gender,
+a boolean -- setting true for female, and false for male. I had originally done this because I wanted to make sure all
+data entered into that field was real (as opposed to a garbage value like "klsdf"). However, I had originally failed to
+consider the other input options (Bigender, Genderqueer, etc.). Because of this, I changed my model so that the
+gender field was not a binary variable, and instead was a string.
+
+
+2. When you made decisions about how you modelled your dataset, you made predictions about what future data you would be encountering. How did you make these decisions? Can you think of any edge cases that might break your model?
+I made sure to check for inconsistencies in the data based upon assumptions I made -- for example if the one field was empty in one row, my REPL will
+print out an error line. This is because I made the assumption that all data rows will have the same number of fields.
+For example if you were to input a csv file as following:
+ID,age,gender
+1,13,F
+1,2
+1,,M
+This csv file would not be accepted because the second row of data is missing a field.
+The third row of data would not cause an error, however.
+
+Another assumption I made was that x,y,z values in the stars data could be read in as a Double.
+If it could not, then again an error would be returned. However, this means that if someone enters a numeric value
+for the x,y,z coordinate that is above Double.MAX_VALUE below -Double.MAX_VALUE, then this data could not be converted into a star.
+
+3. In this assignment we ask you to build an extensible REPL. How have you made your REPL extensible (beyond accessing multiple commands)? Let’s say you wanted to reuse your REPL code. What changes need to be made (if any) to your REPL? Consider the inversion-of-control reading and Lecture 2.
+The REPL class I made is extensible, as it can handle multiple commands. To make sure that the code can be used in other projects,
+I ensured that you could add commands to your repl from another class. (In this project, for example, I added my commands to the REPL
+from my main class).
+
+One way I could make my REPL even more extensible would be to consider different ways I want to parse the input lines.
+For example, in this project I split on spacing except around quotes so that if I had the following entered:
+cat dog this --> would split into: [cat, dog, this]
+cat "dog this" --> would split into: [cat, "dog this"]
+In another project, however, I might not want this functionality. One way I could accommodate for this, would be to have
+my REPL take in a string as a parameter, that defines the way I want to split.

@@ -1,0 +1,9 @@
+INPUT
+stars data/stars/ten-star.csv
+naive_neighbors 3 "Proxima Centauri"
+OUTPUT
+Read 10 stars from data/stars/ten-star.csv
+71454
+71457
+0
+END

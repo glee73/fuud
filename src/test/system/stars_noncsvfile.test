@@ -1,0 +1,5 @@
+INPUT
+stars data/stars/fakefile.csv
+OUTPUT
+ERROR:
+END
