@@ -1,5 +1,7 @@
 package edu.brown.cs.student.foodcrawl.DBCommands;
 
+import edu.brown.cs.student.foodcrawl.DataStructures.Post;
+import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
 
 import java.io.File;
@@ -51,11 +53,11 @@ public class DBConnectionManager {
     PreparedStatement prep3 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS posts (" +
       "postID varchar(255) NOT NULL," +
       "stars int," +
-      "restaurant_id varchar(255) NOT NULL," +
+      "rest_id varchar(255) NOT NULL," +
       "user_id varchar(255) NOT NULL," +
       "review_text varchar(1000))," +
       "PRIMARY KEY (postID)," +
-    "FOREIGN KEY restaurant_id REFERENCES restaurants(rest_id)," +
+    "FOREIGN KEY rest_id REFERENCES restaurants(rest_id)," +
       "FOREIGN KEY user_id REFERENCES users(userID)");
     prep3.execute();
     prep3.close();
@@ -72,6 +74,13 @@ public class DBConnectionManager {
       "FOREIGN KEY postID REFERENCES posts(postID),");
     prep5.execute();
     prep5.close();
+
+    PreparedStatement prep6 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS tags (" +
+      "restID varchar(255) NOT NULL," +
+      "tag varchar(255)) NOT NULL," +
+      "FOREIGN KEY restID REFERENCES restaurants(rest_id)");
+    prep6.execute();
+    prep6.close();
   }
 
   public void addUser(User u) throws SQLException{
@@ -83,10 +92,51 @@ public class DBConnectionManager {
   }
 
   public void addFollow(User follower, User target) throws SQLException {
-    PreparedStatement a = conn.prepareStatement("INSERT INTO friends (id1, id2) VALUES (?, ?)");
+    PreparedStatement a = conn.prepareStatement("INSERT INTO follower (id1, id2) VALUES (?, ?)");
     a.setString(1, follower.getID());
     a.setString(2, target.getID());
     a.execute();
     a.close();
+  }
+
+  public void addPost(Post p) throws SQLException{
+    PreparedStatement a = conn.prepareStatement("INSERT INTO posts " +
+      "(postID, stars, rest_id, user_id, review_text) VALUES (?, ?, ?, ?, ?)");
+    a.setString(1, p.getId());
+    a.setInt(2, p.getReviewOutOfTen());
+    a.setString(3, p.getRestaurantID());
+    a.setString(4, p.getUserID());
+    a.setString(5, p.getDescription());
+    a.execute();
+    a.close();
+
+    for (String photo : p.getPictures()) {
+      PreparedStatement a2 = conn.prepareStatement("INSERT INTO photos" +
+        "(postID, photoPath) VALUES (?, ?)");
+      a2.setString(1, p.getId());
+      a2.setString(2, photo);
+      a2.execute();
+      a2.close();
+    }
+  }
+
+  public void addRestaurant(Restaurant r) throws SQLException{
+    PreparedStatement p = conn.prepareStatement("INSERT INTO restaurants " +
+      "(rest_id, latitude, longitude, name) VALUES (?, ?, ?, ?)");
+    p.setString(1, r.getId());
+    p.setDouble(2, r.getLatitude());
+    p.setDouble(3, r.getLongitude());
+    p.setString(4, r.getName());
+    p.execute();
+    p.close();
+
+    for (String tag : r.getTags()) {
+      PreparedStatement p2 = conn.prepareStatement("INSERT INTO tags" +
+        "(restID, tag) VALUES (?, ?)");
+      p2.setString(1, r.getId());
+      p2.setString(2, tag);
+      p2.execute();
+      p2.close();
+    }
   }
 }
