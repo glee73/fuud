@@ -36,30 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.flex-container {
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap; /*this is default*/
-  /*justify-content: space-around;*/
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 50px;
-}
-
-.scroll-box1{
-  height:500px;
-  width:600px;
-  border:1px solid #ccc;
-  overflow:auto;
-}
-
-.scroll-box2{
-  height:100px;
-  width:600px;
-  border:1px solid #ccc;
-  font:16px/26px Georgia, Garamond, Serif;
-  overflow:auto;
-}
-
-body {background-color: #f5ffcf;}

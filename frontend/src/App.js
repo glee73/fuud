@@ -1,24 +1,19 @@
+import logo from './logo.svg';
 import './App.css';
-import Canvas from './Canvas.js';
-import CheckIn from './CheckIn.js';
+import Navbar from './Navbar';
+import Profile from './Profile';
+import { Route, Switch } from 'react-router-dom';
 
 function App() {
-
-  return (
-    <div class="flex-container">
-        <div class="flex-item">
-            <h1> Maps 3</h1>
-            <p> To clear a path once it's been calculated, interact with/move the map or press the "Find my Route" button </p>
-            <Canvas />
+    return (
+        <div className="App">
+            <Navbar></Navbar>
+            <Profile></Profile>
+            <Switch>
+                <Route path="/myprofile" component={Profile}/>
+            </Switch>
         </div>
-        <div class="flex-item">
-            <h1> Maps 4</h1>
-            <CheckIn />
-
-        </div>
-    </div>
-  );
-
+    );
 }
 
 export default App;
