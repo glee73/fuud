@@ -1,5 +1,7 @@
 package edu.brown.cs.student.foodcrawl.DBCommands;
 
+import edu.brown.cs.student.foodcrawl.DataStructures.User;
+
 import java.io.File;
 import java.sql.*;
 
@@ -39,8 +41,9 @@ public class DBConnectionManager {
 
     PreparedStatement prep2 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS users (" +
       "userID varchar(255) NOT NULL," +
-      "name varchar(255) NOT NULL," +
-      "email varchar(255) NOT NULL," +
+      "username varchar(255) NOT NULL," +
+      "email varchar(255)," +
+      "password varchar(255)," +
       "PRIMARY KEY (userID) ");
     prep2.execute();
     prep2.close();
@@ -57,9 +60,9 @@ public class DBConnectionManager {
     prep3.execute();
     prep3.close();
 
-    PreparedStatement prep4 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS friends (" +
-      "id1 varchar(255) NOT NULL," +
-      "id2 varchar(255) NOT NULL");
+    PreparedStatement prep4 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS follower (" +
+      "f_id varchar(255) NOT NULL," +
+      "target_id varchar(255) NOT NULL");
     prep4.execute();
     prep4.close();
 
@@ -69,10 +72,21 @@ public class DBConnectionManager {
       "FOREIGN KEY postID REFERENCES posts(postID),");
     prep5.execute();
     prep5.close();
-
   }
 
+  public void addUser(User u) throws SQLException{
+    PreparedStatement adduser = conn.prepareStatement("INSERT INTO users (userID, username) VALUES (?, ?)");
+    adduser.setString(1, u.getID());
+    adduser.setString(2, u.getUsername());
+    adduser.execute();
+    adduser.close();
+  }
 
-
-
+  public void addFollow(User follower, User target) throws SQLException {
+    PreparedStatement a = conn.prepareStatement("INSERT INTO friends (id1, id2) VALUES (?, ?)");
+    a.setString(1, follower.getID());
+    a.setString(2, target.getID());
+    a.execute();
+    a.close();
+  }
 }

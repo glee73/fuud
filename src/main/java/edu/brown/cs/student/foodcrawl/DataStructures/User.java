@@ -20,4 +20,12 @@ public class User {
     this.following = new ArrayList<>();
     this.id = GenerateHashID.generateUUID();
   }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public String getID() {
+    return id;
+  }
 }
