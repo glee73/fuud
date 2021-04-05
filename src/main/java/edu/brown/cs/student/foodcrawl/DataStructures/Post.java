@@ -8,20 +8,18 @@ public class Post {
   private final String description;
   private final int reviewOutOfTen;
   private final List<String> pictures; //urls to pictures
-  private final String restaurantID;
+  private final String restaurantName;
   private final String id;
-  private final String userID;
+  private final String user;
 
   public Post(String description, int reviewOutOfTen, List<String> pictures, String username,
-              String restaurantName, String restaurantLocation) {
+              String restaurantName) {
     this.description = description;
     this.reviewOutOfTen = reviewOutOfTen;
     this.pictures = pictures;
     this.id = GenerateHashID.generateUUID();
-    this.restaurantID = " ";
-    this.userID = " ";
-
-    // TODO: query the DB and see if restaurant with same name + location already exists
+    this.restaurantName = restaurantName;
+    this.user = username;
   }
 
 
@@ -41,11 +39,11 @@ public class Post {
     return id;
   }
 
-  public String getRestaurantID() {
-    return restaurantID;
+  public String getRestaurantName() {
+    return restaurantName;
   }
 
-  public String getUserID() {
-    return userID;
+  public String getUser() {
+    return user;
   }
 }
