@@ -1,0 +1,19 @@
+1) We collect data regarding a user's Name, location, and timestamp for a checkin.
+Each data point is needed so that we know the time and place of a user's checkin.
+The name of a user is the relevant identifier for a user's identity, which is needed
+to confirm who checked in. The location of the user is relevant so that our maps
+application can use your location data to, for instance, give you directions on how
+to get from your current location to another given location. Lastly, the timestamp of your
+checkin is relevant so that we can estimate what time approximately you will arrive at your
+destination.
+
+
+2) It can be difficult to delete all of the data on a user because oftentimes it is
+intertwined with other user's data. Take facebook for instance, say I made a post
+and all my friends commented on it and liked it. If I want all of my data deleted,
+it's not clear what happens to the post that I previously made. While I may have been
+the original poster, that post contains information in the form of my friends' comments
+and likes, and my friends might want their comment and like data preserved. But if my post
+gets deleted, what happens to this info which wasn't mine but was intertwined and linked
+to my data? This is an example of why it may be difficult to delete all of the data on a user,
+especially on more complex applications.
