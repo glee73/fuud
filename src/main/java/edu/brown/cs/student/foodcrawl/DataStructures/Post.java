@@ -14,5 +14,9 @@ public class Post {
     this.description = description;
     this.reviewOutOfTen = reviewOutOfTen;
     this.pictures = pictures;
+
+    // TODO: query the DB and see if restaurant with same name + location already exists
   }
+
+
 }
