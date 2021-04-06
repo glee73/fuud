@@ -1,22 +1,53 @@
 package edu.brown.cs.student.foodcrawl.DataStructures;
 
+import edu.brown.cs.student.foodcrawl.UtilityFunctions.GenerateHashID;
+
 import java.util.List;
 
 public class Post {
-  String description;
-  int reviewOutOfTen;
-  List<String> pictures; //urls to pictures
-  String restaurantID;
-  String id;
+  private final String description;
+  private final int reviewOutOfTen;
+  private final List<String> pictures; //urls to pictures
+  private final String restaurantName;
+  private final String id;
+  private final String user;
 
-  public Post(String description, int reviewOutOfTen, List<String> pictures,
-              String restaurantName, String restaurantLocation) {
+  public Post(String description, int reviewOutOfTen, List<String> pictures, String username,
+              String restaurantName, String inputID) {
     this.description = description;
     this.reviewOutOfTen = reviewOutOfTen;
     this.pictures = pictures;
-
-    // TODO: query the DB and see if restaurant with same name + location already exists
+    if (inputID == null) {
+      this.id = GenerateHashID.generateUUID();
+    } else {
+      this.id = inputID;
+    }
+    this.restaurantName = restaurantName;
+    this.user = username;
   }
 
 
+  public String getDescription() {
+    return description;
+  }
+
+  public int getReviewOutOfTen() {
+    return reviewOutOfTen;
+  }
+
+  public List<String> getPictures() {
+    return pictures;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getRestaurantName() {
+    return restaurantName;
+  }
+
+  public String getUser() {
+    return user;
+  }
 }
