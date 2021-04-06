@@ -9,7 +9,6 @@ public class User {
 
   String username;
   List<String> following;
-  String id;
 
   /**
    * invariant that the username for each user is unique!!
@@ -18,14 +17,9 @@ public class User {
   public User(String username) {
     this.username = username;
     this.following = new ArrayList<>();
-    this.id = GenerateHashID.generateUUID();
   }
 
   public String getUsername() {
     return username;
-  }
-
-  public String getID() {
-    return id;
   }
 }

@@ -6,6 +6,8 @@ import edu.brown.cs.student.foodcrawl.DataStructures.User;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBConnectionManager {
   /**
@@ -33,32 +35,31 @@ public class DBConnectionManager {
 
   private void setupTables() throws SQLException {
     PreparedStatement prep1 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS restaurants (" +
-      "rest_id varchar(255) NOT NULL," +
+      "DISTINCT rest_id varchar(255) NOT NULL," +
       "latitude double NOT NULL," +
       "longitude double NOT NULL," +
-      "name varchar(255))," +
-    "PRIMARY KEY(rest_id)");
+      "name varchar(255)," +
+    "PRIMARY KEY(rest_id))");
     prep1.execute();
     prep1.close();
 
     PreparedStatement prep2 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS users (" +
-      "userID varchar(255) NOT NULL," +
-      "username varchar(255) NOT NULL," +
+      "DISTINCT username varchar(255) NOT NULL," +
       "email varchar(255)," +
       "password varchar(255)," +
-      "PRIMARY KEY (userID) ");
+      "PRIMARY KEY (username)) ");
     prep2.execute();
     prep2.close();
 
     PreparedStatement prep3 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS posts (" +
-      "postID varchar(255) NOT NULL," +
+      "DISTINCT postID varchar(255) NOT NULL," +
       "stars int," +
       "rest_id varchar(255) NOT NULL," +
-      "user_id varchar(255) NOT NULL," +
-      "review_text varchar(1000))," +
+      "username varchar(255) NOT NULL," +
+      "review_text varchar(1000)," +
       "PRIMARY KEY (postID)," +
-    "FOREIGN KEY rest_id REFERENCES restaurants(rest_id)," +
-      "FOREIGN KEY user_id REFERENCES users(userID)");
+    "FOREIGN KEY (rest_id) REFERENCES restaurants(rest_id)," +
+      "FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE)");
     prep3.execute();
     prep3.close();
 
@@ -71,30 +72,29 @@ public class DBConnectionManager {
     PreparedStatement prep5 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS photos (" +
       "postID varchar(255) NOT NULL," +
       "photoPath varchar(255) NOT NULL," +
-      "FOREIGN KEY postID REFERENCES posts(postID),");
+      "FOREIGN KEY (postID) REFERENCES posts(postID) ON DELETE CASCADE)");
     prep5.execute();
     prep5.close();
 
     PreparedStatement prep6 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS tags (" +
       "restID varchar(255) NOT NULL," +
-      "tag varchar(255)) NOT NULL," +
-      "FOREIGN KEY restID REFERENCES restaurants(rest_id)");
+      "tag varchar(255) NOT NULL," +
+      "FOREIGN KEY (restID) REFERENCES restaurants(rest_id) ON DELETE CASCADE)");
     prep6.execute();
     prep6.close();
   }
 
   public void addUser(User u) throws SQLException{
-    PreparedStatement adduser = conn.prepareStatement("INSERT INTO users (userID, username) VALUES (?, ?)");
-    adduser.setString(1, u.getID());
-    adduser.setString(2, u.getUsername());
+    PreparedStatement adduser = conn.prepareStatement("INSERT INTO users (username) VALUES (?)");
+    adduser.setString(1, u.getUsername());
     adduser.execute();
     adduser.close();
   }
 
   public void addFollow(User follower, User target) throws SQLException {
     PreparedStatement a = conn.prepareStatement("INSERT INTO follower (f_id, target_id) VALUES (?, ?)");
-    a.setString(1, follower.getID());
-    a.setString(2, target.getID());
+    a.setString(1, follower.getUsername());
+    a.setString(2, target.getUsername());
     a.execute();
     a.close();
   }
@@ -139,5 +139,52 @@ public class DBConnectionManager {
       p2.close();
     }
   }
+
+  public List<Restaurant> restaurantsMatchingTags(List<String> tags, boolean and) throws SQLException{
+    StringBuilder statement = new StringBuilder();
+    String conj = "OR";
+    if (and) {
+      conj = "AND";
+    }
+    int i = 0;
+    for (String t : tags) {
+      if (i == tags.size() - 1) {
+        statement.append(t);
+      } else {
+        statement.append(t).append(" ").append(conj).append(" ");
+      }
+      i++;
+    }
+    String sql = "SELECT DISTINCT r.rest_id, r.latitude, r.longitude, r.name " +
+      "FROM restaurants AS r INNER JOIN tags on r.rest_id = tags.restID " +
+      "WHERE " + statement.toString();
+    PreparedStatement p = conn.prepareStatement(sql);
+    ResultSet rs = p.executeQuery();
+    List<Restaurant> output = new ArrayList<>();
+    p.close();
+    while (rs.next()) {
+      PreparedStatement p2 = conn.prepareStatement("SELECT tag FROM tags WHERE restID = ?");
+      p2.setString(1, rs.getString("rest_id"));
+      ResultSet rs2 = p2.executeQuery();
+      List<String> taglist = new ArrayList<>();
+      p.close();
+      while (rs2.next()) {
+        taglist.add(rs2.getString("tag"));
+      }
+      output.add(new Restaurant(rs.getString("name"), rs.getDouble("latitude")
+      , rs.getDouble("longitude"), taglist, rs.getString("rest_id")));
+      rs2.close();
+    }
+    rs.close();
+    return output;
+  }
+
+  public void deleteUserData(String username) throws SQLException{
+    PreparedStatement p = conn.prepareStatement("DELETE FROM users WHERE username = ?");
+    p.setString(1, username);
+    p.execute();
+    p.close();
+  }
+
 
 }

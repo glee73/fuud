@@ -13,11 +13,15 @@ public class Post {
   private final String user;
 
   public Post(String description, int reviewOutOfTen, List<String> pictures, String username,
-              String restaurantName) {
+              String restaurantName, String inputID) {
     this.description = description;
     this.reviewOutOfTen = reviewOutOfTen;
     this.pictures = pictures;
-    this.id = GenerateHashID.generateUUID();
+    if (inputID == null) {
+      this.id = GenerateHashID.generateUUID();
+    } else {
+      this.id = inputID;
+    }
     this.restaurantName = restaurantName;
     this.user = username;
   }

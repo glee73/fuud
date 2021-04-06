@@ -2,7 +2,6 @@ package edu.brown.cs.student.foodcrawl.DataStructures;
 
 import edu.brown.cs.student.foodcrawl.UtilityFunctions.GenerateHashID;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
@@ -12,9 +11,13 @@ public class Restaurant {
   private final Double longitude;
   private final List<String> tags;
 
-  public Restaurant (String n, Double lat, Double longi, List<String> tags) {
+  public Restaurant (String n, Double lat, Double longi, List<String> tags, String inputID) {
     this.name = n;
-    this.id = GenerateHashID.generateUUID();
+    if (inputID == null) {
+      this.id = GenerateHashID.generateUUID();
+    } else {
+      this.id = inputID;
+    }
     this.latitude = lat;
     this.longitude = longi;
     this.tags = tags;
