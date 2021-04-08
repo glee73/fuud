@@ -11,7 +11,7 @@ public class Restaurant {
   private final Double longitude;
   private final List<String> tags;
 
-  public Restaurant (String n, Double lat, Double longi, List<String> tags, String inputID) {
+  public Restaurant(String n, Double lat, Double longi, List<String> tags, String inputID) {
     this.name = n;
     if (inputID == null) {
       this.id = GenerateHashID.generateUUID();
