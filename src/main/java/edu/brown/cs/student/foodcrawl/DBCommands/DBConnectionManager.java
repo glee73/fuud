@@ -17,19 +17,26 @@ public class DBConnectionManager {
   private ResultSet rs;
 
   public DBConnectionManager(String filename) {
-    try {
-      Class.forName("org.sqlite.JDBC");
-      String urlToDB = "jdbc:sqlite:" + filename;
-      // for checking if the file exists
-      File f = new File(filename);
-      if (f.exists()) {
-        this.conn = DriverManager.getConnection(urlToDB);
-      } else {
-        System.out.println("ERROR: db file not found");
+    if (System.getenv("RDS_HOSTNAME") != null) {
+      try {
+        Class.forName("org.postgresql.Driver");
+        String dbName = System.getenv("RDS_DB_NAME");
+        String userName = System.getenv("RDS_USERNAME");
+        String password = System.getenv("RDS_PASSWORD");
+        String hostname = System.getenv("RDS_HOSTNAME");
+        String port = System.getenv("RDS_PORT");
+        String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+        // for checking if the file exists
+        File f = new File(filename);
+        if (f.exists()) {
+          this.conn = DriverManager.getConnection(jdbcUrl);
+        } else {
+          System.out.println("ERROR: db file not found");
+        }
+        setupTables();
+      } catch (ClassNotFoundException | SQLException c) {
+        System.out.println("ERROR: issue connecting to given db");
       }
-      setupTables();
-    } catch (ClassNotFoundException | SQLException c) {
-      System.out.println("ERROR: issue connecting to given db");
     }
   }
 
