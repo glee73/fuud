@@ -56,6 +56,7 @@ public class DBConnectionManager {
       "stars int," +
       "rest_id varchar(255) NOT NULL," +
       "username varchar(255) NOT NULL," +
+      "timestamp int NOT NULL," +
       "review_text varchar(1000)," +
       "PRIMARY KEY (postID)," +
     "FOREIGN KEY (rest_id) REFERENCES restaurants(rest_id)," +
@@ -101,12 +102,13 @@ public class DBConnectionManager {
 
   public void addPost(Post p) throws SQLException{
     PreparedStatement a = conn.prepareStatement("INSERT INTO posts " +
-      "(postID, stars, rest_id, user_id, review_text) VALUES (?, ?, ?, ?, ?)");
+      "(postID, stars, rest_id, user_id, review_text, timestamp) VALUES (?, ?, ?, ?, ?, ?)");
     a.setString(1, p.getId());
     a.setInt(2, p.getReviewOutOfTen());
     a.setString(3, p.getRestaurantName());
     a.setString(4, p.getUser());
     a.setString(5, p.getDescription());
+    a.setInt(6, p.getTimestamp());
     a.execute();
     a.close();
 
