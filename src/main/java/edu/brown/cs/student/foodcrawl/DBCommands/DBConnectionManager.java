@@ -19,7 +19,7 @@ public class DBConnectionManager {
   public DBConnectionManager(String filename) {
     if (System.getenv("RDS_HOSTNAME") != null) {
       try {
-        Class.forName("org.postgresql.Driver");
+        Class.forName("org.mysql.Driver");
         String dbName = System.getenv("RDS_DB_NAME");
         String userName = System.getenv("RDS_USERNAME");
         String password = System.getenv("RDS_PASSWORD");
