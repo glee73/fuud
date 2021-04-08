@@ -16,23 +16,19 @@ public class DBConnectionManager {
   private Connection conn;
   private ResultSet rs;
 
-  public DBConnectionManager(String filename) {
+  public DBConnectionManager() {
     if (System.getenv("RDS_HOSTNAME") != null) {
       try {
         Class.forName("org.mysql.Driver");
-        String dbName = System.getenv("RDS_DB_NAME");
-        String userName = System.getenv("RDS_USERNAME");
-        String password = System.getenv("RDS_PASSWORD");
-        String hostname = System.getenv("RDS_HOSTNAME");
-        String port = System.getenv("RDS_PORT");
+        String dbName = "-";
+        String userName = "cs32";
+        String password = "Ihatethisclass2!";
+        String hostname = "foodcrawl.cuykllbkmivp.us-east-2.rds.amazonaws.com";
+        String port = "3306";
         String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
         // for checking if the file exists
-        File f = new File(filename);
-        if (f.exists()) {
-          this.conn = DriverManager.getConnection(jdbcUrl);
-        } else {
-          System.out.println("ERROR: db file not found");
-        }
+        this.conn = DriverManager.getConnection(jdbcUrl);
+        System.out.println("ERROR: db file not found");
         setupTables();
       } catch (ClassNotFoundException | SQLException c) {
         System.out.println("ERROR: issue connecting to given db");
