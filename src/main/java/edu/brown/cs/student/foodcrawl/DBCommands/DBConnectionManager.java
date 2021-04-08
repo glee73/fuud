@@ -36,8 +36,6 @@ public class DBConnectionManager {
   private void setupTables() throws SQLException {
     PreparedStatement prep1 = conn.prepareStatement("CREATE TABLE IF NOT EXISTS restaurants (" +
       "DISTINCT rest_id varchar(255) NOT NULL," +
-      "latitude double NOT NULL," +
-      "longitude double NOT NULL," +
       "name varchar(255)," +
     "PRIMARY KEY(rest_id))");
     prep1.execute();
@@ -124,11 +122,9 @@ public class DBConnectionManager {
 
   public void addRestaurant(Restaurant r) throws SQLException{
     PreparedStatement p = conn.prepareStatement("INSERT INTO restaurants " +
-      "(rest_id, latitude, longitude, name) VALUES (?, ?, ?, ?)");
+      "(rest_id,  name) VALUES (?, ?)");
     p.setString(1, r.getId());
-    p.setDouble(2, r.getLatitude());
-    p.setDouble(3, r.getLongitude());
-    p.setString(4, r.getName());
+    p.setString(2, r.getName());
     p.execute();
     p.close();
 
