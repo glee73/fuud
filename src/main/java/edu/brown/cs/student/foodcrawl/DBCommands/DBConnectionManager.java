@@ -155,7 +155,7 @@ public class DBConnectionManager {
       }
       i++;
     }
-    String sql = "SELECT DISTINCT r.rest_id, r.latitude, r.longitude, r.name " +
+    String sql = "SELECT DISTINCT r.rest_id, r.address, r.name " +
       "FROM restaurants AS r INNER JOIN tags on r.rest_id = tags.restID " +
       "WHERE " + statement.toString();
     PreparedStatement p = conn.prepareStatement(sql);
@@ -171,8 +171,7 @@ public class DBConnectionManager {
       while (rs2.next()) {
         taglist.add(rs2.getString("tag"));
       }
-      output.add(new Restaurant(rs.getString("name"), rs.getDouble("latitude")
-      , rs.getDouble("longitude"), taglist, rs.getString("rest_id")));
+      output.add(new Restaurant(rs.getString("name"), rs.getString("address"), taglist, rs.getString("rest_id")));
       rs2.close();
     }
     rs.close();
