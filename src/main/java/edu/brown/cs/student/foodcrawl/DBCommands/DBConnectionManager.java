@@ -14,8 +14,7 @@ public class DBConnectionManager {
    * necessary SQL variables.
    */
   private Connection conn;
-  private ResultSet rs;
-
+  
   public DBConnectionManager() {
     if (System.getenv("RDS_HOSTNAME") != null) {
       try {
@@ -188,5 +187,13 @@ public class DBConnectionManager {
     p.close();
   }
 
+  public void check() throws SQLException {
+    PreparedStatement p = conn.prepareStatement("SELECT * FROM users");
+    ResultSet rs = p.executeQuery();
+    rs.next();
+    p.close();
+    rs.close();
+    System.out.println(rs.getString("username"));
+  }
 
 }
