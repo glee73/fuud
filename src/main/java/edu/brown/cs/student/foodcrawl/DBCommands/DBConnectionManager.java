@@ -14,24 +14,22 @@ public class DBConnectionManager {
    * necessary SQL variables.
    */
   private Connection conn;
-  
+
   public DBConnectionManager() {
-    if (System.getenv("RDS_HOSTNAME") != null) {
-      try {
-        Class.forName("org.mysql.Driver");
-        String dbName = "-";
-        String userName = "cs32";
-        String password = "Ihatethisclass2!";
-        String hostname = "foodcrawl.cuykllbkmivp.us-east-2.rds.amazonaws.com";
-        String port = "3306";
-        String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
-        // for checking if the file exists
-        this.conn = DriverManager.getConnection(jdbcUrl);
-        System.out.println("ERROR: db file not found");
-        setupTables();
-      } catch (ClassNotFoundException | SQLException c) {
-        System.out.println("ERROR: issue connecting to given db");
-      }
+    try {
+      Class.forName("org.mysql.Driver");
+      String dbName = "theDatabase";
+      String userName = "cs32";
+      String password = "Ihatethisclass2!";
+      String hostname = "foodcrawlv2.cuykllbkmivp.us-east-2.rds.amazonaws.com";
+      String port = "3306";
+      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+      // for checking if the file exists
+      this.conn = DriverManager.getConnection(jdbcUrl);
+      System.out.println("ERROR: db file not found");
+      setupTables();
+    } catch (ClassNotFoundException | SQLException c) {
+      System.out.println("ERROR: issue connecting to given db");
     }
   }
 
