@@ -8,6 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.model.Updates;
+import edu.brown.cs.student.foodcrawl.DataStructures.User;
 import edu.brown.cs.student.foodcrawl.UtilityFunctions.GenerateHashID;
 import org.bson.Document;
 import java.util.Arrays;
@@ -82,6 +83,29 @@ public class MongoDBConnection {
         Updates.addToSet("following", userFollowed));
   }
 
+  /**
+   * returns a user instance based off of the username.
+   * returns null if not found
+   * @param username string
+   * @return user schema or null
+   */
+  public User getUserByUsername(String username) {
+    final User[] found = {null};
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String username = document.getString("username");
+        String password = document.getString("password");
+        List<String> following = (List<String>) document.get("followers");
+        List<String> followers = (List<String>) document.get("following");
+        found[0] = new User(username, password, followers, following);
+      }
+    };
+    usersCollection.find(eq("username", username))
+      .forEach(existsBlock);
+    return found[0];
+  }
+
   public void checkUser() {
     //createUser("bob", "pw");
     //createUser("ethan", "yuh");
@@ -89,6 +113,9 @@ public class MongoDBConnection {
     System.out.println(checkUsernameExists("ethan"));
     System.out.println(checkUsernameExists("ethhhjian"));
     System.out.println("hi");
+
+    System.out.println(getUserByUsername("ethan").getFollowers());
+    System.out.println(getUserByUsername("jasdiof"));
   }
 
   /**

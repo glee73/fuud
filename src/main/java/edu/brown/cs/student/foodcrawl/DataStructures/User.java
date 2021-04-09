@@ -22,6 +22,20 @@ public class User {
     this.followers = new ArrayList<>();
   }
 
+  /**
+   * user constructor with all fields populated.
+   * @param username
+   * @param password
+   * @param followers
+   * @param following
+   */
+  public User(String username, String password, List<String> followers, List<String> following) {
+    this.username = username;
+    this.password = password;
+    this.followers = followers;
+    this.following = following;
+  }
+
   public String getUsername() {
     return username;
   }
