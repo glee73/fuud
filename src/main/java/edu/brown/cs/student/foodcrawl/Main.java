@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
+import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.stars.Commands.Command;
 import edu.brown.cs.student.stars.Commands.DeleteUserData;
 import edu.brown.cs.student.stars.Commands.MapCommand;
@@ -82,12 +83,10 @@ public final class Main {
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
     //new Main(args).run();
-    try {
-      DBConnectionManager db = new DBConnectionManager();
-      db.check();
-    } catch (SQLException e){
-      System.out.println("nope");
-    }
+
+    MongoDBConnection db = new MongoDBConnection();
+    db.check();
+
   }
 
   private final String[] args;

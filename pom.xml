@@ -89,6 +89,12 @@
       <version>28.2-jre</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver</artifactId>
+      <version>3.7.0</version>
+    </dependency>
+
     <!--
         Google GSON is a library for serialization/deserialization of JSON.
         https://github.com/google/gson.
