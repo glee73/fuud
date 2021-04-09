@@ -7,6 +7,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import java.util.Arrays;
 import com.mongodb.Block;
@@ -37,14 +38,55 @@ public class MongoDBConnection {
     postsCollection = database.getCollection("posts");
   }
 
-  public void createUser() {
-    Document doc = new Document("username", "ethan")
-      .append("password", "lmfao");
+  /**
+   * creates a user. assumes that the username is unique!!!
+   * @param username
+   * @param password
+   */
+  public void createUser(String username, String password) {
+    Document doc = new Document("username", username)
+        .append("password", password)
+        .append("followers", Arrays.asList())
+        .append("following", Arrays.asList());
     usersCollection.insertOne(doc);
   }
 
-  public void check() {
-    createUser();
+  /**
+   * given a username, returns boolean indicating if it exists already.
+   * @param username
+   * @return
+   */
+  public boolean checkUsernameExists(String username) {
+    final boolean[] found = {false};
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        found[0] = true;
+      }
+    };
+    usersCollection.find(eq("username", username))
+        .forEach(existsBlock);
+    return found[0];
+  }
+
+  /**
+   * adds a follower to the userFollowed, and adds the userFollowed to the following list.
+   * @param follower
+   * @param userFollowed
+   */
+  public void addFollower(String follower, String userFollowed) {
+    usersCollection.updateOne(eq("username", userFollowed),
+        Updates.addToSet("followers", follower));
+    usersCollection.updateOne(eq("username", follower),
+        Updates.addToSet("following", userFollowed));
+  }
+
+  public void checkUser() {
+    //createUser("bob", "pw");
+    //createUser("ethan", "yuh");
+    //addFollower("bob", "ethan");
+    System.out.println(checkUsernameExists("ethan"));
+    System.out.println(checkUsernameExists("ethhhjian"));
     System.out.println("hi");
   }
 

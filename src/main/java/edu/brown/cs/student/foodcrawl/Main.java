@@ -85,7 +85,7 @@ public final class Main {
     //new Main(args).run();
 
     MongoDBConnection db = new MongoDBConnection();
-    db.check();
+    db.checkUser();
 
   }
 
