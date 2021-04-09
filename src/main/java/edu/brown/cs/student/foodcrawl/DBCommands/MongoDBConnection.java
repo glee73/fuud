@@ -8,6 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.model.Updates;
+import edu.brown.cs.student.foodcrawl.UtilityFunctions.GenerateHashID;
 import org.bson.Document;
 import java.util.Arrays;
 import com.mongodb.Block;
@@ -90,6 +91,27 @@ public class MongoDBConnection {
     System.out.println("hi");
   }
 
+  /**
+   * creates a restaurant. assumes that the username is unique!!!
+   * @param name string
+   * @param address string
+   */
+  public void createRestaurant(String name, String address) {
+    Document doc = new Document("name", name)
+        .append("address", address)
+        .append("tags", Arrays.asList())
+        .append("id", GenerateHashID.generateUUID());
+    restaurantsCollection.insertOne(doc);
+  }
 
+  public void addTag(String tag, String restaurantID) {
+    restaurantsCollection.updateOne(eq("id", restaurantID),
+        Updates.addToSet("tags", tag));
+  }
+
+  public void checkRestaurant() {
+    //createRestaurant("McDonalds", "thayer st");
+    addTag("burgers", "b3b2525248bf4578b0b5847f58dd3fab");
+  }
 
 }
