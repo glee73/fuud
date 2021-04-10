@@ -110,4 +110,63 @@ code {
   background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/25008305-442083466194421-4458779521922891776-n-1517333246.jpg?crop=1xw:1xh;center,top&resize=480:*");
 }
 
+/******** NEW POST ********/
+.pageTitle {
+  font-size: 30px;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 320px;
+  color:#FF6225;
+}
+.postContainer {
+  border: 2px solid #C4C4C4;
+  border-radius: 15px;
+  margin: 15px 300px;
+  padding: 15px 30px;
+}
+.postHeader {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-bottom: 20px;
+}
+.userName, .postDesc {
+  color: #5A5858;
+}
+.stars {
+  height: 20px;
+  margin-left: 20px;
+}
+.postContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.postImage {
+  width: 30%;
+}
+.postDesc {
+  width: 60%;
+}
 
+/******** RESTAURANT LISTING ********/
+.restaurantContainer {
+  display: flex;
+  align-items: center;
+}
+.restaurantImage {
+  width: 25%;
+  padding-right: 40px;
+}
+.restaurantTitle {
+  color:#FF6225;
+  font-size: 30px;
+}
+.restaurantContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.review {
+  width: 60%;
+}
