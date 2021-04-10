@@ -141,4 +141,21 @@ public class MongoDBConnection {
     addTag("burgers", "b3b2525248bf4578b0b5847f58dd3fab");
   }
 
+  public void createPost(String text, int reviewOutOfTen, List<String> pictures,
+                         String restaurantID, String username, String timestamp) {
+    Document doc = new Document("text", text)
+      .append("review", reviewOutOfTen)
+      .append("pictures", pictures)
+      .append("restaurantID", restaurantID)
+      .append("id", GenerateHashID.generateUUID())
+      .append("username", username)
+      .append("timestamp", timestamp);
+    postsCollection.insertOne(doc);
+  }
+
+  public void checkPost() {
+    //createPost("I just went to the best restaurant!", 10,
+     // new ArrayList<>(), "000", "ethan", "10:00");
+  }
+
 }
