@@ -104,10 +104,10 @@ public class DBConnectionManager {
       "(postID, stars, rest_id, user_id, review_text, timestamp) VALUES (?, ?, ?, ?, ?, ?)");
     a.setString(1, p.getId());
     a.setInt(2, p.getReviewOutOfTen());
-    a.setString(3, p.getRestaurantName());
+    a.setString(3, p.getRestaurantID());
     a.setString(4, p.getUser());
     a.setString(5, p.getDescription());
-    a.setInt(6, p.getTimestamp());
+    a.setString(6, p.getTimestamp());
     a.execute();
     a.close();
 
