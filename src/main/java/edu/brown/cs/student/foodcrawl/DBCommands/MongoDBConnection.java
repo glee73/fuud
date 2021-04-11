@@ -122,9 +122,26 @@ public class MongoDBConnection {
         found[0] = new Restaurant(name, address, tags, id);
       }
     };
-    usersCollection.find(eq("username", name))
+    restaurantsCollection.find(eq("username", name))
       .forEach(existsBlock);
     return found[0];
+  }
+
+  public List<Restaurant> searchByTags(List<String> tags) {
+    final List<Restaurant> found = new ArrayList<>();
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String id = document.getString("id");
+        String name = document.getString("name");
+        String address = document.getString("address");
+        List<String> tags = (List<String>) document.get("tags");
+        found.add(new Restaurant(name, address, tags, id));
+      }
+    };
+    restaurantsCollection.find(in("tags", tags))
+      .forEach(existsBlock);
+    return found;
   }
 
   public void checkUser() {

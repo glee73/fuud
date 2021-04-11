@@ -44,6 +44,7 @@ import edu.brown.cs.student.stars.ThreadUserCheckin.CheckinThread;
 import edu.brown.cs.student.stars.ThreadUserCheckin.UserCheckin;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+import org.json.JSONArray;
 import org.sqlite.core.DB;
 import spark.ExceptionHandler;
 import spark.ModelAndView;
@@ -230,6 +231,21 @@ public final class Main {
       String name = data.getString("name");
       Restaurant rest = connection.getRestByName(name);
       Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class RestTagsHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      JSONArray t = data.getJSONArray("tags");
+      List<String> tags = new ArrayList<>();
+      for (int i=0; i < t.length(); i++) {
+        tags.add(t.getString(i));
+      }
+      List<Restaurant> rests = connection.searchByTags(tags);
+      Map<String, Object> vars = ImmutableMap.of("restaurants", rests);
       return GSON.toJson(vars);
     }
   }
