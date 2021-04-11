@@ -17,7 +17,7 @@ public class ComplexFunctionality {
    */
   public static List<Post> getFeedPagePosts(String username) {
     // call the db command
-
+  // TODO: sortt!!!!
     List<Post> feedpage = new ArrayList<>();
     MongoDBConnection m = new MongoDBConnection();
     User u = m.getUserByUsername(username);
@@ -29,7 +29,8 @@ public class ComplexFunctionality {
       return feedpage;
     }
     for (String us : usersYouFollow) {
-      feedpage.addAll(m.getPostsFromUser(us));
+      List<Post> pst = m.getPostsFromUser(us);
+      feedpage.addAll(pst);
     }
     /*
     feedpage.sort(new Comparator<Post>() {
