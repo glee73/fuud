@@ -123,7 +123,7 @@ public class MongoDBConnection {
         found[0] = new Restaurant(name, address, tags, id);
       }
     };
-    restaurantsCollection.find(eq("username", name))
+    restaurantsCollection.find(eq("name", name))
       .forEach(existsBlock);
     return found[0];
   }
@@ -222,6 +222,10 @@ public class MongoDBConnection {
    //createPost("I just went to the worst restaurant!", 0,
       //new ArrayList<>(), "001", "ethan", "10:03");
     //System.out.println(getPostsFromUser("sdf").size());
+  }
+
+  public void checkStuff() {
+    createRestaurant("");
   }
 
 }
