@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Navbar from './Navbar';
 import Feed from './Feed.js';
@@ -10,7 +9,7 @@ import RestaurantSearch from "./RestaurantSearch.js";
 function App() {
     return (
             <div className="App">
-                <Navbar></Navbar>
+                <Navbar/>
                 <Switch>
                     <Route exact path="/myprofile" component={Profile}/>
                     <Route exact path="/explore" component={Feed}/>
