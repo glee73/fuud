@@ -184,6 +184,7 @@ public final class Main {
     Spark.post("/userposts", new UserPostsHandler());
     Spark.post("/restaurant", new RestHandler());
     Spark.post("/tags", new RestTagsHandler());
+    Spark.post("/feed", new FeedHandler());
   }
 
 
@@ -243,6 +244,17 @@ public final class Main {
       }
       List<Restaurant> rests = connection.searchByTags(tags);
       Map<String, Object> vars = ImmutableMap.of("restaurants", rests);
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class FeedHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("username");
+      List<Post> news = ComplexFunctionality.getFeedPagePosts(username);
+      Map<String, Object> vars = ImmutableMap.of("feed", news);
       return GSON.toJson(vars);
     }
   }
