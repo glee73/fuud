@@ -90,6 +90,7 @@ public final class Main {
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
     //new Main(args).run();
     connection = new MongoDBConnection();
+    runSparkServer(8000);
 
   }
 
@@ -101,34 +102,6 @@ public final class Main {
    */
   private Main(String[] args) {
     this.args = args;
-  }
-
-  /**
-   * runs our maps BE.
-   * @throws IOException exception
-   * @throws SQLException exception
-   * @throws ClassNotFoundException exception
-   */
-  private void run() throws IOException, SQLException, ClassNotFoundException {
-
-    // Parse command line arguments
-    OptionParser parser = new OptionParser();
-    parser.accepts("gui");
-    parser.accepts("port").withRequiredArg().ofType(Integer.class)
-        .defaultsTo(DEFAULT_PORT);
-    OptionSet options = parser.parse(args);
-
-    if (options.has("gui")) {
-      runSparkServer((int) options.valueOf("port"));
-    }
-
-    REPL repl = new REPL();
-    Mock mockCommand = new Mock();
-    Map<String, Command> map = new HashMap<>();
-    map.put("delete_user_data", DELETECOMMAND);
-    repl.makeRepl(map);
-
-
   }
 
   /**
@@ -155,7 +128,7 @@ public final class Main {
    * @throws SQLException exception
    * @throws ClassNotFoundException exception
    */
-  private void runSparkServer(int port)
+  private static void runSparkServer(int port)
       throws FileNotFoundException, SQLException, ClassNotFoundException {
     Spark.port(port);
     Spark.externalStaticFileLocation("src/main/resources/static");
