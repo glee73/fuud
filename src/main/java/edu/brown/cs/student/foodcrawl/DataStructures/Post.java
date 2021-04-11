@@ -7,13 +7,13 @@ public class Post {
   private final String description;
   private final int reviewOutOfTen;
   private final List<String> pictures; //urls to pictures
-  private final String restaurantName;
+  private final String restaurantID;
   private final String id;
   private final String user;
-  private final int timestamp;
+  private final String timestamp;
 
   public Post(String description, int reviewOutOfTen, List<String> pictures, String username,
-              String restaurantName, String inputID, int ts) {
+              String restaurantID, String inputID, String ts) {
     this.description = description;
     this.reviewOutOfTen = reviewOutOfTen;
     this.pictures = pictures;
@@ -22,7 +22,7 @@ public class Post {
     } else {
       this.id = inputID;
     }
-    this.restaurantName = restaurantName;
+    this.restaurantID = restaurantID;
     this.user = username;
     this.timestamp = ts;
   }
@@ -44,15 +44,15 @@ public class Post {
     return id;
   }
 
-  public String getRestaurantName() {
-    return restaurantName;
+  public String getRestaurantID() {
+    return restaurantID;
   }
 
   public String getUser() {
     return user;
   }
 
-  public int getTimestamp() {
+  public String getTimestamp() {
     return timestamp;
   }
 }

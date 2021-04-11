@@ -8,6 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.model.Updates;
+import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
 import edu.brown.cs.student.foodcrawl.UtilityFunctions.GenerateHashID;
 import org.bson.Document;
@@ -139,6 +140,46 @@ public class MongoDBConnection {
   public void checkRestaurant() {
     //createRestaurant("McDonalds", "thayer st");
     addTag("burgers", "b3b2525248bf4578b0b5847f58dd3fab");
+  }
+
+  public void createPost(String text, int reviewOutOfTen, List<String> pictures,
+                         String restaurantID, String username, String timestamp) {
+    Document doc = new Document("text", text)
+      .append("review", reviewOutOfTen)
+      .append("pictures", pictures)
+      .append("restaurantID", restaurantID)
+      .append("id", GenerateHashID.generateUUID())
+      .append("username", username)
+      .append("timestamp", timestamp);
+    postsCollection.insertOne(doc);
+  }
+
+  public List<Post> getPostsFromUser(String username) {
+    //final Post[] found = {null};
+    List<Post> posts = new ArrayList<>();
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String text = document.getString("text");
+        int review = document.getInteger("review");
+        List<String> pictures =  (List<String>) document.get("pictures");
+        String restaurantID = document.getString("restaurantID");
+        String id = document.getString("id");
+        String username = document.getString("username");
+        String timestamp = document.getString("timestamp");
+
+        posts.add(new Post(text, review, pictures, username, restaurantID, id, timestamp));
+      }
+    };
+    postsCollection.find(eq("username", username))
+        .forEach(existsBlock);
+    return posts;
+  }
+
+  public void checkPost() {
+   //createPost("I just went to the worst restaurant!", 0,
+      //new ArrayList<>(), "001", "ethan", "10:03");
+    //System.out.println(getPostsFromUser("sdf").size());
   }
 
 }
