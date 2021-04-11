@@ -18,6 +18,7 @@ import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
 import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.stars.Commands.Command;
@@ -88,6 +89,10 @@ public final class Main {
     // db.checkUser();
     //db.checkRestaurant();
     // db.checkPost();
+    db.createPost("this restaurant is bad", 2,
+      new ArrayList<String>(), "012", "bob", "4:00");
+    System.out.println(ComplexFunctionality.getFeedPagePosts("ethan"));
+    System.out.println(ComplexFunctionality.getFeedPagePosts("fsd"));
   }
 
   private final String[] args;
