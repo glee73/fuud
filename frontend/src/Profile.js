@@ -21,7 +21,7 @@ function Profile() {
         };
 
         axios.post(
-            'http://localhost:4567/nearest',
+            'http://localhost:4567/user',
             toSend,
             config
         )
@@ -48,7 +48,7 @@ function Profile() {
         };
 
         axios.post(
-            'http://localhost:4567/nearest',
+            'http://localhost:4567/userPosts',
             toSend,
             config
         )
@@ -60,8 +60,6 @@ function Profile() {
             });
 
     }
-
-
 
 
     return (
