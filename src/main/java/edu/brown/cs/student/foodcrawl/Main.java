@@ -89,13 +89,8 @@ public final class Main {
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
     //new Main(args).run();
-
-    MongoDBConnection db = new MongoDBConnection();
-    // db.checkUser();
-    //db.checkRestaurant();
-    // db.checkPost();
-    //db.createPost("this restaurant is bad", 2,
-      // new ArrayList<String>(), "012", "bob", "4:00");
+    connection = new MongoDBConnection();
+    connection.checkStuff();
   }
 
   private final String[] args;
@@ -132,7 +127,7 @@ public final class Main {
     Map<String, Command> map = new HashMap<>();
     map.put("delete_user_data", DELETECOMMAND);
     repl.makeRepl(map);
-    connection = new MongoDBConnection();
+
 
   }
 
