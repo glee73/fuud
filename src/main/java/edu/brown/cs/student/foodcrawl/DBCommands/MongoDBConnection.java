@@ -100,8 +100,9 @@ public class MongoDBConnection {
       public void apply(final Document document) {
         String username = document.getString("username");
         String password = document.getString("password");
-        List<String> following = (List<String>) document.get("followers");
-        List<String> followers = (List<String>) document.get("following");
+        List<String> following = (List<String>) document.get("following");
+        List<String> followers = (List<String>) document.get("followers");
+
         found[0] = new User(username, password, followers, following);
       }
     };
@@ -194,6 +195,10 @@ public class MongoDBConnection {
   public List<Post> getPostsFromUser(String username) {
     //final Post[] found = {null};
     List<Post> posts = new ArrayList<>();
+
+    // Strip quotes!!!
+    username = username.replace("\"", "");
+
     Block<Document> existsBlock = new Block<Document>() {
       @Override
       public void apply(final Document document) {
