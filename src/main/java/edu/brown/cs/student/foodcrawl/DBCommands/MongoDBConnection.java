@@ -111,6 +111,11 @@ public class MongoDBConnection {
     return found[0];
   }
 
+  /**
+   * gets the restaurant by name.
+   * @param name
+   * @return
+   */
   public Restaurant getRestByName(String name) {
     final Restaurant[] found = {null};
     Block<Document> existsBlock = new Block<Document>() {
@@ -128,6 +133,11 @@ public class MongoDBConnection {
     return found[0];
   }
 
+  /**
+   * returns all restaurants with any matching tags.
+   * @param tags
+   * @return
+   */
   public List<Restaurant> searchByTags(List<String> tags) {
     final List<Restaurant> found = new ArrayList<>();
     Block<Document> existsBlock = new Block<Document>() {
@@ -222,11 +232,6 @@ public class MongoDBConnection {
    //createPost("I just went to the worst restaurant!", 0,
       //new ArrayList<>(), "001", "ethan", "10:03");
     //System.out.println(getPostsFromUser("sdf").size());
-  }
-
-  public void checkStuff() {
-    // createRestaurant("TestRestaurant", "Exchange Place");
-    System.out.println(getRestByName("TestRestaurant").getId());
   }
 
 }
