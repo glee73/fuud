@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
 import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
+import edu.brown.cs.student.foodcrawl.DataStructures.User;
 import edu.brown.cs.student.stars.Commands.Command;
 import edu.brown.cs.student.stars.Commands.DeleteUserData;
 import edu.brown.cs.student.stars.Commands.MapCommand;
@@ -30,7 +31,6 @@ import edu.brown.cs.student.stars.Commands.NaiveRadius;
 import edu.brown.cs.student.stars.Commands.Nearest;
 import edu.brown.cs.student.stars.Commands.Neighbors;
 import edu.brown.cs.student.stars.Commands.Radius;
-import edu.brown.cs.student.stars.Commands.Route;
 import edu.brown.cs.student.stars.Commands.StarsCommand;
 import edu.brown.cs.student.stars.Commands.Ways;
 import edu.brown.cs.student.stars.DataTypes.MapNode;
@@ -52,6 +52,7 @@ import spark.Request;
 import spark.Spark;
 import spark.TemplateViewRoute;
 import spark.template.freemarker.FreeMarkerEngine;
+import spark.Route;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -71,6 +72,7 @@ public final class Main {
 
   private static final DeleteUserData DELETECOMMAND = new DeleteUserData();
   private static final Gson GSON = new Gson();
+  private static MongoDBConnection connection;
 
   private static List<String[]> userLog = new ArrayList<>();
   // map of latest checkins: maps user id to their latest checkins
@@ -129,6 +131,7 @@ public final class Main {
     Map<String, Command> map = new HashMap<>();
     map.put("delete_user_data", DELETECOMMAND);
     repl.makeRepl(map);
+    connection = new MongoDBConnection();
 
   }
 
@@ -193,6 +196,17 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of("title",
           "Stars: Query the database", "answer", " ");
       return new ModelAndView(variables, "query.ftl");
+    }
+  }
+
+  private static class UserHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("username");
+      User user = connection.getUserByUsername(username);
+      Map<String, Object> vars = ImmutableMap.of("user", user);
+      return GSON.toJson(vars);
     }
   }
 
