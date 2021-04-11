@@ -11,3 +11,162 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/******** NAVBAR COMPONENT ********/
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #FF6225;
+}
+
+.searchBar {
+  border-radius: 15px;
+  width: 50%;
+  padding: 7px 15px;
+}
+
+.orangeCircle{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FF6225;
+}
+.greyCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #C4C4C4;
+}
+.navbarLink {
+  padding: 0 20px;
+  color: #5A5858;
+  text-decoration: none;
+}
+
+.navbarContainer {
+  width: 15%;
+}
+
+.navLinkFlex {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+/******** PROFILE ********/
+.profileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.profilePic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #C4C4C4;
+}
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 15px;
+  height: 80vh;
+  padding: 100px 300px;
+}
+.profileItem {
+  content: "";
+  display: block;
+  padding-bottom: 90%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.pic1 {
+  background-image: url("https://www.chatelaine.com/wp-content/uploads/2017/07/Instagram-tastetoronto-Waffleu-Waffle-House.png");
+}
+.pic2 {
+  background-image: url("https://spoonuniversity.com/wp-content/uploads/sites/25/2016/02/Screen-Shot-2016-02-19-at-3.55.52-PM.png");
+}
+.pic3 {
+  background-image: url("https://www.tasteofhome.com/wp-content/uploads/2018/04/lenaskitchenblog-copy.jpg?fit=696,696");
+}
+.pic4 {
+  background-image: url("https://preen.ph/wp-content/blogs.dir/38/files/2016/03/foodstagram-preen-e1458298504771.jpg");
+}
+.pic5 {
+  background-image: url("https://www.thespruceeats.com/thmb/CHJNPydhuD3_fUXICOnIqeXCeOA=/1088x1080/filters:no_upscale():max_bytes(150000):strip_icc()/veganvultures-5c3e078bc9e77c00014ae3d9.jpg");
+}
+.pic6 {
+  background-image: url("https://www.thespruceeats.com/thmb/WtVmwQ1E82YypuZEN0sTj4ieMUg=/1350x1080/filters:no_upscale():max_bytes(150000):strip_icc()/clemfoodie-5c3dfcef46e0fb00016820be.jpg");
+}
+.pic7 {
+  background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/20482329-251636705343274-3725427080335196160-n-1517333867.jpg?crop=1xw:1xh;center,top&resize=480:*");
+}
+.pic8 {
+  background-image: url("http://resourcemagonline.com/wp-content/uploads/2017/03/Photo-Nov-28-10-28-35-AM.jpg");
+}
+.pic9 {
+  background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/25008305-442083466194421-4458779521922891776-n-1517333246.jpg?crop=1xw:1xh;center,top&resize=480:*");
+}
+
+/******** NEW POST ********/
+.pageTitle {
+  font-size: 30px;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 320px;
+  color:#FF6225;
+}
+.postContainer {
+  border: 2px solid #C4C4C4;
+  border-radius: 15px;
+  margin: 15px 300px;
+  padding: 15px 30px;
+}
+.postHeader {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-bottom: 20px;
+}
+.userName, .postDesc {
+  color: #5A5858;
+}
+.stars {
+  height: 20px;
+  margin-left: 20px;
+}
+.postContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.postImage {
+  width: 30%;
+}
+.postDesc {
+  width: 60%;
+}
+
+/******** RESTAURANT LISTING ********/
+.restaurantContainer {
+  display: flex;
+  align-items: center;
+}
+.restaurantImage {
+  width: 25%;
+  padding-right: 40px;
+}
+.restaurantTitle {
+  color:#FF6225;
+  font-size: 30px;
+}
+.restaurantContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.review {
+  width: 60%;
+}
