@@ -22,6 +22,7 @@ import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
 import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
+import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
 import edu.brown.cs.student.stars.Commands.Command;
 import edu.brown.cs.student.stars.Commands.DeleteUserData;
@@ -218,6 +219,17 @@ public final class Main {
       String username = data.getString("username");
       List<Post> posts = connection.getPostsFromUser(username);
       Map<String, Object> vars = ImmutableMap.of("posts", posts);
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class RestHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String name = data.getString("name");
+      Restaurant rest = connection.getRestByName(name);
+      Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
       return GSON.toJson(vars);
     }
   }

@@ -9,6 +9,7 @@ import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.model.Updates;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
+import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
 import edu.brown.cs.student.foodcrawl.UtilityFunctions.GenerateHashID;
 import org.bson.Document;
@@ -20,6 +21,8 @@ import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.result.DeleteResult;
 import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
+import spark.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +106,23 @@ public class MongoDBConnection {
       }
     };
     usersCollection.find(eq("username", username))
+      .forEach(existsBlock);
+    return found[0];
+  }
+
+  public Restaurant getRestByName(String name) {
+    final Restaurant[] found = {null};
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String id = document.getString("id");
+        String name = document.getString("name");
+        String address = document.getString("address");
+        List<String> tags = (List<String>) document.get("tags");
+        found[0] = new Restaurant(name, address, tags, id);
+      }
+    };
+    usersCollection.find(eq("username", name))
       .forEach(existsBlock);
     return found[0];
   }
