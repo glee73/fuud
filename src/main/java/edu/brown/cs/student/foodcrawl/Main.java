@@ -89,8 +89,8 @@ public final class Main {
     // db.checkUser();
     //db.checkRestaurant();
     // db.checkPost();
-    db.createPost("this restaurant is bad", 2,
-      new ArrayList<String>(), "012", "bob", "4:00");
+    //db.createPost("this restaurant is bad", 2,
+      // new ArrayList<String>(), "012", "bob", "4:00");
     System.out.println(ComplexFunctionality.getFeedPagePosts("ethan"));
     System.out.println(ComplexFunctionality.getFeedPagePosts("fsd"));
   }

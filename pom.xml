@@ -20,6 +20,14 @@
   <!-- Dependencies section for libraries put all of your libraries in here -->
   <dependencies>
 
+    <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>3.7.0</version>
+    </dependency>
+
+
     <!--
         jopt-simple is a command line parser.
         https://pholser.github.io/jopt-simple/.
@@ -87,12 +95,6 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>28.2-jre</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mongodb</groupId>
-      <artifactId>mongodb-driver</artifactId>
-      <version>3.7.0</version>
     </dependency>
 
     <!--
