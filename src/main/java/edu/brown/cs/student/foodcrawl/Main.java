@@ -180,6 +180,10 @@ public final class Main {
     // Setup Spark Routes
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
     Spark.exception(Exception.class, new ExceptionPrinter());
+    Spark.post("/user", new UserHandler());
+    Spark.post("/userposts", new UserPostsHandler());
+    Spark.post("/restaurant", new RestHandler());
+    Spark.post("/tags", new RestTagsHandler());
   }
 
 

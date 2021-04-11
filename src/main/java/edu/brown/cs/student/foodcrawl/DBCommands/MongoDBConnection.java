@@ -35,7 +35,7 @@ public class MongoDBConnection {
 
   public MongoDBConnection() {
     MongoClientURI uri = new MongoClientURI(
-      "mongodb+srv://tim:Ihatethisclass2!@foodcrawl.75jup.mongodb.net/test?retryWrites=true&w=majority");
+      "mongodb+srv://tim:Ihatethisclass2!@foodcrawl.75jup.mongodb.net/test?retryWrites=true&w=majority&authSource=admin");
 
     MongoClient mongoClient = new MongoClient(uri);
     MongoDatabase database = mongoClient.getDatabase("test");
