@@ -1,17 +1,19 @@
 import axios from 'axios';
 import Post from './NewPost';
+import React, {useState, useEffect, useRef} from "react";
 
 function Profile() {
 
-    const userName = () => {
-        return "ckim60";
-    }
+    const userName = "ckim60";
 
     const userData = () => {
+        console.log("getting user data");
 
         const toSend = {
-            user: userName
+            'user': userName
         };
+
+        console.log(toSend);
 
         let config = {
             headers: {
@@ -26,6 +28,7 @@ function Profile() {
             config
         )
             .then(response => {
+                console.log(response.data);
                 return response.data;
             })
             .catch(function (error) {
@@ -35,9 +38,10 @@ function Profile() {
     }
 
     const userPosts = () => {
+        console.log("getting user post");
 
         const toSend = {
-            user: userName
+            'user': userName
         };
 
         let config = {
@@ -53,7 +57,8 @@ function Profile() {
             config
         )
             .then(response => {
-                return response.data;
+                console.log(response.data);
+                response.data;
             })
             .catch(function (error) {
                 console.log(error);
@@ -62,16 +67,16 @@ function Profile() {
     }
 
 
+
     return (
         <div className="profile">
             <div className="profileHeader">
                 <div className="profilePic"></div>
                 <p className="username">{userName}</p>
-                <p className="bio">{userData.bio}</p>
+                <p className="bio">{userData()}</p>
             </div>
             <div className="profileGrid">
-
-                {userPosts.map((post, idx) => (
+                {userPosts().map((post, idx) => (
                     <Post> className={"profileItem"} key={idx}
                         <img src={post.pic} alt={"picture of food"}/>
                     </Post>

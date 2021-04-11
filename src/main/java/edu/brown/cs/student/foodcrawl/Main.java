@@ -7,16 +7,9 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
 import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
@@ -24,28 +17,9 @@ import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
-import edu.brown.cs.student.stars.Commands.Command;
-import edu.brown.cs.student.stars.Commands.DeleteUserData;
-import edu.brown.cs.student.stars.Commands.MapCommand;
-import edu.brown.cs.student.stars.Commands.Mock;
-import edu.brown.cs.student.stars.Commands.NaiveNeighbors;
-import edu.brown.cs.student.stars.Commands.NaiveRadius;
-import edu.brown.cs.student.stars.Commands.Nearest;
-import edu.brown.cs.student.stars.Commands.Neighbors;
-import edu.brown.cs.student.stars.Commands.Radius;
-import edu.brown.cs.student.stars.Commands.StarsCommand;
-import edu.brown.cs.student.stars.Commands.Ways;
-import edu.brown.cs.student.stars.DataTypes.MapNode;
-import edu.brown.cs.student.stars.DataTypes.MapWay;
-import edu.brown.cs.student.stars.DataTypes.Star;
-import edu.brown.cs.student.stars.KDTree.KDNode;
-import edu.brown.cs.student.stars.REPL.REPL;
-import edu.brown.cs.student.stars.ThreadUserCheckin.CheckinThread;
-import edu.brown.cs.student.stars.ThreadUserCheckin.UserCheckin;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.json.JSONArray;
-import org.sqlite.core.DB;
 import spark.ExceptionHandler;
 import spark.ModelAndView;
 
@@ -73,7 +47,6 @@ public final class Main {
   private static final int DEFAULT_PORT = 4567;
   private static final int TIMER_DELAY = 2000;
 
-  private static final DeleteUserData DELETECOMMAND = new DeleteUserData();
   private static final Gson GSON = new Gson();
   private static MongoDBConnection connection;
 
@@ -88,7 +61,7 @@ public final class Main {
    * @throws ClassNotFoundException when class not found
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-    //new Main(args).run();
+    new Main(args).run();
     connection = new MongoDBConnection();
 
   }
@@ -121,12 +94,10 @@ public final class Main {
     if (options.has("gui")) {
       runSparkServer((int) options.valueOf("port"));
     }
-
-    REPL repl = new REPL();
-    Mock mockCommand = new Mock();
-    Map<String, Command> map = new HashMap<>();
-    map.put("delete_user_data", DELETECOMMAND);
-    repl.makeRepl(map);
+    int i = 0;
+    while (true) {
+      i = 0;
+    }
 
 
   }
@@ -230,6 +201,7 @@ public final class Main {
       Restaurant rest = connection.getRestByName(name);
       Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
       return GSON.toJson(vars);
+
     }
   }
 

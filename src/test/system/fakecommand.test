@@ -1,5 +1,0 @@
-INPUT
-fakecommand 1 2 3 4
-OUTPUT
-ERROR:
-END
