@@ -225,8 +225,8 @@ public class MongoDBConnection {
   }
 
   public void checkStuff() {
-    createRestaurant("TestRestaurant", "Exchange Place");
-    System.out.print(getRestByName("TestRestaurant"));
+    // createRestaurant("TestRestaurant", "Exchange Place");
+    System.out.println(getRestByName("TestRestaurant").getId());
   }
 
 }
