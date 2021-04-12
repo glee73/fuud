@@ -134,6 +134,23 @@ public class MongoDBConnection {
     return found[0];
   }
 
+  public Restaurant getRestaurantByID(String id) {
+    final Restaurant[] found = {null};
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String id = document.getString("id");
+        String name = document.getString("name");
+        String address = document.getString("address");
+        List<String> tags = (List<String>) document.get("tags");
+        found[0] = new Restaurant(name, address, tags, id);
+      }
+    };
+    restaurantsCollection.find(eq("id", id))
+      .forEach(existsBlock);
+    return found[0];
+  }
+
   /**
    * returns all restaurants with any matching tags.
    * @param tags
@@ -230,8 +247,11 @@ public class MongoDBConnection {
   }
 
   public void checkPost() {
-    //createPost("I just went to the worst restaurant!", 0,
-      //new ArrayList<>(), "001", "ethan", "10:03");
+    /*
+    List<String> pic = new ArrayList<>();
+    pic.add("https://drive.google.com/file/d/1zpFeTO4diF_b9e6flc9r_4jGRmdpnVgE/view?usp=sharing");
+    createPost("kinda underwhelming. not much depth of flavor.", 3,
+      pic, "588c799866b647828134b4e92fa02188", "ben", "5:35"); */
 
     //System.out.println(getPostsFromUser("sdf").size());
 
