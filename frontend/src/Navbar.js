@@ -26,6 +26,10 @@ function Navbar() {
                     <a className="navbarLink" href="">my friends</a>
                 </div>
             </div>
+            <div className="newPostFixed">
+                <Link className="newPostButton" to="/newPost">+</Link>
+                <p className="newPostLabel">new post</p>
+            </div>
         </div>
 
     );

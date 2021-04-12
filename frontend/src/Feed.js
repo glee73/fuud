@@ -39,17 +39,19 @@ function Feed() {
 
         useEffect(() => {
             getFeedPosts();
-        })
+        }, [])
 
 
         const displayPosts = () => {
             let content = [];
-
+            console.log(posts[0])
             posts.map((post, idx) => (
                 content.push(
                     <NewPost className={"profileItem"} key={idx}
                              user={post.user} rating={post.reviewOutOfTen}
-                             desc={post.description}> </NewPost>)
+                             desc={post.description} time={post.timestamp}
+                             resID={post.restaurantID} pic={post.pictures}>
+                    </NewPost>)
             ));
 
             return (<div className="profileGrid">
@@ -57,7 +59,6 @@ function Feed() {
                 </div>
             );
         }
-
 
         return (
             <div className="feed">

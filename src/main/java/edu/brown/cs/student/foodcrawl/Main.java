@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,6 @@ import org.json.JSONArray;
 import spark.ExceptionHandler;
 import spark.ModelAndView;
 
-import spark.QueryParamsMap;
 import spark.Response;
 import spark.Request;
 import spark.Spark;
@@ -86,9 +84,7 @@ public final class Main {
         .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
-//    if (options.has("gui")) {
     runSparkServer((int) options.valueOf("port"));
-//    }
   }
 
   /**
@@ -142,6 +138,8 @@ public final class Main {
     Spark.post("/login", new LoginHandler());
     Spark.post("/signup", new SignUpHandler());
     Spark.post("/logout", new LogoutHandler());
+    Spark.post("/search", new SearchHandler());
+    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
   }
 
 
@@ -197,7 +195,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       JSONArray t = data.getJSONArray("tags");
       List<String> tags = new ArrayList<>();
-      for (int i=0; i < t.length(); i++) {
+      for (int i = 0; i < t.length(); i++) {
         tags.add(t.getString(i));
       }
       List<Restaurant> rests = connection.searchByTags(tags);
@@ -217,18 +215,31 @@ public final class Main {
     }
   }
 
+  private static class GetRestaurantByIDHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String id = data.getString("id");
+      Restaurant r = connection.getRestaurantByID(id);
+      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
+      return GSON.toJson(vars);
+    }
+  }
+
   private static class AddPostHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       try {
         JSONArray p = data.getJSONArray("pictures");
         List<String> pictures = new ArrayList<>();
-        for (int i=0; i < p.length(); i++) {
+        for (int i = 0; i < p.length(); i++) {
           pictures.add(p.getString(i));
         }
-        Restaurant r = connection.getRestByName(data.getString("restaurant"));
-        connection.createPost(data.getString("text"), data.getInt("review"), pictures, r.getId(),
-          data.getString("username"), data.getString("timestamp"));
+        Restaurant r = connection.getRestByName(data.getString(
+                "restaurantName"));
+        connection.createPost(data.getString("text"), data.getInt("review"),
+                pictures, r.getId(), data.getString("username"),
+                data.getString("timestamp"));
         Map<String, Object> vars = ImmutableMap.of("success", true);
         return GSON.toJson(vars);
       } catch (Exception e) {
@@ -292,6 +303,21 @@ public final class Main {
       request.session().removeAttribute("USERID");
       response.redirect("/login");
       Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged out");
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class SearchHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      Restaurant r = connection.getRestByName(
+              data.getString("restaurantName"));
+      Map<String, Object> vars;
+      if (r == null) {
+        vars = ImmutableMap.of("success", false);
+      } else {
+        vars = ImmutableMap.of("success", r.getId());
+      }
       return GSON.toJson(vars);
     }
   }

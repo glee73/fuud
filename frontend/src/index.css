@@ -47,7 +47,6 @@ code {
 .navbarContainer {
   width: 15%;
 }
-
 .navLinkFlex {
   padding: 10px 20px;
   display: flex;
@@ -55,7 +54,33 @@ code {
   justify-content: left;
 }
 
+.newPostFixed {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  padding: 10px 10px 0 10px;
+}
+.newPostButton {
+  background-color: #FF6225;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  text-decoration: none;
+  color: white;
+  font-size: 50px;
+  position: absolute;
+  top: -25%;
+  left: 5%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.newPostLabel {
+  color: #5A5858;
+}
 /******** PROFILE ********/
+.profile {
+  margin-top: -100px;
+}
 .profileHeader {
   display: flex;
   align-items: center;
@@ -107,8 +132,13 @@ code {
 .postDesc {
   width: 60%;
 }
-
+.feed {
+  margin-top: -100px;
+}
 /******** RESTAURANT LISTING ********/
+.restaurant {
+  margin-top: -100px;
+}
 .restaurantContainer {
   display: flex;
   align-items: center;
@@ -128,4 +158,36 @@ code {
 }
 .review {
   width: 60%;
+}
+
+/******** MAKE NEW POST ********/
+.makeNewPost {
+  text-align: left;
+  padding: 0px 300px 100px 300px;
+  margin-top: -100px;
+}
+.newPostHeader {
+  font-size: 40px;
+  color: #5A5858;
+}
+.step {
+  color: #5A5858;
+}
+.formStyle {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.submitButton {
+  font-size: 18px;
+  padding: 7px 14px;
+  margin-top: 20px;
+  background-color: #FF6225;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+}
+.searchButton {
+  width: 30%;
 }
