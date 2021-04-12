@@ -139,7 +139,7 @@ public final class Main {
     Spark.post("/restaurant", new RestHandler());
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
-    Spark.post("addpost", new AddPostHandler());
+    Spark.post("/addpost", new AddPostHandler());
   }
 
 
