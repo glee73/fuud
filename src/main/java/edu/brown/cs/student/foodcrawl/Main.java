@@ -7,12 +7,10 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
-import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
@@ -23,7 +21,6 @@ import org.json.JSONArray;
 import spark.ExceptionHandler;
 import spark.ModelAndView;
 
-import spark.QueryParamsMap;
 import spark.Response;
 import spark.Request;
 import spark.Spark;
@@ -87,9 +84,7 @@ public final class Main {
         .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
-//    if (options.has("gui")) {
     runSparkServer((int) options.valueOf("port"));
-//    }
   }
 
   /**
@@ -139,7 +134,7 @@ public final class Main {
     Spark.post("/restaurant", new RestHandler());
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
-    Spark.post("addpost", new AddPostHandler());
+    Spark.post("/addpost", new AddPostHandler());
   }
 
 
