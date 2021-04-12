@@ -1,12 +1,18 @@
 import axios from 'axios';
 import Post from './NewPost';
 import React, {useState, useEffect, useRef} from "react";
+import './Profile.css';
 
 function Profile() {
 
+    let [loading, setLoading] = useState(true);
+    let [userData, setUserData] = useState({});
+    let [userPosts, setUserPosts] = useState([]);
+    let gotInfo = 0;
+
     const userName = "ethan";
 
-    const userData = () => {
+    function getUserData() {
         console.log("getting user data");
 
         const toSend = {
@@ -27,6 +33,8 @@ function Profile() {
         )
             .then(response => {
                 console.log(response.data["user"]);
+                setUserData(response.data["user"]);
+                gotInfo++;
                 return response.data["user"];
             })
             .catch(function (error) {
@@ -35,7 +43,7 @@ function Profile() {
 
     }
 
-    const userPosts = () => {
+    function getUserPosts() {
         console.log("getting user post");
 
         const toSend = {
@@ -56,6 +64,8 @@ function Profile() {
         )
             .then(response => {
                 console.log(response.data["posts"]);
+                setUserPosts(response.data["posts"]);
+                gotInfo++;
                 return response.data["posts"];
             })
             .catch(function (error) {
@@ -63,19 +73,39 @@ function Profile() {
             });
 
     }
+
+    useEffect(() => {
+        window.setInterval( () => {
+            let wait = document.getElementsByClassName("waiting")[0];
+            if (wait.innerHTML.length > 2)
+                wait.innerHTML = "";
+            else
+                wait.innerHTML += ".";
+        }, 200);
+        getUserData();
+        getUserPosts();
+    }, [])
+
+
+    if (gotInfo < 2) {
+        return (
+            <div className={"waiting"}> </div>
+        )
+    }
+
     return (
         <div className="profile">
             <div className="profileHeader">
                 <div className="profilePic"></div>
                 <p className="username">{userName}</p>
-                <p className="bio">{userData()}</p>
+                <p className="bio">{userData["following"][0]}</p>
             </div>
             <div className="profileGrid">
-                {userPosts()[0]}
-                {/*{userPosts().map((post, idx) => (*/}
-                {/*    <Post> className={"profileItem"} key={idx}*/}
-                {/*        <img src={post.pic} alt={"picture of food"}/>*/}
-                {/*    </Post>*/}
+                {Object.keys(userPosts).map((post, idx) => (
+                    <Post> className={"profileItem"} key={idx}
+                        <img src={post["pictures"][idx]} alt={"picture of" +
+                        " food"}/>
+                    </Post>
                 ))}
 
                 {/*<div className="profileItem pic1"></div>*/}
@@ -89,8 +119,7 @@ function Profile() {
                 {/*<div className="profileItem pic9"></div>*/}
             </div>
         </div>
-    )
-    ;
+    );
 }
 
 export default Profile;
