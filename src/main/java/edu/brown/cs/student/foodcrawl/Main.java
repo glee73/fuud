@@ -13,6 +13,7 @@ import java.util.Map;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
 import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
+import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
@@ -49,9 +50,7 @@ public final class Main {
 
   private static final Gson GSON = new Gson();
   private static MongoDBConnection connection;
-
-  private static List<String[]> userLog = new ArrayList<>();
-  // map of latest checkins: maps user id to their latest checkins
+  private static Encryptor encryptor;
 
   /**
    * The initial method called when execution begins.
@@ -140,6 +139,9 @@ public final class Main {
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
     Spark.post("addpost", new AddPostHandler());
+    Spark.post("/login", new LoginHandler());
+    Spark.post("/signup", new SignUpHandler());
+    Spark.post("/logout", new LogoutHandler());
   }
 
 
@@ -233,7 +235,64 @@ public final class Main {
         Map<String, Object> vars = ImmutableMap.of("success", false);
         return GSON.toJson(vars);
       }
+    }
+  }
 
+  private static class LoginHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("username");
+      String password = data.getString("password");
+      String encrypted = encryptor.encrypt(password);
+      if (!connection.checkUsernameExists(username)) {
+        Map<String, Object> vars = ImmutableMap.of("success", false, "message", "no such user exists");
+        return GSON.toJson(vars);
+      }
+      User u = connection.getUserByUsername(username);
+      if (u.getPassword().equals(encrypted)) {
+        request.session().attribute("USERID", username);
+        response.redirect("/feed");
+        Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged in!");
+        return GSON.toJson(vars);
+      } else {
+        Map<String, Object> vars = ImmutableMap.of("success", false, "message", "incorrect password");
+        return GSON.toJson(vars);
+      }
+    }
+  }
+
+  private static class SignUpHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("username");
+      String password = data.getString("password");
+      String password2 = data.getString("password2");
+      String encrypted = encryptor.encrypt(password);
+      if (connection.checkUsernameExists(username)) {
+        Map<String, Object> vars = ImmutableMap.of("success", false, "message", "username already taken");
+        return GSON.toJson(vars);
+      } else if (!password.equals(password2)) {
+        Map<String, Object> vars = ImmutableMap.of("success", false, "message", "passwords do not match");
+        return GSON.toJson(vars);
+      } else {
+        connection.createUser(username, encrypted);
+        request.session().attribute("USERID", username);
+        response.redirect("/feed");
+        Map<String, Object> vars = ImmutableMap.of("success", true, "message", "user added!");
+        return GSON.toJson(vars);
+      }
+    }
+  }
+
+  private static class LogoutHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      request.session().removeAttribute("USERID");
+      response.redirect("/login");
+      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged out");
+      return GSON.toJson(vars);
     }
   }
 
