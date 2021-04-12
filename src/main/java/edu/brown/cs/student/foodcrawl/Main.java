@@ -91,15 +91,9 @@ public final class Main {
         .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
-    if (options.has("gui")) {
-      runSparkServer((int) options.valueOf("port"));
-    }
-    int i = 0;
-    while (true) {
-      i = 0;
-    }
-
-
+//    if (options.has("gui")) {
+    runSparkServer((int) options.valueOf("port"));
+//    }
   }
 
   /**
@@ -126,27 +120,20 @@ public final class Main {
    * @throws SQLException exception
    * @throws ClassNotFoundException exception
    */
-  private void runSparkServer(int port)
-      throws FileNotFoundException, SQLException, ClassNotFoundException {
+  private void runSparkServer(int port) {
     Spark.port(port);
     Spark.externalStaticFileLocation("src/main/resources/static");
-
     Spark.options("/*", (request, response) -> {
       String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
       if (accessControlRequestHeaders != null) {
         response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
       }
-
       String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
-
       if (accessControlRequestMethod != null) {
         response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
       }
-
       return "OK";
     });
-
-    FreeMarkerEngine freeMarker = createEngine();
 
     // Setup Spark Routes
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));

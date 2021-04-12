@@ -4,16 +4,14 @@ import React, {useState, useEffect, useRef} from "react";
 
 function Profile() {
 
-    const userName = "ckim60";
+    const userName = "ethan";
 
     const userData = () => {
         console.log("getting user data");
 
         const toSend = {
-            'user': userName
+            "username": userName
         };
-
-        console.log(toSend);
 
         let config = {
             headers: {
@@ -28,8 +26,8 @@ function Profile() {
             config
         )
             .then(response => {
-                console.log(response.data);
-                return response.data;
+                console.log(response.data["user"]);
+                return response.data["user"];
             })
             .catch(function (error) {
                 console.log(error);
@@ -41,7 +39,7 @@ function Profile() {
         console.log("getting user post");
 
         const toSend = {
-            'user': userName
+            "username": userName
         };
 
         let config = {
@@ -52,22 +50,19 @@ function Profile() {
         };
 
         axios.post(
-            'http://localhost:4567/userPosts',
+            'http://localhost:4567/userposts',
             toSend,
             config
         )
             .then(response => {
-                console.log(response.data);
-                response.data;
+                console.log(response.data["posts"]);
+                return response.data["posts"];
             })
             .catch(function (error) {
                 console.log(error);
             });
 
     }
-
-
-
     return (
         <div className="profile">
             <div className="profileHeader">
@@ -76,10 +71,11 @@ function Profile() {
                 <p className="bio">{userData()}</p>
             </div>
             <div className="profileGrid">
-                {userPosts().map((post, idx) => (
-                    <Post> className={"profileItem"} key={idx}
-                        <img src={post.pic} alt={"picture of food"}/>
-                    </Post>
+                {userPosts()[0]}
+                {/*{userPosts().map((post, idx) => (*/}
+                {/*    <Post> className={"profileItem"} key={idx}*/}
+                {/*        <img src={post.pic} alt={"picture of food"}/>*/}
+                {/*    </Post>*/}
                 ))}
 
                 {/*<div className="profileItem pic1"></div>*/}
