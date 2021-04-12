@@ -49,6 +49,10 @@ function MakeNewPost() {
     }
 
     function showSearchResult() {
+        if (searchResult === null) {
+            return;
+        }
+
         if (searchResult === false) {
             return (
                 <div className="searchResult">

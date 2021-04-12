@@ -79,7 +79,7 @@ function Profile() {
             <div className="profileHeader">
                 <div className="profilePic"/>
                 <p className="username">{userName}</p>
-                <p className="bio">{userData["following"][0]}</p>
+                <p className="bio">{userData["bio"]}</p>
             </div>
         );
     }
@@ -92,7 +92,7 @@ function Profile() {
                 <NewPost className={"profileItem"} key={idx}
                       user={post.user} rating={post.reviewOutOfTen}
                       desc={post.description} time={post.timestamp}
-                      resID={post.restaurantID}>
+                      resID={post.restaurantID} pic={post.pictures}>
                 </NewPost>
             )
         ));

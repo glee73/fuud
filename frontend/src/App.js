@@ -8,12 +8,6 @@ import RestaurantSearch from "./RestaurantSearch.js";
 
 
 function App() {
-    function parseURL(url) {
-        const newURL = url.replace("file/d/", "uc?export=view&id=");
-        const finalURL = newURL.substring(0, newURL.length - 5);
-        return finalURL;
-    }
-    parseURL("https://drive.google.com/file/d/1vv3VhsvphsHV2qUaC-3bteBcToFwxCXf/view");
     return (
             <div className="App">
                 <Navbar></Navbar>
