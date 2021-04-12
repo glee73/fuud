@@ -1,14 +1,12 @@
 import axios from 'axios';
-import Post from './NewPost';
+import NewPost from './NewPost';
 import React, {useState, useEffect, useRef} from "react";
-import './Profile.css';
+import './index.css';
 
 function Profile() {
 
-    let [loading, setLoading] = useState(true);
-    let [userData, setUserData] = useState({'username': '', 'password': '', 'followers': [], 'following': []});
+    let [userData, setUserData] = useState({});
     let [userPosts, setUserPosts] = useState([]);
-    let [counter, setCounter] = useState(0);
 
     const userName = "ethan";
 
@@ -26,16 +24,13 @@ function Profile() {
             }
         };
 
-
         axios.post(
             'http://localhost:4567/user',
             toSend,
             config
         )
             .then(response => {
-                console.log(response.data["user"]);
                 setUserData(response.data["user"]);
-                setCounter(counter++);
                 return response.data["user"];
             })
             .catch(function (error) {
@@ -64,9 +59,7 @@ function Profile() {
             config
         )
             .then(response => {
-                console.log(response.data["posts"]);
                 setUserPosts(response.data["posts"]);
-                setCounter(counter++);
                 return response.data["posts"];
             })
             .catch(function (error) {
@@ -75,39 +68,52 @@ function Profile() {
 
     }
 
-    const runInterval = () => {
-        const interval =setTimeout(()=>{
-            output()
-        }, 1000)
-        return () => clearTimeout(interval)
-    }
-
     useEffect(() => {
-        getUserData()
-        getUserPosts()
-        runInterval()
+        getUserData();
+        getUserPosts();
     }, [])
 
+    const displayProfileHeader = () => {
+        return (
+            <div className="profileHeader">
+                <div className="profilePic"/>
+                <p className="username">{userName}</p>
+                <p className="bio">{userData["following"][0]}</p>
+            </div>
+        );
+    }
+
+    const displayPosts = () => {
+        let posts = [];
+
+        userPosts.map((post, idx) => (
+            posts.push(
+                <NewPost className={"profileItem"} key={idx}
+                      user={userName} rating={post.reviewOutOfTen}
+                      desc={post.description}> </NewPost>)
+        ));
+
+        return (<div className="profileGrid">
+            {posts}
+        </div>
+        );
+    }
 
     function output() {
-        document.getElementById('usernameplace').innerText = userName
-        if (userData['following'][0] !== undefined) {
-            document.getElementById('bioplace').innerText = userData["following"][0]
+        if (Object.keys(userData).length === 0 || userPosts.length === 0) {
+            return "";
+        } else {
+            return (
+                <div>
+                    {displayProfileHeader()}
+                    {displayPosts()}
+                </div>
+            );
         }
-        const pg = Object.keys(userPosts).map((post, idx) => (
-            <Post className={"profileItem"} key={idx}> </Post>
-        ))
-        document.getElementById('pg').innerHTML = pg
     }
 
 
-    return (<div className={"profile"} id = "a"><div className="profileHeader">
-        <div className="profilePic"></div>
-        <p className="username" id="usernameplace"></p>
-        <p className="bio" id={'bioplace'}></p>
-    </div>
-        <div className="profileGrid" id={'pg'}>
-        </div></div>);
+    return output();
 }
 
 export default Profile;
