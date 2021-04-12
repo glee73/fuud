@@ -135,6 +135,7 @@ public final class Main {
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
     Spark.post("/addpost", new AddPostHandler());
+    Spark.post("/search", new SearchHandler());
   }
 
 
@@ -216,12 +217,14 @@ public final class Main {
       try {
         JSONArray p = data.getJSONArray("pictures");
         List<String> pictures = new ArrayList<>();
-        for (int i=0; i < p.length(); i++) {
+        for (int i = 0; i < p.length(); i++) {
           pictures.add(p.getString(i));
         }
-        Restaurant r = connection.getRestByName(data.getString("restaurant"));
-        connection.createPost(data.getString("text"), data.getInt("review"), pictures, r.getId(),
-          data.getString("username"), data.getString("timestamp"));
+        Restaurant r = connection.getRestByName(data.getString(
+                "restaurantName"));
+        connection.createPost(data.getString("text"), data.getInt("review"),
+                pictures, r.getId(), data.getString("username"),
+                data.getString("timestamp"));
         Map<String, Object> vars = ImmutableMap.of("success", true);
         return GSON.toJson(vars);
       } catch (Exception e) {
@@ -229,6 +232,21 @@ public final class Main {
         return GSON.toJson(vars);
       }
 
+    }
+  }
+
+  private static class SearchHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      Restaurant r = connection.getRestByName(
+              data.getString("restaurantName"));
+      Map<String, Object> vars;
+      if (r == null) {
+        vars = ImmutableMap.of("success", false);
+      } else {
+        vars = ImmutableMap.of("success", true);
+      }
+      return GSON.toJson(vars);
     }
   }
 

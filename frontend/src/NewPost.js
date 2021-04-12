@@ -7,6 +7,7 @@ function NewPost(props) {
                 <div className="userInfo">
                     <p className="userName">{props.user}</p>
                     <p className="stars"> {props.rating}</p>
+                    <p> {props.time} </p>
                 </div>
             </div>
             <div className="postContent">

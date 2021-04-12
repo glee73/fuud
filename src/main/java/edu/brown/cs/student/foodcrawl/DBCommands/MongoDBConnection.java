@@ -130,8 +130,7 @@ public class MongoDBConnection {
         found[0] = new Restaurant(name, address, tags, id);
       }
     };
-    restaurantsCollection.find(eq("name", name))
-      .forEach(existsBlock);
+    restaurantsCollection.find(eq("name", name)).forEach(existsBlock);
     return found[0];
   }
 

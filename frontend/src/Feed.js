@@ -49,7 +49,8 @@ function Feed() {
                 content.push(
                     <NewPost className={"profileItem"} key={idx}
                              user={post.user} rating={post.reviewOutOfTen}
-                             desc={post.description}> </NewPost>)
+                             desc={post.description} time={post.timestamp}>
+                    </NewPost>)
             ));
 
             return (<div className="profileGrid">
