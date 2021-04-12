@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
-import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
 import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
@@ -134,7 +133,7 @@ public final class Main {
     Spark.post("/restaurant", new RestHandler());
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
-    Spark.post("addpost", new AddPostHandler());
+    Spark.post("/addpost", new AddPostHandler());
     Spark.post("/login", new LoginHandler());
     Spark.post("/signup", new SignUpHandler());
     Spark.post("/logout", new LogoutHandler());
@@ -263,7 +262,7 @@ public final class Main {
       User u = connection.getUserByUsername(username);
       if (u.getPassword().equals(encrypted)) {
         request.session().attribute("USERID", username);
-        response.redirect("/feed");
+        response.redirect("/");
         Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged in!");
         return GSON.toJson(vars);
       } else {
@@ -290,7 +289,7 @@ public final class Main {
       } else {
         connection.createUser(username, encrypted);
         request.session().attribute("USERID", username);
-        response.redirect("/feed");
+        response.redirect("/");
         Map<String, Object> vars = ImmutableMap.of("success", true, "message", "user added!");
         return GSON.toJson(vars);
       }

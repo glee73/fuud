@@ -5,6 +5,8 @@ import Profile from './Profile';
 import MakeNewPost from "./MakeNewPost.js";
 import { Route, Switch } from 'react-router-dom';
 import RestaurantSearch from "./RestaurantSearch.js";
+import Login from "./Login.js"
+import Signup from "./Signup.js"
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
                     <Route exact path="/explore" component={Feed}/>
                     <Route exact path="/" component={RestaurantSearch}/>
                     <Route exact path="/newPost" component={MakeNewPost}/>
+                    <Route exact path="/login" component={Login}/>
+                    <Route exact path="/signup" component={Signup}/>
                 </Switch>
             </div>
     );
