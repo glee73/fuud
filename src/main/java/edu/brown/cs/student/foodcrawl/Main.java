@@ -159,9 +159,8 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
-      //User user = connection.getUserByUsername(username);
-      User userb = new User(username, "yuh");
-      Map<String, Object> vars = ImmutableMap.of("user", userb);
+      User user = connection.getUserByUsername(username);
+      Map<String, Object> vars = ImmutableMap.of("user", user);
       return GSON.toJson(vars);
     }
   }
@@ -171,8 +170,8 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
-      //List<Post> posts = connection.getPostsFromUser(username);
-      Map<String, Object> vars = ImmutableMap.of("posts", new ArrayList<>());
+      List<Post> posts = connection.getPostsFromUser(username);
+      Map<String, Object> vars = ImmutableMap.of("posts", posts);
       return GSON.toJson(vars);
     }
   }
