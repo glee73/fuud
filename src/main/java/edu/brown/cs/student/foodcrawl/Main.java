@@ -61,10 +61,8 @@ public final class Main {
    * @throws ClassNotFoundException when class not found
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-    new Main(args).run();
     connection = new MongoDBConnection();
-    runSparkServer(8000);
-
+    new Main(args).run();
   }
 
   private final String[] args;
@@ -79,11 +77,8 @@ public final class Main {
 
   /**
    * runs our maps BE.
-   * @throws IOException exception
-   * @throws SQLException exception
-   * @throws ClassNotFoundException exception
    */
-  private void run() throws IOException, SQLException, ClassNotFoundException {
+  private void run() {
 
     // Parse command line arguments
     OptionParser parser = new OptionParser();
@@ -165,6 +160,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
       User user = connection.getUserByUsername(username);
+      User userb = new User(username, "yuh");
       Map<String, Object> vars = ImmutableMap.of("user", user);
       return GSON.toJson(vars);
     }
