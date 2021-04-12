@@ -53,7 +53,8 @@ public class MongoDBConnection {
     Document doc = new Document("username", username)
         .append("password", password)
         .append("followers", Arrays.asList())
-        .append("following", Arrays.asList());
+        .append("following", Arrays.asList())
+        .append("bio", "");
     usersCollection.insertOne(doc);
   }
 
@@ -102,12 +103,13 @@ public class MongoDBConnection {
         String password = document.getString("password");
         List<String> following = (List<String>) document.get("following");
         List<String> followers = (List<String>) document.get("followers");
+        String bio = document.getString("bio");
 
-        found[0] = new User(username, password, followers, following);
+        found[0] = new User(username, password, followers, following, bio);
       }
     };
     usersCollection.find(eq("username", username))
-      .forEach(existsBlock);
+        .forEach(existsBlock);
     return found[0];
   }
 
@@ -136,7 +138,7 @@ public class MongoDBConnection {
   /**
    * returns all restaurants with any matching tags.
    * @param tags
-   * @return
+   * @return list of restaurants
    */
   public List<Restaurant> searchByTags(List<String> tags) {
     final List<Restaurant> found = new ArrayList<>();
@@ -163,7 +165,7 @@ public class MongoDBConnection {
     System.out.println(checkUsernameExists("ethhhjian"));
     System.out.println("hi");
 
-    System.out.println(getUserByUsername("ethan").getFollowers());
+    System.out.println(getUserByUsername("ethan").getBio());
     System.out.println(getUserByUsername("jasdiof"));
   }
 
@@ -229,9 +231,13 @@ public class MongoDBConnection {
   }
 
   public void checkPost() {
-   //createPost("I just went to the worst restaurant!", 0,
+    //createPost("I just went to the worst restaurant!", 0,
       //new ArrayList<>(), "001", "ethan", "10:03");
+
     //System.out.println(getPostsFromUser("sdf").size());
+
+
+    // createRestaurant("Bajas Tex Mex", "273 Thayer St, Providence, Rhode Island");
   }
 
 }

@@ -5,16 +5,17 @@ function NewPost(props) {
             <div className="postHeader">
                 <div className="greyCircle"></div>
                 <div className="userInfo">
-                    <p className="userName">{props.username}</p>
-                    <img className="stars" src="https://ecodri.com.au/wp-content/uploads/2019/08/5-Star-rating.png" />
+                    <p className="userName">{props.user}</p>
+                    <p className="stars"> {props.rating}</p>
                 </div>
             </div>
             <div className="postContent">
-                <img className="postImage" src={props.imgURL} />
-                <p className="postDesc">blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah!</p>
+                {/*<img className="postImage" src={props.imgURL} />*/}
+                <p className="postDesc">{props.desc}</p>
             </div>
         </div>
     );
 }
 
 export default NewPost;
+

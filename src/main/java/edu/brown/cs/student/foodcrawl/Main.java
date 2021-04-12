@@ -61,8 +61,8 @@ public final class Main {
    * @throws ClassNotFoundException when class not found
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-    connection = new MongoDBConnection();
     new Main(args).run();
+    connection = new MongoDBConnection();
   }
 
   private final String[] args;
@@ -93,7 +93,7 @@ public final class Main {
   }
 
   /**
-   * creates free marker egine.
+   * creates free marker engine.
    * @return free marker engine
    */
   private static FreeMarkerEngine createEngine() {
@@ -139,6 +139,7 @@ public final class Main {
     Spark.post("/restaurant", new RestHandler());
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
+    Spark.post("/addpost", new AddPostHandler());
   }
 
 
@@ -160,7 +161,6 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
       User user = connection.getUserByUsername(username);
-      User userb = new User(username, "yuh");
       Map<String, Object> vars = ImmutableMap.of("user", user);
       return GSON.toJson(vars);
     }
@@ -212,6 +212,28 @@ public final class Main {
       List<Post> news = ComplexFunctionality.getFeedPagePosts(username);
       Map<String, Object> vars = ImmutableMap.of("feed", news);
       return GSON.toJson(vars);
+    }
+  }
+
+  private static class AddPostHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      try {
+        JSONArray p = data.getJSONArray("pictures");
+        List<String> pictures = new ArrayList<>();
+        for (int i=0; i < p.length(); i++) {
+          pictures.add(p.getString(i));
+        }
+        Restaurant r = connection.getRestByName(data.getString("restaurant"));
+        connection.createPost(data.getString("text"), data.getInt("review"), pictures, r.getId(),
+          data.getString("username"), data.getString("timestamp"));
+        Map<String, Object> vars = ImmutableMap.of("success", true);
+        return GSON.toJson(vars);
+      } catch (Exception e) {
+        Map<String, Object> vars = ImmutableMap.of("success", false);
+        return GSON.toJson(vars);
+      }
+
     }
   }
 
