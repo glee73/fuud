@@ -135,6 +135,23 @@ public class MongoDBConnection {
     return found[0];
   }
 
+  public Restaurant getRestaurantByID(String id) {
+    final Restaurant[] found = {null};
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String id = document.getString("id");
+        String name = document.getString("name");
+        String address = document.getString("address");
+        List<String> tags = (List<String>) document.get("tags");
+        found[0] = new Restaurant(name, address, tags, id);
+      }
+    };
+    restaurantsCollection.find(eq("id", id))
+      .forEach(existsBlock);
+    return found[0];
+  }
+
   /**
    * returns all restaurants with any matching tags.
    * @param tags

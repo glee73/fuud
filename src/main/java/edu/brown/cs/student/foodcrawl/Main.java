@@ -135,6 +135,7 @@ public final class Main {
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
     Spark.post("/addpost", new AddPostHandler());
+    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
   }
 
 
@@ -206,6 +207,17 @@ public final class Main {
       String username = data.getString("username");
       List<Post> news = ComplexFunctionality.getFeedPagePosts(username);
       Map<String, Object> vars = ImmutableMap.of("feed", news);
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class GetRestaurantByIDHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String id = data.getString("id");
+      Restaurant r = connection.getRestaurantByID(id);
+      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
       return GSON.toJson(vars);
     }
   }
