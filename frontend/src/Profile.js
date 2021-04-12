@@ -6,7 +6,7 @@ import './Profile.css';
 function Profile() {
 
     let [loading, setLoading] = useState(true);
-    let [userData, setUserData] = useState({});
+    let [userData, setUserData] = useState({'username': '', 'password': '', 'followers': [], 'following': []});
     let [userPosts, setUserPosts] = useState([]);
     let [counter, setCounter] = useState(0);
 
@@ -77,41 +77,37 @@ function Profile() {
 
     const runInterval = () => {
         const interval =setTimeout(()=>{
-            getUserData();
-            getUserPosts();
+            output()
         }, 1000)
         return () => clearTimeout(interval)
     }
 
     useEffect(() => {
+        getUserData()
+        getUserPosts()
         runInterval()
     }, [])
 
 
     function output() {
-        let content = document.getElementsByClassName("profile");
-        if (Object.keys(userData).length === 0 || userPosts.length === 0) {
-            content.innerHTML = "";
-            return content;
-        } else {
-            content.innerHTML = (`<div className="profileHeader">
-                        <div className="profilePic"></div>
-                        <p className="username">{userName}</p>
-                        <p className="bio">{userData["following"][0]}</p>
-                    </div>
-                    <div className="profileGrid">
-                        {Object.keys(userPosts).map((post, idx) => (
-                            <Post className={"profileItem"} key={idx}> </Post>
-                        ))}
-                    </div>`
-            );
-            console.log(content);
-            return content;
+        document.getElementById('usernameplace').innerText = userName
+        if (userData['following'][0] !== undefined) {
+            document.getElementById('bioplace').innerText = userData["following"][0]
         }
+        const pg = Object.keys(userPosts).map((post, idx) => (
+            <Post className={"profileItem"} key={idx}> </Post>
+        ))
+        document.getElementById('pg').innerHTML = pg
     }
 
 
-    return (<div className={"profile"}> {output()} </div>);
+    return (<div className={"profile"} id = "a"><div className="profileHeader">
+        <div className="profilePic"></div>
+        <p className="username" id="usernameplace"></p>
+        <p className="bio" id={'bioplace'}></p>
+    </div>
+        <div className="profileGrid" id={'pg'}>
+        </div></div>);
 }
 
 export default Profile;

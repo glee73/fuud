@@ -61,7 +61,7 @@ public final class Main {
    * @throws ClassNotFoundException when class not found
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-    connection = new MongoDBConnection();
+    // connection = new MongoDBConnection();
     new Main(args).run();
   }
 
@@ -159,9 +159,9 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
-      User user = connection.getUserByUsername(username);
+      //User user = connection.getUserByUsername(username);
       User userb = new User(username, "yuh");
-      Map<String, Object> vars = ImmutableMap.of("user", user);
+      Map<String, Object> vars = ImmutableMap.of("user", userb);
       return GSON.toJson(vars);
     }
   }
@@ -171,8 +171,8 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
-      List<Post> posts = connection.getPostsFromUser(username);
-      Map<String, Object> vars = ImmutableMap.of("posts", posts);
+      //List<Post> posts = connection.getPostsFromUser(username);
+      Map<String, Object> vars = ImmutableMap.of("posts", new ArrayList<>());
       return GSON.toJson(vars);
     }
   }
