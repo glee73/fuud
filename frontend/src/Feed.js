@@ -1,6 +1,7 @@
 import NewPost from './NewPost';
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import './index.css';
 
 function Feed() {
 
@@ -47,7 +48,7 @@ function Feed() {
             posts.map((post, idx) => (
                 content.push(
                     <NewPost className={"profileItem"} key={idx}
-                             user={userName} rating={post.reviewOutOfTen}
+                             user={post.user} rating={post.reviewOutOfTen}
                              desc={post.description}> </NewPost>)
             ));
 

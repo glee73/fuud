@@ -89,7 +89,7 @@ function Profile() {
         userPosts.map((post, idx) => (
             posts.push(
                 <NewPost className={"profileItem"} key={idx}
-                      user={userName} rating={post.reviewOutOfTen}
+                      user={post.user} rating={post.reviewOutOfTen}
                       desc={post.description}> </NewPost>)
         ));
 
