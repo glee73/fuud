@@ -61,8 +61,9 @@ public final class Main {
    * @throws ClassNotFoundException when class not found
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
+
     connection = new MongoDBConnection();
-    connection.checkUser();
+    // connection.checkUser();
     new Main(args).run();
   }
 
@@ -161,7 +162,6 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
       User user = connection.getUserByUsername(username);
-      User userb = new User(username, "yuh");
       Map<String, Object> vars = ImmutableMap.of("user", user);
       return GSON.toJson(vars);
     }
