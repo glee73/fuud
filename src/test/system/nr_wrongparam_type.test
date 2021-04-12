@@ -1,7 +1,0 @@
-INPUT
-stars data/stars/one-star.csv
-naive_radius a "Lonely Star"
-OUTPUT
-Read 1 stars from data/stars/one-star.csv
-ERROR:
-END

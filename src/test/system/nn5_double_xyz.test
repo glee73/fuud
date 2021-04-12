@@ -1,7 +1,0 @@
-INPUT
-stars data/stars/one-star.csv
-naive_neighbors 10 1.5 3.5 .34
-OUTPUT
-Read 1 stars from data/stars/one-star.csv
-1
-END
