@@ -12,9 +12,7 @@ function RestaurantListing(props) {
                 <p className="review">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut!”</p>
             </div>
         </div>
-
-    )
-        ;
+    );
 }
 
 export default RestaurantListing;
