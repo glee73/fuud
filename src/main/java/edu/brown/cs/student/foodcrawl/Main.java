@@ -195,7 +195,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       JSONArray t = data.getJSONArray("tags");
       List<String> tags = new ArrayList<>();
-      for (int i=0; i < t.length(); i++) {
+      for (int i = 0; i < t.length(); i++) {
         tags.add(t.getString(i));
       }
       List<Restaurant> rests = connection.searchByTags(tags);
@@ -221,12 +221,12 @@ public final class Main {
       try {
         JSONArray p = data.getJSONArray("pictures");
         List<String> pictures = new ArrayList<>();
-        for (int i=0; i < p.length(); i++) {
+        for (int i = 0; i < p.length(); i++) {
           pictures.add(p.getString(i));
         }
         Restaurant r = connection.getRestByName(data.getString("restaurant"));
         connection.createPost(data.getString("text"), data.getInt("review"), pictures, r.getId(),
-          data.getString("username"), data.getString("timestamp"));
+            data.getString("username"), data.getString("timestamp"));
         Map<String, Object> vars = ImmutableMap.of("success", true);
         return GSON.toJson(vars);
       } catch (Exception e) {
