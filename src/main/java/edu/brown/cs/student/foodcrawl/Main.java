@@ -7,16 +7,9 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
 import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
@@ -24,28 +17,9 @@ import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
-import edu.brown.cs.student.stars.Commands.Command;
-import edu.brown.cs.student.stars.Commands.DeleteUserData;
-import edu.brown.cs.student.stars.Commands.MapCommand;
-import edu.brown.cs.student.stars.Commands.Mock;
-import edu.brown.cs.student.stars.Commands.NaiveNeighbors;
-import edu.brown.cs.student.stars.Commands.NaiveRadius;
-import edu.brown.cs.student.stars.Commands.Nearest;
-import edu.brown.cs.student.stars.Commands.Neighbors;
-import edu.brown.cs.student.stars.Commands.Radius;
-import edu.brown.cs.student.stars.Commands.StarsCommand;
-import edu.brown.cs.student.stars.Commands.Ways;
-import edu.brown.cs.student.stars.DataTypes.MapNode;
-import edu.brown.cs.student.stars.DataTypes.MapWay;
-import edu.brown.cs.student.stars.DataTypes.Star;
-import edu.brown.cs.student.stars.KDTree.KDNode;
-import edu.brown.cs.student.stars.REPL.REPL;
-import edu.brown.cs.student.stars.ThreadUserCheckin.CheckinThread;
-import edu.brown.cs.student.stars.ThreadUserCheckin.UserCheckin;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.json.JSONArray;
-import org.sqlite.core.DB;
 import spark.ExceptionHandler;
 import spark.ModelAndView;
 
@@ -73,7 +47,6 @@ public final class Main {
   private static final int DEFAULT_PORT = 4567;
   private static final int TIMER_DELAY = 2000;
 
-  private static final DeleteUserData DELETECOMMAND = new DeleteUserData();
   private static final Gson GSON = new Gson();
   private static MongoDBConnection connection;
 
@@ -88,7 +61,7 @@ public final class Main {
    * @throws ClassNotFoundException when class not found
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-    //new Main(args).run();
+    new Main(args).run();
     connection = new MongoDBConnection();
     runSparkServer(8000);
 
@@ -102,6 +75,26 @@ public final class Main {
    */
   private Main(String[] args) {
     this.args = args;
+  }
+
+  /**
+   * runs our maps BE.
+   * @throws IOException exception
+   * @throws SQLException exception
+   * @throws ClassNotFoundException exception
+   */
+  private void run() throws IOException, SQLException, ClassNotFoundException {
+
+    // Parse command line arguments
+    OptionParser parser = new OptionParser();
+    parser.accepts("gui");
+    parser.accepts("port").withRequiredArg().ofType(Integer.class)
+        .defaultsTo(DEFAULT_PORT);
+    OptionSet options = parser.parse(args);
+
+//    if (options.has("gui")) {
+    runSparkServer((int) options.valueOf("port"));
+//    }
   }
 
   /**
@@ -128,27 +121,20 @@ public final class Main {
    * @throws SQLException exception
    * @throws ClassNotFoundException exception
    */
-  private static void runSparkServer(int port)
-      throws FileNotFoundException, SQLException, ClassNotFoundException {
+  private void runSparkServer(int port) {
     Spark.port(port);
     Spark.externalStaticFileLocation("src/main/resources/static");
-
     Spark.options("/*", (request, response) -> {
       String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
       if (accessControlRequestHeaders != null) {
         response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
       }
-
       String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
-
       if (accessControlRequestMethod != null) {
         response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
       }
-
       return "OK";
     });
-
-    FreeMarkerEngine freeMarker = createEngine();
 
     // Setup Spark Routes
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
@@ -203,6 +189,7 @@ public final class Main {
       Restaurant rest = connection.getRestByName(name);
       Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
       return GSON.toJson(vars);
+
     }
   }
 

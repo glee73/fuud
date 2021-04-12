@@ -1,5 +1,0 @@
-INPUT
-stars data/stars/incorrectCsvStruc.csv
-OUTPUT
-ERROR:
-END
