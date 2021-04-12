@@ -7,12 +7,10 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.ComplexFunctionality;
-import edu.brown.cs.student.foodcrawl.DBCommands.DBConnectionManager;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
@@ -23,7 +21,6 @@ import org.json.JSONArray;
 import spark.ExceptionHandler;
 import spark.ModelAndView;
 
-import spark.QueryParamsMap;
 import spark.Response;
 import spark.Request;
 import spark.Spark;
@@ -87,9 +84,7 @@ public final class Main {
         .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
-//    if (options.has("gui")) {
     runSparkServer((int) options.valueOf("port"));
-//    }
   }
 
   /**
@@ -194,7 +189,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       JSONArray t = data.getJSONArray("tags");
       List<String> tags = new ArrayList<>();
-      for (int i=0; i < t.length(); i++) {
+      for (int i = 0; i < t.length(); i++) {
         tags.add(t.getString(i));
       }
       List<Restaurant> rests = connection.searchByTags(tags);
