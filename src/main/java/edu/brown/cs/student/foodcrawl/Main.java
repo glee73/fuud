@@ -62,6 +62,7 @@ public final class Main {
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
     connection = new MongoDBConnection();
+    connection.checkUser();
     new Main(args).run();
   }
 
@@ -93,7 +94,7 @@ public final class Main {
   }
 
   /**
-   * creates free marker egine.
+   * creates free marker engine.
    * @return free marker engine
    */
   private static FreeMarkerEngine createEngine() {
