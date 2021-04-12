@@ -37,6 +37,7 @@ code {
   border-radius: 50%;
   background: #C4C4C4;
 }
+
 .navbarLink {
   padding: 0 20px;
   color: #5A5858;
@@ -53,6 +54,7 @@ code {
   align-items: center;
   justify-content: left;
 }
+
 /******** PROFILE ********/
 .profileHeader {
   display: flex;
@@ -65,49 +67,6 @@ code {
   height: 120px;
   border-radius: 50%;
   background: #C4C4C4;
-}
-.profileGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 15px;
-  height: 80vh;
-  padding: 100px 300px;
-}
-.profileItem {
-  content: "";
-  display: block;
-  padding-bottom: 90%;
-  width: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.pic1 {
-  background-image: url("https://www.chatelaine.com/wp-content/uploads/2017/07/Instagram-tastetoronto-Waffleu-Waffle-House.png");
-}
-.pic2 {
-  background-image: url("https://spoonuniversity.com/wp-content/uploads/sites/25/2016/02/Screen-Shot-2016-02-19-at-3.55.52-PM.png");
-}
-.pic3 {
-  background-image: url("https://www.tasteofhome.com/wp-content/uploads/2018/04/lenaskitchenblog-copy.jpg?fit=696,696");
-}
-.pic4 {
-  background-image: url("https://preen.ph/wp-content/blogs.dir/38/files/2016/03/foodstagram-preen-e1458298504771.jpg");
-}
-.pic5 {
-  background-image: url("https://www.thespruceeats.com/thmb/CHJNPydhuD3_fUXICOnIqeXCeOA=/1088x1080/filters:no_upscale():max_bytes(150000):strip_icc()/veganvultures-5c3e078bc9e77c00014ae3d9.jpg");
-}
-.pic6 {
-  background-image: url("https://www.thespruceeats.com/thmb/WtVmwQ1E82YypuZEN0sTj4ieMUg=/1350x1080/filters:no_upscale():max_bytes(150000):strip_icc()/clemfoodie-5c3dfcef46e0fb00016820be.jpg");
-}
-.pic7 {
-  background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/20482329-251636705343274-3725427080335196160-n-1517333867.jpg?crop=1xw:1xh;center,top&resize=480:*");
-}
-.pic8 {
-  background-image: url("http://resourcemagonline.com/wp-content/uploads/2017/03/Photo-Nov-28-10-28-35-AM.jpg");
-}
-.pic9 {
-  background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/25008305-442083466194421-4458779521922891776-n-1517333246.jpg?crop=1xw:1xh;center,top&resize=480:*");
 }
 
 /******** NEW POST ********/
