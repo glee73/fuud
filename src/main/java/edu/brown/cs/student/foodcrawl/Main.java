@@ -135,11 +135,8 @@ public final class Main {
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
     Spark.post("/addpost", new AddPostHandler());
-<<<<<<< HEAD
     Spark.post("/search", new SearchHandler());
-=======
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
->>>>>>> ad7661c9e9cd9f5c28bf6b5d9676911d7488edd7
   }
 
 
@@ -259,7 +256,7 @@ public final class Main {
       if (r == null) {
         vars = ImmutableMap.of("success", false);
       } else {
-        vars = ImmutableMap.of("success", true);
+        vars = ImmutableMap.of("success", r.getId());
       }
       return GSON.toJson(vars);
     }

@@ -91,7 +91,8 @@ function Profile() {
             posts.push(
                 <NewPost className={"profileItem"} key={idx}
                       user={post.user} rating={post.reviewOutOfTen}
-                      desc={post.description} time={post.timestamp}>
+                      desc={post.description} time={post.timestamp}
+                      resID={post.restaurantID}>
                 </NewPost>
             )
         ));

@@ -56,7 +56,10 @@ function MakeNewPost() {
                 </div>
             );
         } else {
-            return (<div className="searchResult"/>);
+            return (
+                <div className="searchResult">
+                    Restaurant found! Please continue.
+                </div>);
         }
     }
 
