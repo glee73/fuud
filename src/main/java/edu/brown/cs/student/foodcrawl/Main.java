@@ -63,7 +63,6 @@ public final class Main {
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
     new Main(args).run();
     connection = new MongoDBConnection();
-
   }
 
   private final String[] args;
@@ -82,7 +81,7 @@ public final class Main {
    * @throws SQLException exception
    * @throws ClassNotFoundException exception
    */
-  private void run() throws IOException, SQLException, ClassNotFoundException {
+  private void run() {
 
     // Parse command line arguments
     OptionParser parser = new OptionParser();

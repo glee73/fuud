@@ -8,7 +8,7 @@ function Profile() {
     let [loading, setLoading] = useState(true);
     let [userData, setUserData] = useState({});
     let [userPosts, setUserPosts] = useState([]);
-    let gotInfo = 0;
+    let [counter, setCounter] = useState(0);
 
     const userName = "ethan";
 
@@ -34,7 +34,7 @@ function Profile() {
             .then(response => {
                 console.log(response.data["user"]);
                 setUserData(response.data["user"]);
-                gotInfo++;
+                setCounter(counter++);
                 return response.data["user"];
             })
             .catch(function (error) {
@@ -65,7 +65,7 @@ function Profile() {
             .then(response => {
                 console.log(response.data["posts"]);
                 setUserPosts(response.data["posts"]);
-                gotInfo++;
+                setCounter(counter++);
                 return response.data["posts"];
             })
             .catch(function (error) {
@@ -74,52 +74,43 @@ function Profile() {
 
     }
 
+    const runInterval = () => {
+        const interval =setTimeout(()=>{
+            getUserData();
+            getUserPosts();
+        }, 1000)
+        return () => clearTimeout(interval)
+    }
+
     useEffect(() => {
-        window.setInterval( () => {
-            let wait = document.getElementsByClassName("waiting")[0];
-            if (wait.innerHTML.length > 2)
-                wait.innerHTML = "";
-            else
-                wait.innerHTML += ".";
-        }, 200);
-        getUserData();
-        getUserPosts();
+        runInterval()
     }, [])
 
 
-    if (gotInfo < 2) {
-        return (
-            <div className={"waiting"}> </div>
-        )
+    function output() {
+        let content = document.getElementsByClassName("profile");
+        if (Object.keys(userData).length === 0 || userPosts.length === 0) {
+            content.innerHTML = "";
+            return content;
+        } else {
+            content.innerHTML = (`<div className="profileHeader">
+                        <div className="profilePic"></div>
+                        <p className="username">{userName}</p>
+                        <p className="bio">{userData["following"][0]}</p>
+                    </div>
+                    <div className="profileGrid">
+                        {Object.keys(userPosts).map((post, idx) => (
+                            <Post className={"profileItem"} key={idx}> </Post>
+                        ))}
+                    </div>`
+            );
+            console.log(content);
+            return content;
+        }
     }
 
-    return (
-        <div className="profile">
-            <div className="profileHeader">
-                <div className="profilePic"></div>
-                <p className="username">{userName}</p>
-                <p className="bio">{userData["following"][0]}</p>
-            </div>
-            <div className="profileGrid">
-                {Object.keys(userPosts).map((post, idx) => (
-                    <Post> className={"profileItem"} key={idx}
-                        <img src={post["pictures"][idx]} alt={"picture of" +
-                        " food"}/>
-                    </Post>
-                ))}
 
-                {/*<div className="profileItem pic1"></div>*/}
-                {/*<div className="profileItem pic2"></div>*/}
-                {/*<div className="profileItem pic3"></div>*/}
-                {/*<div className="profileItem pic4"></div>*/}
-                {/*<div className="profileItem pic5"></div>*/}
-                {/*<div className="profileItem pic6"></div>*/}
-                {/*<div className="profileItem pic7"></div>*/}
-                {/*<div className="profileItem pic8"></div>*/}
-                {/*<div className="profileItem pic9"></div>*/}
-            </div>
-        </div>
-    );
+    return (<div className={"profile"}> {output()} </div>);
 }
 
 export default Profile;
