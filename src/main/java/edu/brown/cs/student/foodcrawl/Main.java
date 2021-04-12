@@ -61,10 +61,8 @@ public final class Main {
    * @throws ClassNotFoundException when class not found
    */
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-
-    connection = new MongoDBConnection();
-    // connection.checkUser();
     new Main(args).run();
+    connection = new MongoDBConnection();
   }
 
   private final String[] args;
