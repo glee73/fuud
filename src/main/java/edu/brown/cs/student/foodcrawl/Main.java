@@ -26,12 +26,9 @@ import spark.Response;
 import spark.Request;
 import spark.Spark;
 import spark.TemplateViewRoute;
-import spark.template.freemarker.FreeMarkerEngine;
 import spark.Route;
 
 import com.google.common.collect.ImmutableMap;
-
-import freemarker.template.Configuration;
 
 import org.json.JSONObject;
 import com.google.gson.Gson;
@@ -43,7 +40,6 @@ import com.google.gson.Gson;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
-  private static final int TIMER_DELAY = 2000;
 
   private static final Gson GSON = new Gson();
   private static MongoDBConnection connection;
@@ -78,29 +74,11 @@ public final class Main {
 
     // Parse command line arguments
     OptionParser parser = new OptionParser();
-    parser.accepts("gui");
     parser.accepts("port").withRequiredArg().ofType(Integer.class)
         .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
     runSparkServer((int) options.valueOf("port"));
-  }
-
-  /**
-   * creates free marker engine.
-   * @return free marker engine
-   */
-  private static FreeMarkerEngine createEngine() {
-    Configuration config = new Configuration();
-    File templates = new File("src/main/resources/spark/template/freemarker");
-    try {
-      config.setDirectoryForTemplateLoading(templates);
-    } catch (IOException ioe) {
-      System.out.printf("ERROR: Unable use %s for template loading.%n",
-          templates);
-      System.exit(1);
-    }
-    return new FreeMarkerEngine(config);
   }
 
   /**
