@@ -92,7 +92,7 @@ function MakeNewPost() {
             "review": review,
             "username": userName,
             "timestamp": timestamp,
-            "pictures": data
+            "pic": data
         }
 
         let config = {
