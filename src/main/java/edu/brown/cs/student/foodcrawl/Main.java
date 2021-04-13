@@ -47,7 +47,7 @@ public final class Main {
 
   private static final Gson GSON = new Gson();
   private static MongoDBConnection connection;
-  private static Encryptor encryptor;
+  private static Encryptor encryptor = new Encryptor();
 
   /**
    * The initial method called when execution begins.
@@ -262,7 +262,6 @@ public final class Main {
       User u = connection.getUserByUsername(username);
       if (u.getPassword().equals(encrypted)) {
         request.session().attribute("USERID", username);
-        response.redirect("/");
         Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged in!");
         return GSON.toJson(vars);
       } else {
@@ -289,7 +288,6 @@ public final class Main {
       } else {
         connection.createUser(username, encrypted);
         request.session().attribute("USERID", username);
-        response.redirect("/");
         Map<String, Object> vars = ImmutableMap.of("success", true, "message", "user added!");
         return GSON.toJson(vars);
       }

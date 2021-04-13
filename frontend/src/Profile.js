@@ -1,5 +1,5 @@
 import axios from 'axios';
-import NewPost from './NewPost';
+import Post from './Post';
 import React, {useState, useEffect, useRef} from "react";
 import './index.css';
 
@@ -89,11 +89,11 @@ function Profile() {
 
         userPosts.map((post, idx) => (
             posts.push(
-                <NewPost className={"profileItem"} key={idx}
+                <Post className={"profileItem"} key={idx}
                       user={post.user} rating={post.reviewOutOfTen}
                       desc={post.description} time={post.timestamp}
                       resID={post.restaurantID} pic={post.pictures}>
-                </NewPost>
+                </Post>
             )
         ));
 

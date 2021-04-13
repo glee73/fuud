@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
+import logo from "./fuud.svg";
 
 function Navbar() {
     return (
         <div>
             <div className="header">
-                <h1>LOGO</h1>
+                <Link to="/">
+                    <img src={logo} alt={"fuud logo"} className={"logo"}/>
+                </Link>
+
                 <input className="searchBar" type="text" placeholder="looking for something?"/>
                 <div className="greyCircle"></div>
             </div>

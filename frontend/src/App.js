@@ -12,7 +12,7 @@ import Signup from "./Signup.js"
 function App() {
     return (
             <div className="App">
-                <Navbar></Navbar>
+                <Navbar/>
                 {/*https://drive.google.com/file/d/0B6wwyazyzml-OGQ3VUo0Z2thdmc/view*/}
                 {/*https://drive.google.com/uc?export=view&id=0B6wwyazyzml-OGQ3VUo0Z2thdmc*/}
 

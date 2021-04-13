@@ -1,10 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  margin: auto;
+  width: 95%;
+  font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+input {
+  font-family: 'Montserrat', sans-serif;
 }
 
 code {
@@ -15,14 +22,19 @@ code {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   color: #FF6225;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .searchBar {
+  border: 1px solid #F0F2F5;
+  background: #F0F2F5;
   border-radius: 15px;
   width: 50%;
   padding: 7px 15px;
+  box-shadow: 0 1px 5px rgb(196,196,196);
 }
 
 .orangeCircle{
@@ -42,10 +54,12 @@ code {
   padding: 0 20px;
   color: #5A5858;
   text-decoration: none;
+  font-size: 17px;
+  letter-spacing: 1px;
 }
 
 .navbarContainer {
-  width: 15%;
+  width: 18%;
 }
 .navLinkFlex {
   padding: 10px 20px;
@@ -100,13 +114,16 @@ code {
   display: flex;
   align-items: flex-start;
   padding: 0 320px;
-  color:#FF6225;
+  color: #FF6225;
 }
 .postContainer {
-  border: 2px solid #C4C4C4;
+  /*border: 1px solid #C4C4C4;*/
+  background: #F0F2F5;
+  border: 1px solid #F0F2F5;
   border-radius: 15px;
   margin: 15px 300px;
   padding: 15px 30px;
+  box-shadow: 0 1px 5px rgb(196,196,196);
 }
 .postHeader {
   display: flex;

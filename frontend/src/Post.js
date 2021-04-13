@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState} from "react";
 
-function NewPost(props) {
+function Post(props) {
 
     let resID = props.resID;
     let [resName, setResName] = useState("");
@@ -15,12 +15,12 @@ function NewPost(props) {
 
     function isValidURL(url) {
         if (url === 'undefined') {
-            return (<div/>);
+            return ("");
         } else {
             if (url.length !== 0) {
                 return (<img src={parseURL(url)} className="postImage"/>);
             } else {
-                return (<div/>);
+                return ("");
             }
 
         }
@@ -58,7 +58,7 @@ function NewPost(props) {
     return (
         <div className="postContainer">
             <div className="postHeader">
-                <div className="greyCircle"></div>
+                <div className="greyCircle"/>
                 <div className="userInfo">
                     <p className="userName">{props.user}</p>
                     <p>{resName}</p>
@@ -74,5 +74,5 @@ function NewPost(props) {
     );
 }
 
-export default NewPost;
+export default Post;
 
