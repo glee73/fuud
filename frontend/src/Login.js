@@ -11,7 +11,6 @@ function Login(props) {
     let history = useHistory();
     let [user, setUser] = useState(null);
     let [msg, setMsg] = useState("");
-    let [res, setRes] = useState(false);
 
     useEffect(() => {
         props.getUser(user);
@@ -46,23 +45,17 @@ function Login(props) {
             config
         )
             .then(response => {
-                setMsg(response.data["message"]);
-                setRes(response.data["success"])
-                console.log(response.data["success"], response.data["message"]);
+                if (response.data["success"]) {
+                    setUser(user);
+                    return (history.push("/explore"));
+                } else {
+                    setMsg(<p className={"error"}> {response.data["message"]} </p>);
+                }
             })
             .catch(function (error) {
                 console.log(error);
             });
 
-    }
-
-    function afterSubmit() {
-        if (!res) {
-            return <p className={"error"}> {msg} </p>
-        } else {
-            setUser(user);
-            return (history.push("/explore"));
-        }
     }
 
     return(
@@ -84,7 +77,7 @@ function Login(props) {
                     </form>
 
                     <button className="submitButton" type="submit" onClick={submitLogin}>log in</button>
-                    {afterSubmit()}
+                    {msg}
                     <Link className={"link"} to={"/register"}> register </Link>
                 </div>
             </div>

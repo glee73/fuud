@@ -2,10 +2,12 @@ import axios from "axios";
 import React from "react";
 import {useHistory} from "react-router-dom";
 import './index.css';
+import {useState} from "react";
 
 function Signup() {
 
     let history = useHistory();
+    let [msg, setMsg] = useState("");
 
     function submitCreds() {
         let user = document.getElementById('setUsername');
@@ -41,7 +43,7 @@ function Signup() {
         )
             .then(response => {
                 if (!response.data["success"]) {
-                    return (<p> {response.data["message"]} </p>);
+                    setMsg(<p className={"error"}> {response.data["message"]} </p>);
                 } else {
                     return (history.push("/"));
                 }
@@ -49,9 +51,7 @@ function Signup() {
             .catch(function (error) {
                 console.log(error);
             });
-
     }
-
 
     return (
         <div className={"register shadow"}>
@@ -72,6 +72,7 @@ function Signup() {
             </div>
 
             <button className="submitButton" type="submit" onClick={submitCreds}>sign up</button>
+            {msg}
         </div>
 );
 
