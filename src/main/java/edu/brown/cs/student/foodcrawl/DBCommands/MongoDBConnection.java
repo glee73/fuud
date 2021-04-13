@@ -21,6 +21,7 @@ import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.result.DeleteResult;
 import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
+import org.bson.types.Binary;
 import spark.Response;
 
 import java.util.ArrayList;
@@ -209,7 +210,7 @@ public class MongoDBConnection {
   }
 
   public void createPost(String text, int reviewOutOfTen, List<String> pictures,
-                         String restaurantID, String username, String timestamp) {
+                         String restaurantID, String username, String timestamp, String b) {
     Document doc = new Document("text", text)
       .append("review", reviewOutOfTen)
       .append("pictures", pictures)
@@ -217,7 +218,7 @@ public class MongoDBConnection {
       .append("id", GenerateHashID.generateUUID())
       .append("username", username)
       .append("timestamp", timestamp)
-      .append("pic", new byte[10]);
+      .append("pic", b);
     postsCollection.insertOne(doc);
   }
 
@@ -239,7 +240,14 @@ public class MongoDBConnection {
         String username = document.getString("username");
         String timestamp = document.getString("timestamp");
 
-        posts.add(new Post(text, review, pictures, username, restaurantID, id, timestamp));
+        /*
+        Binary bin = document.get("blob", org.bson.types.Binary.class);
+        if (bin != null) {
+          System.out.println(new String(bin.getData()));
+        } */
+        String bin = document.getString("pic");
+
+        posts.add(new Post(text, review, pictures, username, restaurantID, id, timestamp, bin));
       }
     };
     postsCollection.find(eq("username", username))
@@ -248,16 +256,18 @@ public class MongoDBConnection {
   }
 
   public void checkPost() {
-    createPost("testiinggg", 3,
-      new ArrayList<>(), "588c799866b647828134b4e92fa02188", "ben", "5:35");
+    //createPost("testiinggg", 3,
+    //  new ArrayList<>(), "588c799866b647828134b4e92fa02188", "ben", "5:35");
     /*
     List<String> pic = new ArrayList<>();
     pic.add("https://drive.google.com/file/d/1zpFeTO4diF_b9e6flc9r_4jGRmdpnVgE/view?usp=sharing");
     createPost("kinda underwhelming. not much depth of flavor.", 3,
       pic, "588c799866b647828134b4e92fa02188", "ben", "5:35"); */
-
-    //System.out.println(getPostsFromUser("sdf").size());
-
+    /*
+    List<Post> ppf = getPostsFromUser("ben");
+    for (Post p: ppf) {
+      System.out.println(p.getPic());
+    }*/
 
     // createRestaurant("Bajas Tex Mex", "273 Thayer St, Providence, Rhode Island");
   }
