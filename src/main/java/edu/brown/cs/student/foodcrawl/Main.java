@@ -47,7 +47,7 @@ public final class Main {
 
   private static final Gson GSON = new Gson();
   private static MongoDBConnection connection;
-  private static Encryptor encryptor = new Encryptor();
+  private static final Encryptor encryptor = new Encryptor();
 
   /**
    * The initial method called when execution begins.
@@ -139,6 +139,7 @@ public final class Main {
     Spark.post("/logout", new LogoutHandler());
     Spark.post("/search", new SearchHandler());
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
+    Spark.post("/addfollower", new AddFollowerHandler());
   }
 
 
@@ -298,7 +299,6 @@ public final class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       request.session().removeAttribute("USERID");
-      response.redirect("/login");
       Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged out");
       return GSON.toJson(vars);
     }
@@ -315,6 +315,15 @@ public final class Main {
       } else {
         vars = ImmutableMap.of("success", r.getId());
       }
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class AddFollowerHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      connection.addFollower(data.getString("follower"), data.getString("followed"));
+      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "successfully followed");
       return GSON.toJson(vars);
     }
   }
