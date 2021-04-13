@@ -1,16 +1,19 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React from "react";
 import {useHistory, Link} from "react-router-dom";
 import './index.css';
 import graph from './gray-graph.gif';
 import fuud from './fuud.svg';
+import {useState, useEffect} from "react";
 
-function Login() {
-
-    let [status, setStatus] = useState(false);
-    let [msg, setMsg] = useState("");
+function Login(props) {
 
     let history = useHistory();
+    let [user, setUser] = useState(null);
+
+    useEffect(() => {
+        props.getUser(user);
+    },[user]);
 
     function submitLogin() {
         let user = document.getElementById('username');
@@ -42,13 +45,12 @@ function Login() {
         )
             .then(response => {
                 console.log(response.data["success"], response.data["message"]);
-                setStatus(response.data["success"]);
-                setMsg(response.data["message"]);
 
                 if (!response.data["success"]) {
                     return (<p> {response.data["message"]} </p>);
                 } else {
-                    return (history.push("/explore"))
+                    setUser(user);
+                    return (history.push("/explore"));
                 }
             })
             .catch(function (error) {
@@ -56,6 +58,7 @@ function Login() {
             });
 
     }
+
 
 
     return(
@@ -77,7 +80,7 @@ function Login() {
                     </form>
 
                     <button className="submitButton" type="submit" onClick={submitLogin}>log in</button>
-                    <Link className={"link"} to={"/signup"}> register </Link>
+                    <Link className={"link"} to={"/register"}> register </Link>
                 </div>
             </div>
 

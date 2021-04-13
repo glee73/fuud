@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import logo from "./fuud.svg";
 
-function Navbar() {
+function Navbar(props) {
+
+    let history = useHistory();
+
+    function logout() {
+        props.logout();
+        return (history.push("/"));
+    }
+
     return (
         <div>
             <div className="header">
@@ -10,7 +18,7 @@ function Navbar() {
                 </Link>
 
                 <input className="searchBar shadow" type="text" placeholder="looking for something?"/>
-                <div className="greyCircle"></div>
+                <div className="link" onClick={logout}> logout </div>
             </div>
             <div className="navbarContainer">
                 <div className="navLinkFlex">
@@ -19,15 +27,11 @@ function Navbar() {
                 </div>
                 <div className="navLinkFlex">
                     <div className="orangeCircle"></div>
-                    <a className="navbarLink" href="">my pinned</a>
+                    {/*<a className="navbarLink" href="">my pinned</a>*/}
                 </div>
                 <div className="navLinkFlex">
                     <div className="orangeCircle"></div>
                     <Link className="navbarLink" to="/myprofile">my profile</Link>
-                </div>
-                <div className="navLinkFlex">
-                    <div className="orangeCircle"></div>
-                    <a className="navbarLink" href="">my friends</a>
                 </div>
             </div>
             <div className="newPostFixed">

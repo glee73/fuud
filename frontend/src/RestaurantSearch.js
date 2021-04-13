@@ -1,10 +1,14 @@
 import RestaurantListing from "./RestaurantListing";
 import Navbar from "./Navbar.js"
+import React from "react";
 
-function RestaurantSearch() {
+function RestaurantSearch(props) {
+
+    let userName = props.user;
+
     return (
         <div>
-            <Navbar/>
+            <Navbar logout={props.logout}/>
             <div className="restaurant">
                 <p className="restaurantTitle pageTitle">search results</p>
                 <RestaurantListing title="Kung Fu Tea" imgURL="https://d1ralsognjng37.cloudfront.net/281ebbce-1a1d-495d-9b6f-fef70842acb9.jpeg"></RestaurantListing>
