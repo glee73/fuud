@@ -77,13 +77,17 @@ function MakeNewPost() {
         let text = document.getElementById('caption').value;
         let review = document.getElementById('rating').value;
         let timestamp = new Date().toLocaleString();
-        let picUrl = document.getElementById('fileupload').value;
+        let picUrl = document.getElementById('fileUpload').value;
+        console.log(picUrl);
         img.setAttribute('src', picUrl)
         canvas.height = img.height
         canvas.width = img.width
         const ctx = canvas.getContext('2d')
         ctx.drawImage(img, 0, 0)
         const data = canvas.toDataURL("image/png")
+
+        console.log("yoo")
+        console.log(data);
 
 
         const toSend = {
