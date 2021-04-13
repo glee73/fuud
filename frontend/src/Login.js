@@ -10,6 +10,8 @@ function Login(props) {
 
     let history = useHistory();
     let [user, setUser] = useState(null);
+    let [msg, setMsg] = useState("");
+    let [res, setRes] = useState(false);
 
     useEffect(() => {
         props.getUser(user);
@@ -44,14 +46,9 @@ function Login(props) {
             config
         )
             .then(response => {
+                setMsg(response.data["message"]);
+                setRes(response.data["success"])
                 console.log(response.data["success"], response.data["message"]);
-
-                if (!response.data["success"]) {
-                    return (<p> {response.data["message"]} </p>);
-                } else {
-                    setUser(user);
-                    return (history.push("/explore"));
-                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -59,7 +56,14 @@ function Login(props) {
 
     }
 
-
+    function afterSubmit() {
+        if (!res) {
+            return <p className={"error"}> {msg} </p>
+        } else {
+            setUser(user);
+            return (history.push("/explore"));
+        }
+    }
 
     return(
         <div className="login-container">
@@ -71,15 +75,16 @@ function Login(props) {
 
                 <div className={"login shadow"}>
 
-                    <form className="">
+                    <form>
                         <input type="text" id="username" name="username" placeholder="enter username" required/>
                     </form>
 
-                    <form className="">
+                    <form>
                         <input type="password" id="password" name="password" placeholder="enter password" required/>
                     </form>
 
                     <button className="submitButton" type="submit" onClick={submitLogin}>log in</button>
+                    {afterSubmit()}
                     <Link className={"link"} to={"/register"}> register </Link>
                 </div>
             </div>

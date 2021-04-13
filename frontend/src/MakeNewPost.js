@@ -132,6 +132,8 @@ function MakeNewPost(props) {
         console.log("after");
     }
 
+    props.redirect();
+
     return (
 
         <div>

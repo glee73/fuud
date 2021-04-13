@@ -1,12 +1,11 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-import {Redirect} from "react-router-dom";
+import React from "react";
+import {useHistory} from "react-router-dom";
 import './index.css';
 
 function Signup() {
 
-    let [status, setStatus] = useState(false);
-    let [msg, setMsg] = useState("");
+    let history = useHistory();
 
     function submitCreds() {
         let user = document.getElementById('setUsername');
@@ -35,17 +34,17 @@ function Signup() {
             }
         };
 
-        console.log(toSend);
-
         axios.post(
             'http://localhost:4567/signup',
             toSend,
             config
         )
             .then(response => {
-                console.log(response.data["success"]);
-                setStatus(response.data["success"]);
-                setMsg(response.data["message"]);
+                if (!response.data["success"]) {
+                    return (<p> {response.data["message"]} </p>);
+                } else {
+                    return (history.push("/"));
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -53,42 +52,26 @@ function Signup() {
 
     }
 
-    function onSuccess() {
-        submitCreds();
-        if (!status) {
-            return (<p> {msg} </p>);
-        } else {
-            return (<Redirect to={"/login"} />)
-        }
-    }
-
-    console.log(msg);
-
-
-
 
     return (
-        <div>
-            <div className="">
-                <form className="">
-                    <label htmlFor="setUsername">Choose a username:</label>
-                    <input className={"shadow"} type="text" id="setUsername" name="setUsername" required/>
+        <div className={"register shadow"}>
+            <div>
+                <form>
+                    <input type="text" id="setUsername" name="setUsername" placeholder="choose a username" required/>
                 </form>
             </div>
-            <div className="">
-                <form className="">
-                    <label htmlFor="setPW">Choose a password:</label>
-                    <input className={"shadow"} type="password" id="setPW" name="setPW" required/>
+            <div>
+                <form>
+                    <input type="password" id="setPW" name="setPW" placeholder="choose a password" required/>
                 </form>
             </div>
-            <div className="">
-                <form className="">
-                    <label htmlFor="confirmPW">Confirm password:</label>
-                    <input className={"shadow"} type="password" id="confirmPW" name="confirmPW" required/>
+            <div>
+                <form>
+                    <input type="password" id="confirmPW" name="confirmPW" placeholder="confirm password" required/>
                 </form>
             </div>
 
-            <button className="submitButton" type="submit" onClick={onSuccess}>sign up</button>
+            <button className="submitButton" type="submit" onClick={submitCreds}>sign up</button>
         </div>
 );
 

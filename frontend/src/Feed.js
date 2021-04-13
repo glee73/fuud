@@ -66,6 +66,8 @@ function Feed(props) {
             );
         }
 
+        props.redirect();
+
         if (posts === null) {
             return (
                 <div>

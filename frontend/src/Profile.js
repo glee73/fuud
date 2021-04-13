@@ -130,6 +130,8 @@ function Profile(props) {
         }
     }
 
+    props.redirect();
+
 
     return (
         <div>
