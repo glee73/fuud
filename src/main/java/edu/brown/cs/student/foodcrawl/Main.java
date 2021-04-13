@@ -55,6 +55,7 @@ public final class Main {
   public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
     new Main(args).run();
     connection = new MongoDBConnection();
+    //connection.checkPost();
   }
 
   private final String[] args;
@@ -217,7 +218,7 @@ public final class Main {
                 "restaurantName"));
         connection.createPost(data.getString("text"), data.getInt("review"),
                 pictures, r.getId(), data.getString("username"),
-                data.getString("timestamp"));
+                data.getString("timestamp"), data.getString("pic"));
         Map<String, Object> vars = ImmutableMap.of("success", true);
         return GSON.toJson(vars);
       } catch (Exception e) {
