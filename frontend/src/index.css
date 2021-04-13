@@ -10,6 +10,24 @@ body {
   font-size: 16px;
 }
 
+body::-webkit-scrollbar, .user-data-tab::-webkit-scrollbar {
+  width: 16px;  /* for vertical scrollbars */
+  height: 0px; /* for horizontal scrollbars */
+}
+
+body::-webkit-scrollbar-track, .user-data-tab::-webkit-scrollbar-track{
+  border-radius: 20px;
+}
+
+body::-webkit-scrollbar-thumb, .user-data-tab::-webkit-scrollbar-thumb{
+  background: #c4c4c4;
+  border-radius: 20px;
+}
+
+body::-webkit-scrollbar-corner, .user-data-tab::-webkit-scrollbar-corner {
+  background: #d7e9fc;
+}
+
 form {
   margin-bottom: 15px;
 }
