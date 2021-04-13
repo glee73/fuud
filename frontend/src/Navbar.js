@@ -5,7 +5,7 @@ function Navbar() {
     return (
         <div>
             <div className="header">
-                <Link to="/">
+                <Link to="/explore">
                     <img src={logo} alt={"fuud logo"} className={"logo"}/>
                 </Link>
 

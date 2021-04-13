@@ -10,6 +10,12 @@ body {
   font-size: 16px;
 }
 
+.link, .link:visited, .link:active {
+  text-decoration: none;
+  color: #FF6225;
+  font-size: 14px;
+}
+
 body::-webkit-scrollbar, .user-data-tab::-webkit-scrollbar {
   width: 16px;  /* for vertical scrollbars */
   height: 0px; /* for horizontal scrollbars */
@@ -257,8 +263,9 @@ code {
 }
 .submitButton {
   font-size: 17px;
-  padding: 7px 14px;
+  padding: 7px 30px;
   margin-top: 20px;
+  margin-right: 15px;
   background-color: #FF6225;
   color: white;
   border-radius: 15px;
@@ -267,4 +274,45 @@ code {
 }
 .searchButton {
   width: 30%;
+}
+
+.graph img {
+  width: 60%;
+  opacity: 0.75;
+}
+
+.graph p {
+  margin-top: 50px;
+  color: #FF6225;
+}
+
+.login-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  padding-top: 10%;
+}
+
+.login {
+  background: #f5f8fc;
+  border-radius: 15px;
+  padding: 40px 60px;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  width: 80%;
+}
+
+.login input {
+  background: white;
+  border: 1px solid #f0f2f5;
+}
+
+.login-graphics {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 400px;
 }

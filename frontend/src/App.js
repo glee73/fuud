@@ -3,14 +3,16 @@ import Navbar from './Navbar';
 import Feed from './Feed.js';
 import Profile from './Profile';
 import MakeNewPost from "./MakeNewPost.js";
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch, useHistory} from 'react-router-dom';
 import RestaurantSearch from "./RestaurantSearch.js";
 import Login from "./Login.js"
 import Signup from "./Signup.js"
 
 
 
+
 function App() {
+
     return (
             <div className="App">
                 {/*https://drive.google.com/file/d/0B6wwyazyzml-OGQ3VUo0Z2thdmc/view*/}
@@ -22,9 +24,9 @@ function App() {
                 <Switch>
                     <Route exact path="/myprofile" component={Profile}/>
                     <Route exact path="/explore" component={Feed}/>
-                    <Route exact path="/" component={RestaurantSearch}/>
+                    <Route exact path="/" component={Login}/>
+                    <Route exact path="/search" component={RestaurantSearch}/>
                     <Route exact path="/newPost" component={MakeNewPost}/>
-                    <Route exact path="/login" component={Login}/>
                     <Route exact path="/signup" component={Signup}/>
                 </Switch>
             </div>
