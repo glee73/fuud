@@ -2,6 +2,7 @@ import axios from 'axios';
 import Post from './Post';
 import React, {useState, useEffect, useRef} from "react";
 import './index.css';
+import Navbar from "./Navbar.js"
 
 function Profile() {
 
@@ -87,7 +88,7 @@ function Profile() {
     const displayPosts = () => {
         let posts = [];
 
-        userPosts.map((post, idx) => (
+        userPosts.reverse().map((post, idx) => (
             posts.push(
                 <Post className={"profileItem"} key={idx}
                       user={post.user} rating={post.reviewOutOfTen}
@@ -98,7 +99,8 @@ function Profile() {
         ));
 
         return (<div className="profileGrid">
-            {posts}
+                <p className={"pageTitle"}> your posts </p>
+                {posts}
         </div>
         );
     }
@@ -108,7 +110,7 @@ function Profile() {
             return "";
         } else {
             return (
-                <div>
+                <div className={"profile"}>
                     {displayProfileHeader()}
                     {displayPosts()}
                 </div>
@@ -117,7 +119,12 @@ function Profile() {
     }
 
 
-    return output();
+    return (
+        <div>
+            <Navbar/>
+            {output()}
+        </div>
+    );
 }
 
 export default Profile;

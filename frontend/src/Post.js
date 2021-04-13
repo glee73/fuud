@@ -56,14 +56,14 @@ function Post(props) {
     getResName();
 
     return (
-        <div className="postContainer">
+        <div className="postContainer shadow">
             <div className="postHeader">
                 <div className="greyCircle"/>
                 <div className="userInfo">
-                    <p className="userName">{props.user}</p>
-                    <p>{resName}</p>
-                    <p className="stars"> {props.rating}</p>
-                    <p> {props.time} </p>
+                    <p className="userName">
+                        <em>{props.user} rates {resName.toLowerCase()} {props.rating} out of 10 </em>
+                    </p>
+                    <p className="postTime"> posted @ {props.time} </p>
                 </div>
             </div>
             <div className="postContent">

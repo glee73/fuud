@@ -1,7 +1,7 @@
 
 function RestaurantListing(props) {
     return (
-        <div className="postContainer restaurantContainer">
+        <div className="postContainer restaurantContainer shadow">
             <img className="restaurantImage" src={props.imgURL} />
             <div className="restaurantContent">
                 <p className="restaurantTitle">{props.title}</p>

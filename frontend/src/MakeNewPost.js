@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState, useEffect, useRef} from "react";
 import { useHistory } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function MakeNewPost() {
 
@@ -109,35 +110,39 @@ function MakeNewPost() {
     }
 
     return (
-        <div className="makeNewPost">
-            <h1 className="newPostHeader">Make a New Post!</h1>
-            <div className="step step1">
-                <form className="formStyle restaurantNameForm">
-                    <label htmlFor="restaurantName">Restaurant Name:</label>
-                    <input type="text" id="restaurantName" name="restaurantName" required/>
-                    <button className="submitButton searchButton" type="button" onClick={sendRestaurantName}>Search</button>
-                </form>
-                {showSearchResult()}
+
+        <div>
+            <Navbar/>
+            <div className="makeNewPost">
+                <p className="newPostHeader">Make a New Post!</p>
+                <div className="step step1">
+                    <form className="formStyle restaurantNameForm">
+                        <label htmlFor="restaurantName">Restaurant Name:</label>
+                        <input className={"shadow"} type="text" id="restaurantName" name="restaurantName" required/>
+                        <button className="submitButton searchButton" type="button" onClick={sendRestaurantName}>search</button>
+                    </form>
+                    {showSearchResult()}
+                </div>
+                <div className="step step2">
+                    <form className="formStyle rating">
+                        <label htmlFor="rating">Rating (out of 10):</label>
+                        <input className={"shadow"} type="number" id="rating" name="rating" required/>
+                    </form>
+                </div>
+                <div className="step step3">
+                    <form className="formStyle caption">
+                        <label htmlFor="caption">Caption:</label>
+                        <input className={"shadow"} type="text" id="caption" name="caption" required/>
+                    </form>
+                </div>
+                <div className="step step4">
+                    <form className="formStyle caption">
+                        <label htmlFor="fileUpload">Upload Image (optional):</label>
+                        <input className={"shadow"} type="text" id="fileUpload" name="fileUpload" placeholder="Please provide a public Google Drive link"/>
+                    </form>
+                </div>
+                <button className="submitButton" type="submit" onClick={makePost} action={"/myprofile"}>submit</button>
             </div>
-            <div className="step step2">
-                <form className="formStyle rating">
-                    <label htmlFor="rating">Rating (out of 10):</label>
-                    <input type="number" id="rating" name="rating" required/>
-                </form>
-            </div>
-            <div className="step step3">
-                <form className="formStyle caption">
-                    <label htmlFor="caption">Caption:</label>
-                    <input type="text" id="caption" name="caption" required/>
-                </form>
-            </div>
-            <div className="step step4">
-                <form className="formStyle caption">
-                    <label htmlFor="fileUpload">Upload Image (optional):</label>
-                    <input type="text" id="fileUpload" name="fileUpload" placeholder="Please provide a public Google Drive link"/>
-                </form>
-            </div>
-            <button className="submitButton" type="submit" onClick={makePost} action={"/myprofile"}>Submit</button>
         </div>
     );
 }

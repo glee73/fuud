@@ -9,7 +9,7 @@ function Navbar() {
                     <img src={logo} alt={"fuud logo"} className={"logo"}/>
                 </Link>
 
-                <input className="searchBar" type="text" placeholder="looking for something?"/>
+                <input className="searchBar shadow" type="text" placeholder="looking for something?"/>
                 <div className="greyCircle"></div>
             </div>
             <div className="navbarContainer">
@@ -32,7 +32,6 @@ function Navbar() {
             </div>
             <div className="newPostFixed">
                 <Link className="newPostButton" to="/newPost">+</Link>
-                <p className="newPostLabel">new post</p>
             </div>
         </div>
 

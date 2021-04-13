@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import { Redirect } from "react-router-dom";
+import './index.css';
 
 function Login() {
 
@@ -63,12 +64,12 @@ function Login() {
 
             <form className="">
                 <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" required/>
+                <input className={"shadow"} type="text" id="username" name="username" required/>
             </form>
 
             <form className="">
                 <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" required/>
+                <input className={"shadow"} type="password" id="password" name="password" required/>
             </form>
 
             <button className="submitButton" type="submit" onClick={onSuccess}>log in</button>

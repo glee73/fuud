@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {Redirect} from "react-router-dom";
+import './index.css';
 
 function Signup() {
 
@@ -71,19 +72,19 @@ function Signup() {
             <div className="">
                 <form className="">
                     <label htmlFor="setUsername">Choose a username:</label>
-                    <input type="text" id="setUsername" name="setUsername" required/>
+                    <input className={"shadow"} type="text" id="setUsername" name="setUsername" required/>
                 </form>
             </div>
             <div className="">
                 <form className="">
                     <label htmlFor="setPW">Choose a password:</label>
-                    <input type="password" id="setPW" name="setPW" required/>
+                    <input className={"shadow"} type="password" id="setPW" name="setPW" required/>
                 </form>
             </div>
             <div className="">
                 <form className="">
                     <label htmlFor="confirmPW">Confirm password:</label>
-                    <input type="password" id="confirmPW" name="confirmPW" required/>
+                    <input className={"shadow"} type="password" id="confirmPW" name="confirmPW" required/>
                 </form>
             </div>
 
