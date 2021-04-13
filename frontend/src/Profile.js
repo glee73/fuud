@@ -3,6 +3,7 @@ import Post from './Post';
 import React, {useState, useEffect, useRef} from "react";
 import './index.css';
 import Navbar from "./Navbar.js"
+import BinImage from "./BinImage";
 
 function Profile() {
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useState} from "react";
+import BinImage from "./BinImage";
 
 function Post(props) {
 
