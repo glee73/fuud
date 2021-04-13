@@ -216,7 +216,8 @@ public class MongoDBConnection {
       .append("restaurantID", restaurantID)
       .append("id", GenerateHashID.generateUUID())
       .append("username", username)
-      .append("timestamp", timestamp);
+      .append("timestamp", timestamp)
+      .append("pic", new byte[10]);
     postsCollection.insertOne(doc);
   }
 
@@ -247,6 +248,8 @@ public class MongoDBConnection {
   }
 
   public void checkPost() {
+    createPost("testiinggg", 3,
+      new ArrayList<>(), "588c799866b647828134b4e92fa02188", "ben", "5:35");
     /*
     List<String> pic = new ArrayList<>();
     pic.add("https://drive.google.com/file/d/1zpFeTO4diF_b9e6flc9r_4jGRmdpnVgE/view?usp=sharing");
