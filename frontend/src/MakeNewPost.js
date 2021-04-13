@@ -11,6 +11,9 @@ function MakeNewPost() {
 
     let history = useHistory();
 
+    const canvas = document.createElement('canvas')
+    const img = document.createElement('img')
+
 
     function sendRestaurantName() {
         let restaurantName = document.getElementById('restaurantName');
@@ -74,7 +77,14 @@ function MakeNewPost() {
         let text = document.getElementById('caption').value;
         let review = document.getElementById('rating').value;
         let timestamp = new Date().toLocaleString();
-        let pics = [];
+        let picUrl = document.getElementById('fileupload').value;
+        img.setAttribute('src', picUrl)
+        canvas.height = img.height
+        canvas.width = img.width
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0)
+        const data = canvas.toDataURL("image/png")
+
 
         const toSend = {
             "restaurantName": restaurantName,
@@ -82,7 +92,7 @@ function MakeNewPost() {
             "review": review,
             "username": userName,
             "timestamp": timestamp,
-            "pictures": pics
+            "pictures": data
         }
 
         let config = {
@@ -138,7 +148,7 @@ function MakeNewPost() {
                 <div className="step step4">
                     <form className="formStyle caption">
                         <label htmlFor="fileUpload">Upload Image (optional):</label>
-                        <input className={"shadow"} type="text" id="fileUpload" name="fileUpload" placeholder="Please provide a public Google Drive link"/>
+                        <input className={"shadow"} type="file" id="fileUpload" name="fileUpload"/>
                     </form>
                 </div>
                 <button className="submitButton" type="submit" onClick={makePost} action={"/myprofile"}>submit</button>
