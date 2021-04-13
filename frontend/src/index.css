@@ -1,28 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  margin: auto;
+  width: 95%;
+  font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+body::-webkit-scrollbar, .user-data-tab::-webkit-scrollbar {
+  width: 16px;  /* for vertical scrollbars */
+  height: 0px; /* for horizontal scrollbars */
+}
+
+body::-webkit-scrollbar-track, .user-data-tab::-webkit-scrollbar-track{
+  border-radius: 20px;
+}
+
+body::-webkit-scrollbar-thumb, .user-data-tab::-webkit-scrollbar-thumb{
+  background: #c4c4c4;
+  border-radius: 20px;
+}
+
+body::-webkit-scrollbar-corner, .user-data-tab::-webkit-scrollbar-corner {
+  background: #d7e9fc;
+}
+
+form {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 10px;
+  margin-right: 15px;
+}
+
+em {
+  font-weight: 300;
+  color: #FF6225;
+  font-style: normal;
+}
+
+input {
+  font-family: 'Montserrat', sans-serif;
+  background: #f0f2f5;
+  border-radius: 15px;
+  padding: 7px 15px;
+}
+
+.pageTitle {
+  font-size: 40px;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 320px;
+  color: #FF6225;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.shadow {
+  box-shadow: 1px 1px 4px rgb(217, 217, 217);
+  border: 1px solid #f0f2f5;
+}
+
 /******** NAVBAR COMPONENT ********/
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   color: #FF6225;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .searchBar {
-  border-radius: 15px;
   width: 50%;
-  padding: 7px 15px;
 }
 
 .orangeCircle{
@@ -32,20 +89,25 @@ code {
   background: #FF6225;
 }
 .greyCircle {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: #C4C4C4;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .navbarLink {
   padding: 0 20px;
   color: #5A5858;
   text-decoration: none;
+  font-size: 17px;
+  letter-spacing: 1px;
 }
 
 .navbarContainer {
-  width: 15%;
+  width: 18%;
 }
 .navLinkFlex {
   padding: 10px 20px;
@@ -56,10 +118,11 @@ code {
 
 .newPostFixed {
   position: fixed;
-  bottom: 20px;
-  right: 30px;
+  bottom: 50px;
+  right: 60px;
   padding: 10px 10px 0 10px;
 }
+
 .newPostButton {
   background-color: #FF6225;
   width: 70px;
@@ -69,8 +132,9 @@ code {
   color: white;
   font-size: 50px;
   position: absolute;
-  top: -25%;
-  left: 5%;
+  top: -50%;
+  left: -50%;
+  margin-right: 30px;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
@@ -78,8 +142,9 @@ code {
   color: #5A5858;
 }
 /******** PROFILE ********/
+
 .profile {
-  margin-top: -100px;
+  margin-top: -150px;
 }
 .profileHeader {
   display: flex;
@@ -95,28 +160,37 @@ code {
 }
 
 /******** NEW POST ********/
-.pageTitle {
-  font-size: 30px;
-  display: flex;
-  align-items: flex-start;
-  padding: 0 320px;
-  color:#FF6225;
-}
 .postContainer {
-  border: 2px solid #C4C4C4;
+  background: #f5f8fc;
   border-radius: 15px;
-  margin: 15px 300px;
-  padding: 15px 30px;
+  margin: 20px 300px 40px;
+  padding: 15px 50px;
+  text-align: left;
 }
 .postHeader {
   display: flex;
   align-items: center;
   justify-content: left;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
-.userName, .postDesc {
+.userName, .postTime {
   color: #5A5858;
 }
+
+.userName {
+  font-size: 18px;
+}
+
+.postTime {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
+.userInfo {
+  text-align: left;
+  margin-left: 20px;
+}
+
 .stars {
   height: 20px;
   margin-left: 20px;
@@ -125,19 +199,20 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 30px;
 }
 .postImage {
-  width: 30%;
+  width: 25%;
+  margin-right: 30px;
+  border-radius: 15px;
 }
-.postDesc {
-  width: 60%;
-}
+
 .feed {
-  margin-top: -100px;
+  margin-top: -200px;
 }
 /******** RESTAURANT LISTING ********/
 .restaurant {
-  margin-top: -100px;
+  margin-top: -200px;
 }
 .restaurantContainer {
   display: flex;
@@ -164,14 +239,16 @@ code {
 .makeNewPost {
   text-align: left;
   padding: 0px 300px 100px 300px;
-  margin-top: -100px;
+  margin-top: -200px;
 }
+
 .newPostHeader {
   font-size: 40px;
-  color: #5A5858;
+  color: #FF6225;
 }
 .step {
   color: #5A5858;
+  margin-bottom: 40px;
 }
 .formStyle {
   display: flex;
@@ -179,14 +256,14 @@ code {
   width: 50%;
 }
 .submitButton {
-  font-size: 18px;
+  font-size: 17px;
   padding: 7px 14px;
   margin-top: 20px;
   background-color: #FF6225;
-  text-transform: uppercase;
-  font-weight: bold;
   color: white;
-  border-radius: 5px;
+  border-radius: 15px;
+  font-family: 'Quicksand', sans-serif;
+  border: 1px solid #f0f2f5;
 }
 .searchButton {
   width: 30%;

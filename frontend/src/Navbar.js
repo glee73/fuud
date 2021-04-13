@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
+import logo from "./fuud.svg";
 
 function Navbar() {
     return (
         <div>
             <div className="header">
-                <h1>LOGO</h1>
-                <input className="searchBar" type="text" placeholder="looking for something?"/>
+                <Link to="/">
+                    <img src={logo} alt={"fuud logo"} className={"logo"}/>
+                </Link>
+
+                <input className="searchBar shadow" type="text" placeholder="looking for something?"/>
                 <div className="greyCircle"></div>
             </div>
             <div className="navbarContainer">
@@ -28,7 +32,6 @@ function Navbar() {
             </div>
             <div className="newPostFixed">
                 <Link className="newPostButton" to="/newPost">+</Link>
-                <p className="newPostLabel">new post</p>
             </div>
         </div>
 

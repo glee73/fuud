@@ -1,7 +1,8 @@
-import NewPost from './NewPost';
+import Post from './Post';
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import './index.css';
+import Navbar from "./Navbar";
 
 function Feed() {
 
@@ -47,11 +48,11 @@ function Feed() {
             console.log(posts[0])
             posts.map((post, idx) => (
                 content.push(
-                    <NewPost className={"profileItem"} key={idx}
-                             user={post.user} rating={post.reviewOutOfTen}
-                             desc={post.description} time={post.timestamp}
-                             resID={post.restaurantID} pic={post.pictures}>
-                    </NewPost>)
+                    <Post className={"profileItem"} key={idx}
+                          user={post.user} rating={post.reviewOutOfTen}
+                          desc={post.description} time={post.timestamp}
+                          resID={post.restaurantID} pic={post.pictures}>
+                    </Post>)
             ));
 
             return (<div className="profileGrid">
@@ -61,9 +62,12 @@ function Feed() {
         }
 
         return (
-            <div className="feed">
-                <p className="feedTitle pageTitle">what your friends are saying</p>
-                {displayPosts()}
+            <div>
+                <Navbar/>
+                <div className="feed">
+                    <p className="feedTitle pageTitle">what your friends are saying</p>
+                    {displayPosts()}
+                </div>
             </div>
         );
 }

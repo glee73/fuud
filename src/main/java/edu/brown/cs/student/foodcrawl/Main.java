@@ -26,12 +26,9 @@ import spark.Response;
 import spark.Request;
 import spark.Spark;
 import spark.TemplateViewRoute;
-import spark.template.freemarker.FreeMarkerEngine;
 import spark.Route;
 
 import com.google.common.collect.ImmutableMap;
-
-import freemarker.template.Configuration;
 
 import org.json.JSONObject;
 import com.google.gson.Gson;
@@ -43,11 +40,10 @@ import com.google.gson.Gson;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
-  private static final int TIMER_DELAY = 2000;
 
   private static final Gson GSON = new Gson();
   private static MongoDBConnection connection;
-  private static Encryptor encryptor;
+  private static final Encryptor encryptor = new Encryptor();
 
   /**
    * The initial method called when execution begins.
@@ -79,29 +75,11 @@ public final class Main {
 
     // Parse command line arguments
     OptionParser parser = new OptionParser();
-    parser.accepts("gui");
     parser.accepts("port").withRequiredArg().ofType(Integer.class)
         .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
     runSparkServer((int) options.valueOf("port"));
-  }
-
-  /**
-   * creates free marker engine.
-   * @return free marker engine
-   */
-  private static FreeMarkerEngine createEngine() {
-    Configuration config = new Configuration();
-    File templates = new File("src/main/resources/spark/template/freemarker");
-    try {
-      config.setDirectoryForTemplateLoading(templates);
-    } catch (IOException ioe) {
-      System.out.printf("ERROR: Unable use %s for template loading.%n",
-          templates);
-      System.exit(1);
-    }
-    return new FreeMarkerEngine(config);
   }
 
   /**
@@ -140,6 +118,7 @@ public final class Main {
     Spark.post("/logout", new LogoutHandler());
     Spark.post("/search", new SearchHandler());
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
+    Spark.post("/addfollower", new AddFollowerHandler());
   }
 
 
@@ -263,7 +242,6 @@ public final class Main {
       User u = connection.getUserByUsername(username);
       if (u.getPassword().equals(encrypted)) {
         request.session().attribute("USERID", username);
-        response.redirect("/");
         Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged in!");
         return GSON.toJson(vars);
       } else {
@@ -290,7 +268,6 @@ public final class Main {
       } else {
         connection.createUser(username, encrypted);
         request.session().attribute("USERID", username);
-        response.redirect("/");
         Map<String, Object> vars = ImmutableMap.of("success", true, "message", "user added!");
         return GSON.toJson(vars);
       }
@@ -301,7 +278,6 @@ public final class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       request.session().removeAttribute("USERID");
-      response.redirect("/login");
       Map<String, Object> vars = ImmutableMap.of("success", true, "message", "logged out");
       return GSON.toJson(vars);
     }
@@ -318,6 +294,15 @@ public final class Main {
       } else {
         vars = ImmutableMap.of("success", r.getId());
       }
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class AddFollowerHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      connection.addFollower(data.getString("follower"), data.getString("followed"));
+      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "successfully followed");
       return GSON.toJson(vars);
     }
   }
