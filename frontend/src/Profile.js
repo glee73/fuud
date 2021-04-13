@@ -94,7 +94,7 @@ function Profile() {
                 <Post className={"profileItem"} key={idx}
                       user={post.user} rating={post.reviewOutOfTen}
                       desc={post.description} time={post.timestamp}
-                      resID={post.restaurantID} pic={post.pictures}>
+                      resID={post.restaurantID} pic={post.pic}>
                 </Post>
             )
         ));
