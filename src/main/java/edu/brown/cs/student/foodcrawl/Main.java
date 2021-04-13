@@ -209,10 +209,15 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       try {
+        JSONArray p = data.getJSONArray("pictures");
+        List<String> pictures = new ArrayList<>();
+        for (int i = 0; i < p.length(); i++) {
+          pictures.add(p.getString(i));
+        }
         Restaurant r = connection.getRestByName(data.getString(
                 "restaurantName"));
         connection.createPost(data.getString("text"), data.getInt("review"),
-                data.getString("pictures"), r.getId(), data.getString("username"),
+                pictures, r.getId(), data.getString("username"),
                 data.getString("timestamp"));
         Map<String, Object> vars = ImmutableMap.of("success", true);
         return GSON.toJson(vars);
