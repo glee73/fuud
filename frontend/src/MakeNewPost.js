@@ -79,22 +79,19 @@ function MakeNewPost() {
         let timestamp = new Date().toLocaleString();
         let picUrl = document.getElementById('fileUpload').value;
 
-        var FR= new FileReader();
-        FR.onload = function(e) {
-            callback(e.target.result)
-        };
-        FR.readAsDataURL(picUrl);
 
-        /*
         console.log(picUrl);
         img.setAttribute('src', picUrl)
         canvas.height = img.height
         canvas.width = img.width
         const ctx = canvas.getContext('2d')
         ctx.drawImage(img, 0, 0)
-        const data = canvas.toDataURL("image/png")*/
+        const data = canvas.toDataURL("image/png")
 
+        console.log(canvas)
+        console.log(img)
         console.log("yoo")
+        console.log(data)
 
         const toSend = {
             "restaurantName": restaurantName,
