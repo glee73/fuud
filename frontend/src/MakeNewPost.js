@@ -1,13 +1,16 @@
 import axios from "axios";
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 
-function MakeNewPost() {
+function MakeNewPost(props) {
 
     let [searchResult, setSearchResult] = useState(null);
     let [submitResult, setSubmitResult] = useState(null);
-    let userName = "ethan";
+
+    const userName = props.user;
+
+    console.log(userName);
 
     let history = useHistory();
 
@@ -79,6 +82,12 @@ function MakeNewPost() {
         let timestamp = new Date().toLocaleString();
         let picUrl = document.getElementById('fileUpload').value;
 
+        // let FR= new FileReader();
+        // FR.onload = function(e) {
+        //     callback(e.target.result)
+        // };
+        // FR.readAsDataURL(picUrl);
+
 
         console.log(picUrl);
         img.setAttribute('src', picUrl)
@@ -99,7 +108,7 @@ function MakeNewPost() {
             "review": review,
             "username": userName,
             "timestamp": timestamp,
-            "pic": data
+            // "pic": data
         }
 
         let config = {
@@ -126,10 +135,12 @@ function MakeNewPost() {
         console.log("after");
     }
 
+    props.redirect();
+
     return (
 
         <div>
-            <Navbar/>
+            <Navbar logout={props.logout}/>
             <div className="makeNewPost">
                 <p className="newPostHeader">Make a New Post!</p>
                 <div className="step step1">

@@ -5,12 +5,14 @@ import './index.css';
 import Navbar from "./Navbar.js"
 import BinImage from "./BinImage";
 
-function Profile() {
+function Profile(props) {
 
-    let [userData, setUserData] = useState({});
-    let [userPosts, setUserPosts] = useState([]);
+    let [userData, setUserData] = useState(null);
+    let [userPosts, setUserPosts] = useState(null);
 
-    const userName = "ethan";
+    const userName = props.user;
+
+    console.log(userName);
 
     function getUserData() {
         console.log("getting user data");
@@ -32,8 +34,9 @@ function Profile() {
             config
         )
             .then(response => {
-                setUserData(response.data["user"]);
-                return response.data["user"];
+                let data = response.data["user"];
+                setUserData(data);
+                return true;
             })
             .catch(function (error) {
                 console.log(error);
@@ -62,8 +65,7 @@ function Profile() {
         )
             .then(response => {
                 setUserPosts(response.data["posts"]);
-                console.log(response.data["posts"]);
-                return response.data["posts"];
+                return true;
             })
             .catch(function (error) {
                 console.log(error);
@@ -81,6 +83,8 @@ function Profile() {
             <div className="profileHeader">
                 <div className="profilePic"/>
                 <p className="username">{userName}</p>
+                <p> {userData["followers"].length} followers &emsp;|&emsp; {userData["following"].length} following
+                </p>
                 <p className="bio">{userData["bio"]}</p>
             </div>
         );
@@ -88,6 +92,13 @@ function Profile() {
 
     const displayPosts = () => {
         let posts = [];
+
+        if (userPosts.length === 0) {
+            return (
+                <p> You have made no posts. Click the button on the bottom right to get started!
+                </p>
+            );
+        }
 
         userPosts.reverse().map((post, idx) => (
             posts.push(
@@ -107,7 +118,7 @@ function Profile() {
     }
 
     function output() {
-        if (Object.keys(userData).length === 0 || userPosts.length === 0) {
+        if (userData === null || userPosts === null) {
             return "";
         } else {
             return (
@@ -119,10 +130,12 @@ function Profile() {
         }
     }
 
+    props.redirect();
+
 
     return (
         <div>
-            <Navbar/>
+            <Navbar logout={props.logout}/>
             {output()}
         </div>
     );

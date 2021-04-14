@@ -1,12 +1,20 @@
 import axios from "axios";
-import React, {useState} from "react";
-import { Redirect } from "react-router-dom";
+import React from "react";
+import {useHistory, Link} from "react-router-dom";
 import './index.css';
+import graph from './gray-graph.gif';
+import fuud from './fuud.svg';
+import {useState, useEffect} from "react";
 
-function Login() {
+function Login(props) {
 
-    let [status, setStatus] = useState(false);
+    let history = useHistory();
+    let [user, setUser] = useState(null);
     let [msg, setMsg] = useState("");
+
+    useEffect(() => {
+        props.getUser(user);
+    },[user]);
 
     function submitLogin() {
         let user = document.getElementById('username');
@@ -37,9 +45,12 @@ function Login() {
             config
         )
             .then(response => {
-                console.log(response.data["success"]);
-                setStatus(response.data["success"]);
-                setMsg(response.data["message"]);
+                if (response.data["success"]) {
+                    setUser(user);
+                    return (history.push("/explore"));
+                } else {
+                    setMsg(<p className={"error"}> {response.data["message"]} </p>);
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -47,32 +58,35 @@ function Login() {
 
     }
 
-    function onSuccess() {
-        submitLogin();
-        if (!status) {
-            return (<p> {msg} </p>);
-        } else {
-            return (<Redirect to={"/explore"} />)
-        }
-    }
-
-
     return(
-        <div className="login">
+        <div className="login-container">
 
-            <p> sign in here! </p>
+            <div className={"login-graphics"}>
+                <div className={"login-logo"}>
+                    <img src={fuud}/>
+                </div>
 
-            <form className="">
-                <label htmlFor="username">Username:</label>
-                <input className={"shadow"} type="text" id="username" name="username" required/>
-            </form>
+                <div className={"login shadow"}>
 
-            <form className="">
-                <label htmlFor="password">Password:</label>
-                <input className={"shadow"} type="password" id="password" name="password" required/>
-            </form>
+                    <form>
+                        <input type="text" id="username" name="username" placeholder="enter username" required/>
+                    </form>
 
-            <button className="submitButton" type="submit" onClick={onSuccess}>log in</button>
+                    <form>
+                        <input type="password" id="password" name="password" placeholder="enter password" required/>
+                    </form>
+
+                    <button className="submitButton" type="submit" onClick={submitLogin}>log in</button>
+                    {msg}
+                    <Link className={"link"} to={"/register"}> register </Link>
+                </div>
+            </div>
+
+            <div className={"graph"}>
+                <img src={graph}/>
+                <p> discover new restaurants and meet new people along the way! </p>
+            </div>
+
         </div>
     );
 }

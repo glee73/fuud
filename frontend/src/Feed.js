@@ -4,11 +4,13 @@ import React, {useEffect, useState} from "react";
 import './index.css';
 import Navbar from "./Navbar";
 
-function Feed() {
+function Feed(props) {
 
-        const userName = "ethan";
+        const userName = props.user;
 
-        let [posts, setPosts] = useState([]);
+        console.log(userName);
+
+        let [posts, setPosts] = useState(null);
 
         function getFeedPosts() {
                 const toSend = {
@@ -45,7 +47,10 @@ function Feed() {
 
         const displayPosts = () => {
             let content = [];
-            console.log(posts[0])
+
+            if (posts.length === 0) {
+                return <p> No posts to show. Find other users to follow by entering their username in the search bar above!</p>
+            }
             posts.map((post, idx) => (
                 content.push(
                     <Post className={"profileItem"} key={idx}
@@ -61,15 +66,25 @@ function Feed() {
             );
         }
 
-        return (
-            <div>
-                <Navbar/>
-                <div className="feed">
-                    <p className="feedTitle pageTitle">what your friends are saying</p>
-                    {displayPosts()}
+        props.redirect();
+
+        if (posts === null) {
+            return (
+                <div>
+                    <Navbar logout={props.logout}/>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div>
+                    <Navbar logout={props.logout}/>
+                    <div className="feed">
+                        <p className="feedTitle pageTitle">what your friends are saying</p>
+                        {displayPosts()}
+                    </div>
+                </div>
+            );
+        }
 }
 
 export default Feed;
