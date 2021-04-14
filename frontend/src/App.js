@@ -24,9 +24,9 @@ function App() {
     }
 
     function redirect() {
-        if (user === null) {
-            return history.push("/");
-        }
+        // if (user === null) {
+        //     return history.push("/");
+        // }
     }
 
 

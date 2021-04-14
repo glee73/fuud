@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 
@@ -14,9 +14,12 @@ function MakeNewPost(props) {
 
     let history = useHistory();
 
-    const canvas = document.createElement('canvas')
     const img = document.createElement('img')
+    const canvas = document.createElement('canvas')
 
+    const handleImageUpload = (event) => {
+        img.setAttribute('src', URL.createObjectURL(event.target.files[0]))
+    }
 
     function sendRestaurantName() {
         let restaurantName = document.getElementById('restaurantName');
@@ -80,17 +83,9 @@ function MakeNewPost(props) {
         let text = document.getElementById('caption').value;
         let review = document.getElementById('rating').value;
         let timestamp = new Date().toLocaleString();
-        let picUrl = document.getElementById('fileUpload').value;
 
-        // let FR= new FileReader();
-        // FR.onload = function(e) {
-        //     callback(e.target.result)
-        // };
-        // FR.readAsDataURL(picUrl);
-
-
-        console.log(picUrl);
-        img.setAttribute('src', picUrl)
+        console.log(img)
+        console.log(img.height)
         canvas.height = img.height
         canvas.width = img.width
         const ctx = canvas.getContext('2d')
@@ -98,8 +93,6 @@ function MakeNewPost(props) {
         const data = canvas.toDataURL("image/png")
 
         console.log(canvas)
-        console.log(img)
-        console.log("yoo")
         console.log(data)
 
         const toSend = {
@@ -108,7 +101,7 @@ function MakeNewPost(props) {
             "review": review,
             "username": userName,
             "timestamp": timestamp,
-            // "pic": data
+            "pic": data
         }
 
         let config = {
@@ -166,7 +159,7 @@ function MakeNewPost(props) {
                 <div className="step step4">
                     <form className="formStyle caption">
                         <label htmlFor="fileUpload">Upload Image (optional):</label>
-                        <input className={"shadow"} type="file" id="fileUpload" name="fileUpload"/>
+                        <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload}/>
                     </form>
                 </div>
                 <button className="submitButton" type="submit" onClick={makePost} action={"/myprofile"}>submit</button>
