@@ -194,7 +194,7 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
-      List<Post> news = ComplexFunctionality.getFeedPagePosts(username);
+      List<Post> news = FeedPage.getFeedPagePosts(username);
       news.sort(new TimestampComparator());
       Map<String, Object> vars = ImmutableMap.of("feed", news);
       return GSON.toJson(vars);
