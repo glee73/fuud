@@ -1,5 +1,7 @@
 import { Link, useHistory } from 'react-router-dom';
 import logo from "./fuud.svg";
+import axios from "axios";
+import React, {useEffect, useState} from "react";
 
 function Navbar(props) {
 
@@ -9,6 +11,52 @@ function Navbar(props) {
         props.logout();
         return (history.push("/"));
     }
+    
+    function searchBy(e) {
+        e.preventDefault();
+
+        let searchFor = document.getElementById('searchBar');
+
+        if (searchFor == null) {
+            return;
+        } else {
+            searchFor = searchFor.value;
+        }
+        
+        const toSend = {
+            "searchBar": searchFor,
+            "text": text,
+            "review": review,
+            "username": userName,
+            "timestamp": timestamp,
+            "pic": data
+        }
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        };
+
+        axios.post(
+            'http://localhost:4567/addpost',
+            toSend,
+            config
+        )
+            .then(response => {
+                if (response.data["success"]) {
+                    history.push('/myprofile');
+                } else {
+                    setMsg(<p className="newPostResult"> post failed. please try again. </p>)
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        
+        
+    }
 
     return (
         <div>
@@ -16,8 +64,9 @@ function Navbar(props) {
                 <Link to="/explore">
                     <img src={logo} alt={"fuud logo"} className={"logo"}/>
                 </Link>
-
-                <input className="searchBar shadow" type="text" placeholder="looking for something?"/>
+                <form onSubmit={searchBy}>
+                    <input className="searchBar shadow" type="text" placeholder="looking for something?"/>
+                </form>
                 <div className="link" onClick={logout}> logout </div>
             </div>
             <div className="navbarContainer">

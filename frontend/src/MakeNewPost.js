@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 function MakeNewPost(props) {
 
     let [searchResult, setSearchResult] = useState(null);
-    let [submitResult, setSubmitResult] = useState(null);
+    let [msg, setMsg] = useState(null);
 
     const userName = props.user;
 
@@ -21,7 +21,8 @@ function MakeNewPost(props) {
         img.setAttribute('src', URL.createObjectURL(event.target.files[0]))
     }
 
-    function sendRestaurantName() {
+    function sendRestaurantName(e) {
+        e.preventDefault();
         let restaurantName = document.getElementById('restaurantName');
 
         if (restaurantName == null) {
@@ -41,7 +42,6 @@ function MakeNewPost(props) {
             }
         };
 
-        console.log("before");
         axios.post(
             'http://localhost:4567/search',
             toSend,
@@ -63,37 +63,39 @@ function MakeNewPost(props) {
             return;
         }
 
-        if (searchResult === false) {
+        if (!searchResult) {
             return (
-                <div className="searchResult">
+                <div className="newPostResult">
                     Restaurant name not found. Please try again.
                 </div>
             );
         } else {
             return (
-                <div className="searchResult">
+                <div className="newPostResult">
                     Restaurant found! Please continue.
                 </div>);
         }
     }
 
-    function makePost() {
+    function makePost(e) {
+
+        e.preventDefault();
+
+        if (!searchResult) {
+            setMsg(<p className="newPostResult"> please enter valid restaurant before submission </p>)
+            return;
+        }
 
         let restaurantName = document.getElementById('restaurantName').value;
         let text = document.getElementById('caption').value;
         let review = document.getElementById('rating').value;
         let timestamp = new Date().toLocaleString();
 
-        console.log(img)
-        console.log(img.height)
         canvas.height = img.height
         canvas.width = img.width
         const ctx = canvas.getContext('2d')
         ctx.drawImage(img, 0, 0)
         const data = canvas.toDataURL("image/png")
-
-        console.log(canvas)
-        console.log(data)
 
         const toSend = {
             "restaurantName": restaurantName,
@@ -117,18 +119,20 @@ function MakeNewPost(props) {
             config
         )
             .then(response => {
-                console.log(response.data["success"]);
-                setSubmitResult(response.data["success"]);
-                history.push('/myprofile');
-                return response.data["success"];
+                if (response.data["success"]) {
+                    history.push('/myprofile');
+                } else {
+                    setMsg(<p className="newPostResult"> post failed. please try again. </p>)
+                }
             })
             .catch(function (error) {
                 console.log(error);
             });
-        console.log("after");
     }
 
-    props.redirect();
+    useEffect(() => {
+        props.redirect();
+    }, [])
 
     return (
 
@@ -137,7 +141,7 @@ function MakeNewPost(props) {
             <div className="makeNewPost">
                 <p className="newPostHeader">Make a New Post!</p>
                 <div className="step step1">
-                    <form className="formStyle restaurantNameForm">
+                    <form className="formStyle restaurantNameForm" onSubmit={sendRestaurantName}>
                         <label htmlFor="restaurantName">Restaurant Name:</label>
                         <input className={"shadow"} type="text" id="restaurantName" name="restaurantName" required/>
                         <button className="submitButton searchButton" type="button" onClick={sendRestaurantName}>search</button>
@@ -158,13 +162,15 @@ function MakeNewPost(props) {
                 </div>
                 <div className="step step4">
                     <form className="formStyle caption">
-                        <label htmlFor="fileUpload">Upload Image (optional):</label>
+                        <label htmlFor="fileUpload">Upload an image (optional):</label>
                         <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload}/>
                     </form>
                 </div>
+                {msg}
                 <button className="submitButton" type="submit" onClick={makePost} action={"/myprofile"}>submit</button>
             </div>
         </div>
+
     );
 }
 
