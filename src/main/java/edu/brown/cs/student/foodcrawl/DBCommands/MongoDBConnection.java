@@ -21,7 +21,7 @@ import com.mongodb.Block;
 import static com.mongodb.client.model.Filters.*;
 
 /**
- * a class to manage our database connection
+ * a class to manage our database connection.
  */
 public class MongoDBConnection {
 
@@ -30,7 +30,7 @@ public class MongoDBConnection {
   MongoCollection<Document> postsCollection;
 
   /**
-   * the constructor, which establishes a connection to our database
+   * the constructor, which establishes a connection to our database.
    */
   public MongoDBConnection() {
     MongoClientURI uri = new MongoClientURI(
@@ -87,6 +87,14 @@ public class MongoDBConnection {
         Updates.addToSet("following", userFollowed));
   }
 
+  public void updateProfilePic(String username, String pic) {
+    usersCollection.updateOne(eq("username", username), Updates.set("pic", pic));
+  }
+
+  public void testUpdate() {
+    updateProfilePic("ethan", "f");
+  }
+
   /**
    * returns a user instance based off of the username.
    * returns null if not found
@@ -103,8 +111,9 @@ public class MongoDBConnection {
         List<String> following = (List<String>) document.get("following");
         List<String> followers = (List<String>) document.get("followers");
         String bio = document.getString("bio");
+        String pic = document.getString("pic");
 
-        found[0] = new User(username, password, followers, following, bio);
+        found[0] = new User(username, password, followers, following, bio, pic);
       }
     };
     usersCollection.find(eq("username", username))
@@ -134,7 +143,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * get a restaurant by id
+   * get a restaurant by id.
    * @param id the id, a string
    * @return the corresponding restaurant
    */
@@ -216,7 +225,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to create a post
+   * a method to create a post.
    * @param text the text of the post, a string
    * @param reviewOutOfTen the review, an integer
    * @param pictures any pictures, a list of string links
@@ -228,13 +237,13 @@ public class MongoDBConnection {
   public void createPost(String text, int reviewOutOfTen, List<String> pictures,
                          String restaurantID, String username, String timestamp, String b) {
     Document doc = new Document("text", text)
-      .append("review", reviewOutOfTen)
-      .append("pictures", pictures)
-      .append("restaurantID", restaurantID)
-      .append("id", GenerateHashID.generateUUID())
-      .append("username", username)
-      .append("timestamp", timestamp)
-      .append("pic", b);
+        .append("review", reviewOutOfTen)
+        .append("pictures", pictures)
+        .append("restaurantID", restaurantID)
+        .append("id", GenerateHashID.generateUUID())
+        .append("username", username)
+        .append("timestamp", timestamp)
+        .append("pic", b);
     postsCollection.insertOne(doc);
   }
 

@@ -10,6 +10,7 @@ public class User {
   private final List<String> following;
   private final List<String> followers;
   private String bio;
+  private String pic;
 
   /**
    * invariant that the username for each user is unique!!
@@ -30,13 +31,15 @@ public class User {
    * @param password
    * @param followers
    * @param following
+   * @param bio
    */
-  public User(String username, String password, List<String> followers, List<String> following, String bio) {
+  public User(String username, String password, List<String> followers, List<String> following, String bio, String pic) {
     this.username = username;
     this.password = password;
     this.followers = followers;
     this.following = following;
     this.bio = bio;
+    this.pic = pic;
   }
 
   public String getUsername() {
@@ -55,5 +58,9 @@ public class User {
 
   public String getBio() {
     return bio;
+  }
+
+  public String getPic() {
+    return pic;
   }
 }
