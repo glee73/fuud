@@ -1,11 +1,13 @@
-import './App.css';
-import Feed from './Feed.js';
-import Profile from './Profile';
-import MakeNewPost from "./MakeNewPost.js";
+import './css/App.css';
+import Feed from './pages/Feed.js';
+import Profile from './pages/Profile';
+import MakeNewPost from "./pages/MakeNewPost.js";
 import {Route, Switch,useHistory} from 'react-router-dom';
-import RestaurantSearch from "./RestaurantSearch.js";
-import Login from "./Login.js"
-import Signup from "./Signup.js"
+import RestaurantSearch from "./pages/RestaurantSearch.js";
+import Login from "./pages/Login.js"
+import Signup from "./pages/Signup.js"
+import Explore from "./pages/Explore.js"
+import Pinned from "./pages/Pinned.js"
 
 function App() {
 
@@ -29,19 +31,19 @@ function App() {
 
     return (
             <div className="App">
-                {/*https://drive.google.com/file/d/0B6wwyazyzml-OGQ3VUo0Z2thdmc/view*/}
-                {/*https://drive.google.com/uc?export=view&id=0B6wwyazyzml-OGQ3VUo0Z2thdmc*/}
-
-                {/*https://drive.google.com/file/d/1vv3VhsvphsHV2qUaC-3bteBcToFwxCXf/view*/}
-                {/*https://drive.google.com/uc?export=view&id=1vv3VhsvphsHV2qUaC-3bteBcToFwxCXf*/}
-                {/*<img width="640" height="auto" src="https://drive.google.com/uc?export=view&id=1vv3VhsvphsHV2qUaC-3bteBcToFwxCXf"/>*/}
                 <Switch>
                     <Route exact path="/myprofile"
                            render={(props) => (
                                 <Profile {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/explore"
                            render={(props) => (
+                               <Explore {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                    <Route exact path="/myfeed"
+                           render={(props) => (
                                <Feed {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                    <Route exact path="/mypinned"
+                           render={(props) => (
+                               <Pinned {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/newPost"
                            render={(props) => (
                                <MakeNewPost {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
@@ -50,7 +52,7 @@ function App() {
                                <Login {...props} getUser={getUser} /> )} />
                     <Route exact path="/search"
                            render={(props) => (
-                               <RestaurantSearch {...props} getUser={getUser} logout={clearUser} redirect={redirect}/> )} />
+                               <RestaurantSearch {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/register" component={Signup}/>
                 </Switch>
             </div>

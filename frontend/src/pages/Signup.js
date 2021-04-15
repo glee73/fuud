@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import {useHistory} from "react-router-dom";
-import './index.css';
+import '../css/index.css';
 import {useState} from "react";
 
 function Signup() {

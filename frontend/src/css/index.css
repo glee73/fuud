@@ -212,10 +212,15 @@ code {
   justify-content: space-between;
   padding-bottom: 30px;
 }
+
 .postImage {
   width: 25%;
   margin-right: 30px;
   border-radius: 15px;
+}
+
+.postDesc {
+  width: 75%;
 }
 
 .feed {
@@ -279,6 +284,10 @@ code {
 }
 .searchButton {
   width: 30%;
+}
+
+.newPostResult {
+  color: #5A5858;
 }
 
 .graph img {

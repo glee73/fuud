@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
 import {useHistory, Link} from "react-router-dom";
-import './index.css';
-import graph from './gray-graph.gif';
-import fuud from './fuud.svg';
+import '../css/index.css';
+import graph from '../imgs/gray-graph.gif';
+import fuud from '../imgs/fuud.svg';
 import {useState, useEffect} from "react";
 
 function Login(props) {
@@ -16,7 +16,13 @@ function Login(props) {
         props.getUser(user);
     },[user]);
 
-    function submitLogin() {
+    function incomplete(e) {
+        e.preventDefault();
+        setMsg(<p className={"error"}> please enter a password </p>);
+    }
+
+    function submitLogin(e) {
+        e.preventDefault();
         let user = document.getElementById('username');
         let pw = document.getElementById('password');
 
@@ -46,9 +52,11 @@ function Login(props) {
         )
             .then(response => {
                 if (response.data["success"]) {
+                    console.log('success');
                     setUser(user);
-                    return (history.push("/explore"));
+                    return (history.push("/myfeed"));
                 } else {
+                    console.log('failure');
                     setMsg(<p className={"error"}> {response.data["message"]} </p>);
                 }
             })
@@ -68,11 +76,11 @@ function Login(props) {
 
                 <div className={"login shadow"}>
 
-                    <form>
+                    <form onSubmit={incomplete}>
                         <input type="text" id="username" name="username" placeholder="enter username" required/>
                     </form>
 
-                    <form>
+                    <form onSubmit={submitLogin}>
                         <input type="password" id="password" name="password" placeholder="enter password" required/>
                     </form>
 

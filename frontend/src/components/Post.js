@@ -7,26 +7,6 @@ function Post(props) {
     let resID = props.resID;
     let [resName, setResName] = useState("");
 
-    // function parseURL(url) {
-    //     const newURL = url[0].replace("file/d/", "uc?export=view&id=");
-    //     const finalURL = newURL.substring(0, newURL.length - 5);
-    //     console.log(finalURL);
-    //     return finalURL;
-    // }
-    //
-    // function isValidURL(url) {
-    //     if (url === 'undefined') {
-    //         return ("");
-    //     } else {
-    //         if (url.length !== 0) {
-    //             return (<img src={parseURL(url)} className="postImage"/>);
-    //         } else {
-    //             return ("");
-    //         }
-    //
-    //     }
-    // }
-
     function getResName() {
 
         const toSend = {

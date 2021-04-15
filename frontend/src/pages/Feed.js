@@ -1,8 +1,8 @@
-import Post from './Post';
+import Post from '../components/Post';
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import './index.css';
-import Navbar from "./Navbar";
+import '../css/index.css';
+import Navbar from "../components/Navbar";
 
 function Feed(props) {
 

@@ -1,5 +1,5 @@
 import { Link, useHistory } from 'react-router-dom';
-import logo from "./fuud.svg";
+import logo from "../imgs/fuud.svg";
 
 function Navbar(props) {
 
@@ -13,24 +13,26 @@ function Navbar(props) {
     return (
         <div>
             <div className="header">
-                <Link to="/explore">
+                <Link to="/feed">
                     <img src={logo} alt={"fuud logo"} className={"logo"}/>
                 </Link>
-
-                <input className="searchBar shadow" type="text" placeholder="looking for something?"/>
                 <div className="link" onClick={logout}> logout </div>
             </div>
             <div className="navbarContainer">
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"></div>
-                    <Link className="navbarLink" to="/explore">explore</Link>
+                    <div className="orangeCircle"/>
+                    <Link className="navbarLink" to={"/myfeed"}>my feed</Link>
                 </div>
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"></div>
-                    {/*<a className="navbarLink" href="">my pinned</a>*/}
+                    <div className="orangeCircle"/>
+                    <Link className={"navbarLink"} to={"/explore"}> explore </Link>
                 </div>
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"></div>
+                    <div className="orangeCircle"/>
+                    <Link className={"navbarLink"} to={"/mypinned"}> my pinned </Link>
+                </div>
+                <div className="navLinkFlex">
+                    <div className="orangeCircle"/>
                     <Link className="navbarLink" to="/myprofile">my profile</Link>
                 </div>
             </div>
