@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * a class to compare post by timestamp, in order to sort them
+ */
 public class TimestampComparator implements Comparator<Post> {
   @Override
   public int compare(Post p1, Post p2) {
