@@ -5,6 +5,9 @@ import org.bson.types.Binary;
 
 import java.util.List;
 
+/**
+ * a class for Posts
+ */
 public class Post {
   private final String description;
   private final int reviewOutOfTen;

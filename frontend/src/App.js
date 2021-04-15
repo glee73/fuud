@@ -7,9 +7,6 @@ import RestaurantSearch from "./RestaurantSearch.js";
 import Login from "./Login.js"
 import Signup from "./Signup.js"
 
-
-
-
 function App() {
 
     let history = useHistory();
