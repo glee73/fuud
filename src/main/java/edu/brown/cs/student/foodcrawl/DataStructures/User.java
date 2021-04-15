@@ -43,7 +43,7 @@ public class User {
     return username;
   }
 
-  public String getPassword() {return password;}
+  public String getPassword() { return password;}
 
   public List<String> getFollowing() {
     return following;
