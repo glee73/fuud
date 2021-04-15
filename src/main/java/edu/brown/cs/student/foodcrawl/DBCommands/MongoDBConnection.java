@@ -7,6 +7,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
@@ -202,6 +203,15 @@ public class MongoDBConnection {
   public void addTag(String tag, String restaurantID) {
     restaurantsCollection.updateOne(eq("id", restaurantID),
         Updates.addToSet("tags", tag));
+  }
+
+  public boolean deletePost(String id) {
+    try {
+      postsCollection.deleteOne(Filters.eq("id", id));
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
   }
 
   public void checkRestaurant() {

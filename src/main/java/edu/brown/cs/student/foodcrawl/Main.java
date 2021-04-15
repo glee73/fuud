@@ -16,6 +16,7 @@ import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
+import edu.brown.cs.student.foodcrawl.UtilityFunctions.TimestampComparator;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.json.JSONArray;
@@ -32,6 +33,8 @@ import com.google.common.collect.ImmutableMap;
 
 import org.json.JSONObject;
 import com.google.gson.Gson;
+
+import javax.security.auth.callback.TextOutputCallback;
 
 
 /**
@@ -119,6 +122,8 @@ public final class Main {
     Spark.post("/search", new SearchHandler());
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
+    Spark.post("/searchrestaurant", new SearchRestHandler());
+    Spark.post("/deletepost", new DeletePostHandler());
   }
 
 
@@ -151,6 +156,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
       List<Post> posts = connection.getPostsFromUser(username);
+      posts.sort(new TimestampComparator());
       Map<String, Object> vars = ImmutableMap.of("posts", posts);
       return GSON.toJson(vars);
     }
@@ -189,6 +195,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
       List<Post> news = ComplexFunctionality.getFeedPagePosts(username);
+      news.sort(new TimestampComparator());
       Map<String, Object> vars = ImmutableMap.of("feed", news);
       return GSON.toJson(vars);
     }
@@ -318,6 +325,16 @@ public final class Main {
       } else {
         vars = ImmutableMap.of("success", true, "user", r);
       }
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class DeletePostHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String id = data.getString("id");
+      boolean result = connection.deletePost(id);
+      Map<String, Object> vars = ImmutableMap.of("success", result);
       return GSON.toJson(vars);
     }
   }
