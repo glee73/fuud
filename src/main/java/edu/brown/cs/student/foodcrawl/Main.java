@@ -44,14 +44,10 @@ public final class Main {
   /**
    * The initial method called when execution begins.
    * @param args An array of command line arguments
-   * @throws IOException when error regarding reading input occurs
-   * @throws SQLException when SQL query cannot be made
-   * @throws ClassNotFoundException when class not found
    */
-  public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
+  public static void main(String[] args) {
     new Main(args).run();
     connection = new MongoDBConnection();
-    //connection.checkPost();
   }
 
   private final String[] args;
