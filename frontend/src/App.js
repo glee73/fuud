@@ -32,12 +32,6 @@ function App() {
 
     return (
             <div className="App">
-                {/*https://drive.google.com/file/d/0B6wwyazyzml-OGQ3VUo0Z2thdmc/view*/}
-                {/*https://drive.google.com/uc?export=view&id=0B6wwyazyzml-OGQ3VUo0Z2thdmc*/}
-
-                {/*https://drive.google.com/file/d/1vv3VhsvphsHV2qUaC-3bteBcToFwxCXf/view*/}
-                {/*https://drive.google.com/uc?export=view&id=1vv3VhsvphsHV2qUaC-3bteBcToFwxCXf*/}
-                {/*<img width="640" height="auto" src="https://drive.google.com/uc?export=view&id=1vv3VhsvphsHV2qUaC-3bteBcToFwxCXf"/>*/}
                 <Switch>
                     <Route exact path="/myprofile"
                            render={(props) => (
