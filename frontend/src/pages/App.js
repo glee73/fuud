@@ -1,4 +1,4 @@
-import './App.css';
+import '../css/App.css';
 import Feed from './Feed.js';
 import Profile from './Profile';
 import MakeNewPost from "./MakeNewPost.js";
@@ -6,6 +6,8 @@ import {Route, Switch,useHistory} from 'react-router-dom';
 import RestaurantSearch from "./RestaurantSearch.js";
 import Login from "./Login.js"
 import Signup from "./Signup.js"
+import Explore from "./Explore.js"
+import Pinned from "./Pinned.js"
 
 function App() {
 
@@ -35,7 +37,13 @@ function App() {
                                 <Profile {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/explore"
                            render={(props) => (
+                               <Explore {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                    <Route exact path="/myfeed"
+                           render={(props) => (
                                <Feed {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                    <Route exact path="/mypinned"
+                           render={(props) => (
+                               <Pinned {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/newPost"
                            render={(props) => (
                                <MakeNewPost {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
@@ -44,7 +52,7 @@ function App() {
                                <Login {...props} getUser={getUser} /> )} />
                     <Route exact path="/search"
                            render={(props) => (
-                               <RestaurantSearch {...props} getUser={getUser} logout={clearUser} redirect={redirect}/> )} />
+                               <RestaurantSearch {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/register" component={Signup}/>
                 </Switch>
             </div>

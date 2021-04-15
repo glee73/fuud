@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 
 function MakeNewPost(props) {
 
@@ -9,8 +9,6 @@ function MakeNewPost(props) {
     let [msg, setMsg] = useState(null);
 
     const userName = props.user;
-
-    console.log(userName);
 
     let history = useHistory();
 
@@ -43,7 +41,7 @@ function MakeNewPost(props) {
         };
 
         axios.post(
-            'http://localhost:4567/search',
+            'http://localhost:4567/searchtopost',
             toSend,
             config
         )

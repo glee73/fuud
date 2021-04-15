@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
 import {useHistory, Link} from "react-router-dom";
-import './index.css';
-import graph from './gray-graph.gif';
-import fuud from './fuud.svg';
+import '../css/index.css';
+import graph from '../imgs/gray-graph.gif';
+import fuud from '../imgs/fuud.svg';
 import {useState, useEffect} from "react";
 
 function Login(props) {
@@ -54,7 +54,7 @@ function Login(props) {
                 if (response.data["success"]) {
                     console.log('success');
                     setUser(user);
-                    return (history.push("/explore"));
+                    return (history.push("/myfeed"));
                 } else {
                     console.log('failure');
                     setMsg(<p className={"error"}> {response.data["message"]} </p>);

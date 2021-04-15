@@ -1,5 +1,5 @@
-import RestaurantListing from "./RestaurantListing";
-import Navbar from "./Navbar.js"
+import RestaurantListing from "../components/RestaurantListing";
+import Navbar from "../components/Navbar.js"
 import React from "react";
 
 function RestaurantSearch(props) {

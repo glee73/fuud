@@ -103,7 +103,7 @@ public final class Main {
     Spark.post("/login", new LoginHandler());
     Spark.post("/signup", new SignUpHandler());
     Spark.post("/logout", new LogoutHandler());
-    Spark.post("/search", new SearchHandler());
+    Spark.post("/searchtopost", new SearchHandler());
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
     Spark.post("/searchrestaurant", new SearchRestHandler());
@@ -329,8 +329,7 @@ public final class Main {
   private static class SearchRestHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
-      Restaurant r = connection.getRestByName(
-        data.getString("name"));
+      Restaurant r = connection.getRestByName(data.getString("name"));
       Map<String, Object> vars;
       if (r == null) {
         vars = ImmutableMap.of("success", false, "user", null);

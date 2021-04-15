@@ -1,9 +1,9 @@
 import axios from 'axios';
-import Post from './Post';
+import Post from '../components/Post';
 import React, {useState, useEffect, useRef} from "react";
-import './index.css';
-import Navbar from "./Navbar.js"
-import BinImage from "./BinImage";
+import '../css/index.css';
+import Navbar from "../components/Navbar.js"
+import BinImage from "../components/BinImage";
 
 function Profile(props) {
 
@@ -11,8 +11,6 @@ function Profile(props) {
     let [userPosts, setUserPosts] = useState(null);
 
     const userName = props.user;
-
-    console.log(userName);
 
     function getUserData() {
         console.log("getting user data");
