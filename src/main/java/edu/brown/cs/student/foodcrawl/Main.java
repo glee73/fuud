@@ -9,6 +9,7 @@ import java.util.Map;
 import edu.brown.cs.student.foodcrawl.DBCommands.FeedPage;
 import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
+import edu.brown.cs.student.foodcrawl.DBCommands.RecommendationAlgo;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;

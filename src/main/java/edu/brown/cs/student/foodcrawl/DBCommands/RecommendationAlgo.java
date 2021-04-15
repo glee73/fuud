@@ -1,18 +1,31 @@
 package edu.brown.cs.student.foodcrawl.DBCommands;
 
-import com.mongodb.Mongo;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
 
-import java.util.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class RecommendationAlgo {
 
-
+  /**
+   * returns 3 recommended restaurants.
+   * @param username user we are generating recommmendations for
+   * @return list of restaurants wee recommend
+   */
   public static List<Restaurant> recommend(String username) {
     MongoDBConnection m = new MongoDBConnection();
+    // results is the list of restaurant ids we recommend
     List<String> results = recommendBasedOnUserSimilarity(username);
+    // restaurantsList is the list of restaurants that correspond to the results' ids
     List<Restaurant> restaurantList = new ArrayList<>();
     for (String rID : results) {
       Restaurant r = m.getRestaurantByID(rID);
@@ -26,19 +39,49 @@ public class RecommendationAlgo {
     if (restaurantList.size() < 3) {
       // get the globally highest recommended restaurants based on all posts
       // and use these posts if not enough are returned from recommendBasedOnUserSimilarity
-      return null;
+      List<String> theBest = globallyHighestReviewedRestaurants();
+      for (String bestRID : theBest) {
+        if (!results.contains(bestRID)) {
+          Restaurant bestR = m.getRestaurantByID(bestRID);
+          restaurantList.add(bestR);
+        }
+        if (restaurantList.size() == 3) {
+          break;
+        }
+      }
+      return restaurantList;
+
     } else {
       return restaurantList;
     }
   }
 
   public static List<String> globallyHighestReviewedRestaurants() {
-    // loop through posts and add to hashmaps of ratings and frequency
-    Map<String, Integer> ratings = new HashMap<>();
-    Map<String, Integer> numRatings = new HashMap<>();
+    // get the avg ratings
+    MongoDBConnection m = new MongoDBConnection();
+    HashMap<String, Double> avgRatings = m.computeRatings();
+    // maps restaurant id to avg rating
 
-    // get all posts
-    return null;
+    // sort by value to get the top restaurants
+    CompareByValueDouble comp = new CompareByValueDouble(avgRatings);
+    TreeMap<String, Double> sortedMap = new TreeMap<String, Double>(comp);
+    sortedMap.putAll(avgRatings);
+
+    // get the restaurant ids of the top 5 restauants;
+    List<String> topRestaurants = new ArrayList<>();
+    for (Map.Entry<String, Double> entry : sortedMap.entrySet()) {
+      String key = entry.getKey();
+      Double value = entry.getValue();
+      System.out.println(key + " => " + value);
+
+      topRestaurants.add(key);
+
+      if (topRestaurants.size() == 5) {
+        break;
+      }
+    }
+
+    return topRestaurants;
   }
 
   /**
@@ -98,7 +141,9 @@ public class RecommendationAlgo {
           int difference = Math.abs(restaurantRatings.get(rid) - rating);
           int extraSimilarity = 10 - difference;
 
-          int curSim = similarity.get(username);
+          //System.out.println(similarity);
+          //System.out.println(fuu);
+          int curSim = similarity.get(fuu.getUsername());
           similarity.put(fuu.getUsername(), extraSimilarity + curSim);
         }
       }
@@ -154,6 +199,23 @@ class CompareByValue implements Comparator<String> {
   Map<String, Integer> theMap;
 
   public CompareByValue(Map<String, Integer> theMap) {
+    this.theMap = theMap;
+  }
+
+  // sorts from greatest to least
+  public int compare(String a, String b) {
+    if (theMap.get(a) >= theMap.get(b)) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+}
+
+class CompareByValueDouble implements Comparator<String> {
+  Map<String, Double> theMap;
+
+  public CompareByValueDouble(Map<String, Double> theMap) {
     this.theMap = theMap;
   }
 
