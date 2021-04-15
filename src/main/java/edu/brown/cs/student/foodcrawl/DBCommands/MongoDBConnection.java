@@ -2,11 +2,11 @@ package edu.brown.cs.student.foodcrawl.DBCommands;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.ServerAddress;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
@@ -16,24 +16,23 @@ import org.bson.Document;
 import java.util.Arrays;
 import com.mongodb.Block;
 
-import com.mongodb.client.MongoCursor;
 import static com.mongodb.client.model.Filters.*;
-import com.mongodb.client.result.DeleteResult;
-import static com.mongodb.client.model.Updates.*;
-import com.mongodb.client.result.UpdateResult;
-import org.bson.types.Binary;
-import spark.Response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * a class to manage our database connection
+ */
 public class MongoDBConnection {
 
   MongoCollection<Document> usersCollection;
   MongoCollection<Document> restaurantsCollection;
   MongoCollection<Document> postsCollection;
 
+  /**
+   * the constructor, which establishes a connection to our database
+   */
   public MongoDBConnection() {
     MongoClientURI uri = new MongoClientURI(
       "mongodb+srv://tim:Ihatethisclass2!@foodcrawl.75jup.mongodb.net/test?retryWrites=true&w=majority&authSource=admin");
@@ -47,8 +46,8 @@ public class MongoDBConnection {
 
   /**
    * creates a user. assumes that the username is unique!!!
-   * @param username
-   * @param password
+   * @param username the username, a string
+   * @param password the password, a string
    */
   public void createUser(String username, String password) {
     Document doc = new Document("username", username)
@@ -61,8 +60,8 @@ public class MongoDBConnection {
 
   /**
    * given a username, returns boolean indicating if it exists already.
-   * @param username
-   * @return
+   * @param username the username, a string
+   * @return if it exists, a boolean
    */
   public boolean checkUsernameExists(String username) {
     final boolean[] found = {false};
@@ -79,8 +78,8 @@ public class MongoDBConnection {
 
   /**
    * adds a follower to the userFollowed, and adds the userFollowed to the following list.
-   * @param follower
-   * @param userFollowed
+   * @param follower the username of the follower, a string
+   * @param userFollowed ther username of the user follower, a string
    */
   public void addFollower(String follower, String userFollowed) {
     usersCollection.updateOne(eq("username", userFollowed),
@@ -116,8 +115,8 @@ public class MongoDBConnection {
 
   /**
    * gets the restaurant by name.
-   * @param name
-   * @return
+   * @param name the name, a string
+   * @return the restaurant
    */
   public Restaurant getRestByName(String name) {
     final Restaurant[] found = {null};
@@ -135,6 +134,11 @@ public class MongoDBConnection {
     return found[0];
   }
 
+  /**
+   * get a restaurant by id
+   * @param id the id, a string
+   * @return the corresponding restaurant
+   */
   public Restaurant getRestaurantByID(String id) {
     final Restaurant[] found = {null};
     Block<Document> existsBlock = new Block<Document>() {
@@ -154,7 +158,7 @@ public class MongoDBConnection {
 
   /**
    * returns all restaurants with any matching tags.
-   * @param tags
+   * @param tags a list of string tags
    * @return list of restaurants
    */
   public List<Restaurant> searchByTags(List<String> tags) {
@@ -174,22 +178,11 @@ public class MongoDBConnection {
     return found;
   }
 
-  public void checkUser() {
-    //createUser("bob", "pw");
-    //createUser("ethan", "yuh");
-    //addFollower("bob", "ethan");
-    System.out.println(checkUsernameExists("ethan"));
-    System.out.println(checkUsernameExists("ethhhjian"));
-    System.out.println("hi");
-
-    System.out.println(getUserByUsername("ethan").getBio());
-    System.out.println(getUserByUsername("jasdiof"));
-  }
 
   /**
    * creates a restaurant. assumes that the username is unique!!!
-   * @param name string
-   * @param address string
+   * @param name the name, a string
+   * @param address the address, a string
    */
   public void createRestaurant(String name, String address) {
     Document doc = new Document("name", name)
@@ -199,16 +192,40 @@ public class MongoDBConnection {
     restaurantsCollection.insertOne(doc);
   }
 
+  /**
+   * a method to add a tag to a restaurant
+   * @param tag the tag to add, a string
+   * @param restaurantID the restaurant id, a string
+   */
   public void addTag(String tag, String restaurantID) {
     restaurantsCollection.updateOne(eq("id", restaurantID),
         Updates.addToSet("tags", tag));
   }
 
-  public void checkRestaurant() {
-    //createRestaurant("McDonalds", "thayer st");
-    addTag("burgers", "b3b2525248bf4578b0b5847f58dd3fab");
+  /**
+   * a method to delete a post
+   * @param id the id of the post, a string
+   * @return a boolean indicating if the post was successfully deleted
+   */
+  public boolean deletePost(String id) {
+    try {
+      postsCollection.deleteOne(Filters.eq("id", id));
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
   }
 
+  /**
+   * a method to create a post
+   * @param text the text of the post, a string
+   * @param reviewOutOfTen the review, an integer
+   * @param pictures any pictures, a list of string links
+   * @param restaurantID the id of the corresponding restaurant, a string
+   * @param username the username of the posting user, a string
+   * @param timestamp the timestamp of the post, a string
+   * @param b the base64 encoded photo, a string
+   */
   public void createPost(String text, int reviewOutOfTen, List<String> pictures,
                          String restaurantID, String username, String timestamp, String b) {
     Document doc = new Document("text", text)
@@ -222,6 +239,11 @@ public class MongoDBConnection {
     postsCollection.insertOne(doc);
   }
 
+  /**
+   * a method to get all the posts of a user
+   * @param username the username, a string
+   * @return the list of posts
+   */
   public List<Post> getPostsFromUser(String username) {
     //final Post[] found = {null};
     List<Post> posts = new ArrayList<>();
@@ -255,21 +277,5 @@ public class MongoDBConnection {
     return posts;
   }
 
-  public void checkPost() {
-    //createPost("testiinggg", 3,
-    //  new ArrayList<>(), "588c799866b647828134b4e92fa02188", "ben", "5:35");
-    /*
-    List<String> pic = new ArrayList<>();
-    pic.add("https://drive.google.com/file/d/1zpFeTO4diF_b9e6flc9r_4jGRmdpnVgE/view?usp=sharing");
-    createPost("kinda underwhelming. not much depth of flavor.", 3,
-      pic, "588c799866b647828134b4e92fa02188", "ben", "5:35"); */
-    /*
-    List<Post> ppf = getPostsFromUser("ben");
-    for (Post p: ppf) {
-      System.out.println(p.getPic());
-    }*/
-
-    // createRestaurant("Bajas Tex Mex", "273 Thayer St, Providence, Rhode Island");
-  }
 
 }

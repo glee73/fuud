@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * a class to manage getting the posts for the feed page
+ */
 public class FeedPage {
 
   /**
@@ -16,8 +19,6 @@ public class FeedPage {
    * @return list of posts
    */
   public static List<Post> getFeedPagePosts(String username) {
-    // call the db command
-  // TODO: sortt!!!!
     List<Post> feedpage = new ArrayList<>();
     MongoDBConnection m = new MongoDBConnection();
     User u = m.getUserByUsername(username);

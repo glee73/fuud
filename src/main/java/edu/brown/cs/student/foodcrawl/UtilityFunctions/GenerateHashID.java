@@ -2,6 +2,9 @@ package edu.brown.cs.student.foodcrawl.UtilityFunctions;
 
 import java.util.UUID;
 
+/**
+ * a class to generate unique ids for restaurants and posts
+ */
 public class GenerateHashID {
 
   /**
