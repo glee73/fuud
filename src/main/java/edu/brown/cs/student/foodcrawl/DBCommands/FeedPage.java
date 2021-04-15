@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ComplexFunctionality {
+public class FeedPage {
 
   /**
    * gets all posts the user would see on their feed page.
