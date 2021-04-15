@@ -307,6 +307,21 @@ public final class Main {
     }
   }
 
+  private static class SearchRestHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      Restaurant r = connection.getRestByName(
+        data.getString("name"));
+      Map<String, Object> vars;
+      if (r == null) {
+        vars = ImmutableMap.of("success", false, "user", null);
+      } else {
+        vars = ImmutableMap.of("success", true, "user", r);
+      }
+      return GSON.toJson(vars);
+    }
+  }
+
   /**
    * Display an error page when an exception occurs in the server.
    */
