@@ -1,13 +1,13 @@
-import '../css/App.css';
-import Feed from './Feed.js';
-import Profile from './Profile';
-import MakeNewPost from "./MakeNewPost.js";
+import './css/App.css';
+import Feed from './pages/Feed.js';
+import Profile from './pages/Profile';
+import MakeNewPost from "./pages/MakeNewPost.js";
 import {Route, Switch,useHistory} from 'react-router-dom';
-import RestaurantSearch from "./RestaurantSearch.js";
-import Login from "./Login.js"
-import Signup from "./Signup.js"
-import Explore from "./Explore.js"
-import Pinned from "./Pinned.js"
+import RestaurantSearch from "./pages/RestaurantSearch.js";
+import Login from "./pages/Login.js"
+import Signup from "./pages/Signup.js"
+import Explore from "./pages/Explore.js"
+import Pinned from "./pages/Pinned.js"
 
 function App() {
 
