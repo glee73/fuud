@@ -1,9 +1,7 @@
 package edu.brown.cs.student.foodcrawl;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
