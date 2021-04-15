@@ -38,11 +38,12 @@ public class RecommendationAlgo {
     Map<String, Integer> numRatings = new HashMap<>();
 
     // get all posts
+    return null;
   }
 
   /**
    * returns the restaurants ids of restaurants that your most similar users have eaten at
-   * that youo haven't eaten at yet
+   * that youo haven't eaten at yet.
    * @param username given user we are computing recommendations for
    * @return list of restaurant ids
    */
@@ -94,7 +95,7 @@ public class RecommendationAlgo {
         String rid = po.getRestaurantID();
         int rating = po.getReviewOutOfTen();
         if (restaurantRatings.containsKey(rid)) {
-          int difference = Math.abs(restaurantRatings.get(rid) - rating;
+          int difference = Math.abs(restaurantRatings.get(rid) - rating);
           int extraSimilarity = 10 - difference;
 
           int curSim = similarity.get(username);
@@ -110,7 +111,7 @@ public class RecommendationAlgo {
 
     // get a list of the top 3 users
     List<String> topThreeUsers = new ArrayList<>();
-    for(Map.Entry<String,Integer> entry : sorted_map.entrySet()) {
+    for(Map.Entry<String, Integer> entry : sorted_map.entrySet()) {
       String key = entry.getKey();
       Integer value = entry.getValue();
       System.out.println(key + " => " + value);
