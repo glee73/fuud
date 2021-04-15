@@ -193,7 +193,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to add a tag to a restaurant
+   * a method to add a tag to a restaurant.
    * @param tag the tag to add, a string
    * @param restaurantID the restaurant id, a string
    */
@@ -203,7 +203,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to delete a post
+   * a method to delete a post.
    * @param id the id of the post, a string
    * @return a boolean indicating if the post was successfully deleted
    */
@@ -240,7 +240,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to get all the posts of a user
+   * a method to get all the posts of a user.
    * @param username the username, a string
    * @return the list of posts
    */
