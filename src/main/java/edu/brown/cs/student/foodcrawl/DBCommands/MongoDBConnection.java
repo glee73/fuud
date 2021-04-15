@@ -13,13 +13,12 @@ import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
 import edu.brown.cs.student.foodcrawl.UtilityFunctions.GenerateHashID;
 import org.bson.Document;
-import java.util.Arrays;
+
+import java.util.*;
+
 import com.mongodb.Block;
 
 import static com.mongodb.client.model.Filters.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * a class to manage our database connection
@@ -277,5 +276,44 @@ public class MongoDBConnection {
     return posts;
   }
 
+  public HashMap<String, Double> computeRatings() {
 
+    Map<String, Integer> ratings = new HashMap<>();
+    Map<String, Integer> numRatings = new HashMap<>();
+
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        int review = document.getInteger("review");
+        String restaurantID = document.getString("restaurantID");
+
+        if (ratings.containsKey(restaurantID)) {
+          ratings.put(restaurantID, ratings.get(restaurantID) + review);
+        } else {
+          ratings.put(restaurantID, review);
+        }
+
+        if (numRatings.containsKey(restaurantID)) {
+          numRatings.put(restaurantID, numRatings.get(restaurantID) + 1);
+        } else {
+          numRatings.put(restaurantID, 1);
+        }
+      }
+    };
+    postsCollection.find()
+      .forEach(existsBlock);
+
+    HashMap<String, Double> avgRatings = new HashMap<>();
+    for (String rID : numRatings.keySet()) {
+      int numberOfRatings = numRatings.get(rID);
+      avgRatings.put(rID, ((double) ratings.get(rID)) / numberOfRatings);
+    }
+
+    return avgRatings;
+  }
+
+  public void checkRatings() {
+    HashMap<String, Double> s =  computeRatings();
+    System.out.println(s);
+  }
 }
