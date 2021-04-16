@@ -106,8 +106,8 @@ public class MongoDBConnection {
     usersCollection.updateOne(eq("username", username), Updates.set("pic", pic));
   }
 
-  public void testUpdate() {
-    updateProfilePic("ethan", "f");
+  public void updateBio(String username, String bio) {
+    usersCollection.updateOne(eq("username", username), Updates.set("bio", bio));
   }
 
   /**
