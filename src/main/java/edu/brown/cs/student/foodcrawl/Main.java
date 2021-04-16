@@ -418,6 +418,10 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String user = data.getString("username");
       User u = connection.getUserByUsername(user);
+      if (u.getPinned() == null) {
+        Map<String, Object> vars = ImmutableMap.of("pinned", new ArrayList<>());
+        return GSON.toJson(vars);
+      }
       List<String> pinned = u.getPinned();
       List<Restaurant> rests = new ArrayList<>();
       for (String restID : pinned) {
