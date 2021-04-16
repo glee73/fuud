@@ -53,6 +53,7 @@ public class MongoDBConnection {
         .append("password", password)
         .append("followers", Arrays.asList())
         .append("following", Arrays.asList())
+        .append("pinned", Arrays.asList())
         .append("bio", "");
     usersCollection.insertOne(doc);
   }
@@ -87,12 +88,76 @@ public class MongoDBConnection {
         Updates.addToSet("following", userFollowed));
   }
 
-  public void updateProfilePic(String username, String pic) {
-    usersCollection.updateOne(eq("username", username), Updates.set("pic", pic));
+  /**
+   * a method to determine if a user has a restaurant pinned
+   * @param username the user in question
+   * @param resID the restaurant id
+   * @return a boolean indicating if the user has the restaurant pinned
+   */
+  public boolean isPinned(String username, String resID) {
+    final List<String> rests = new ArrayList<>();
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        List<String> pinned = (List<String>) document.get("pinned");
+        rests.addAll(pinned);
+      }
+    };
+    usersCollection.find(eq("username", username)).forEach(existsBlock);
+    if (rests.contains(resID)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  public void testUpdate() {
-    updateProfilePic("ethan", "f");
+  /**
+   * a method to add a pinned restaurant for a user
+   * @param username the user, a string
+   * @param restID the restaurant id, a string
+   */
+  public boolean addPinned(String username, String restID) {
+    if (!isPinned(username, restID)) {
+      usersCollection.updateOne(eq("username", username),
+        Updates.addToSet("pinned", restID));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * a method to unpin a restaurant from a user's pinned list
+   * @param username the user, a string
+   * @param restID the restaurant id, a string
+   */
+  public void unPin(String username, String restID) {
+    final List<String> rests = new ArrayList<>();
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        List<String> pinned = (List<String>) document.get("pinned");
+        rests.addAll(pinned);
+      }
+    };
+    usersCollection.find(eq("username", username)).forEach(existsBlock);
+    rests.remove(restID);
+    Block<Document> existsBlock2 = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        document.put("pinned", rests);
+      }
+    };
+    usersCollection.find(eq("username", username)).forEach(existsBlock2);
+  }
+
+  /**
+   * a method to update a user's profile picture
+   * @param username the user
+   * @param pic the photo
+   */
+  public void updateProfilePic(String username, String pic) {
+    usersCollection.updateOne(eq("username", username), Updates.set("pic", pic));
   }
 
   /**
@@ -110,10 +175,11 @@ public class MongoDBConnection {
         String password = document.getString("password");
         List<String> following = (List<String>) document.get("following");
         List<String> followers = (List<String>) document.get("followers");
+        List<String> pinned = (List<String>) document.get("pinned");
         String bio = document.getString("bio");
         String pic = document.getString("pic");
 
-        found[0] = new User(username, password, followers, following, bio, pic);
+        found[0] = new User(username, password, followers, following, pinned, bio, pic);
       }
     };
     usersCollection.find(eq("username", username))
@@ -285,6 +351,10 @@ public class MongoDBConnection {
     return posts;
   }
 
+  /**
+   * a method to compute global ratings
+   * @return a hashmap of restaurant ids to ratings
+   */
   public HashMap<String, Double> computeRatings() {
 
     Map<String, Integer> ratings = new HashMap<>();
@@ -321,8 +391,4 @@ public class MongoDBConnection {
     return avgRatings;
   }
 
-  public void checkRatings() {
-    HashMap<String, Double> s =  computeRatings();
-    System.out.println(s);
-  }
 }
