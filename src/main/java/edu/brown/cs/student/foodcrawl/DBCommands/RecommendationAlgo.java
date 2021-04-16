@@ -34,7 +34,9 @@ public class RecommendationAlgo {
         break;
       }
     }
-
+//    if (restaurantList.size() == 0) {
+//      return null;
+//    }
     if (restaurantList.size() < 3) {
       // get the globally highest recommended restaurants based on all posts
       // and use these posts if not enough are returned from recommendBasedOnUserSimilarity

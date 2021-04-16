@@ -7,7 +7,7 @@ function Recommendations(props) {
     const userName = props.user;
     console.log("username" + userName);
     let [recommendations, setRecommendations] = useState(null);
-    let [pinned, setPinned] = useState(false);
+    // let [pinned, setPinned] = useState(false);
     useEffect(() => {
         getRecommendedRestaurants();
     }, []);
@@ -32,7 +32,6 @@ function Recommendations(props) {
             .then(response => {
                 console.log(response.data["recommended"]);
                 setRecommendations(response.data["recommended"]);
-
                 return response.data["recommended"];
             })
             .catch(function (error) {
@@ -83,6 +82,7 @@ function Recommendations(props) {
         </div>)
 
     }
+    // props.redirect();
     return (
         <div>
             <Navbar logout={props.logout}/>
