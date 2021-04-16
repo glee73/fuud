@@ -109,6 +109,7 @@ public final class Main {
     Spark.post("/addfollower", new AddFollowerHandler());
     Spark.post("/searchrestaurant", new SearchRestHandler());
     Spark.post("/deletepost", new DeletePostHandler());
+    Spark.post("/recommended", new GetRecommendedHandler());
   }
 
   /**
@@ -354,6 +355,16 @@ public final class Main {
     }
   }
 
+  private static class GetRecommendedHandler implements Route {
+    public String handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("username");
+      List<Restaurant> recommendedRests = RecommendationAlgo.recommend(username);
+      Map<String, Object> vars = ImmutableMap.of("recommended", recommendedRests);
+      return GSON.toJson(vars);
+    }
+  }
+
   /**
    * Display an error page when an exception occurs in the server.
    */
@@ -370,5 +381,6 @@ public final class Main {
       res.body(stacktrace.toString());
     }
   }
+
 
 }
