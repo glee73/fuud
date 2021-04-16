@@ -33,6 +33,7 @@ public class User {
    * @param password
    * @param followers
    * @param following
+   * @param pinned
    * @param bio
    */
   public User(String username, String password, List<String> followers, List<String> following, List<String> pinned, String bio, String pic) {
@@ -67,5 +68,5 @@ public class User {
     return pic;
   }
 
-  public List<String> getPinned() {return pinned;}
+  public List<String> getPinned() { return pinned; }
 }

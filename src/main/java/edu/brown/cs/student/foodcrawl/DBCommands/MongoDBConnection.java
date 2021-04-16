@@ -104,6 +104,15 @@ public class MongoDBConnection {
   }
 
   /**
+   * updates the bio string.
+   * @param username
+   * @param bio
+   */
+  public void updateBio(String username, String bio) {
+    usersCollection.updateOne(eq("username", username), Updates.set("bio", bio));
+  }
+
+  /**
    * a method to determine if a user has a restaurant pinned
    * @param username the user in question
    * @param resID the restaurant id
@@ -166,8 +175,14 @@ public class MongoDBConnection {
     usersCollection.find(eq("username", username)).forEach(existsBlock2);
   }
 
+  public void checkPins() {
+    //unpin
+    //addPinned
+    //ispinned
+  }
+
   /**
-   * a method to update a user's profile picture
+   * a method to update a user's profile picture.
    * @param username the user
    * @param pic the photo
    */
