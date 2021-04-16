@@ -67,7 +67,7 @@ function Recommendations(props) {
         }
 
     }
-    // props.redirect();
+
     return (
         <div>
             <Navbar logout={props.logout}/>
