@@ -107,8 +107,10 @@ public final class Main {
     Spark.post("/searchtopost", new SearchHandler());
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
-    Spark.post("/searchrestaurant", new SearchRestHandler());
     Spark.post("/deletepost", new DeletePostHandler());
+    Spark.post("/addpin", new AddPinHandler());
+    Spark.post("/unpin", new UnPinHandler());
+    Spark.post("/getpinned", new GetPinnedHandler());
   }
 
   /**
@@ -151,7 +153,6 @@ public final class Main {
       Restaurant rest = connection.getRestByName(name);
       Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
       return GSON.toJson(vars);
-
     }
   }
 
@@ -325,23 +326,6 @@ public final class Main {
   }
 
   /**
-   * handles requests for a restaurant by name
-   */
-  private static class SearchRestHandler implements Route {
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      Restaurant r = connection.getRestByName(data.getString("name"));
-      Map<String, Object> vars;
-      if (r == null) {
-        vars = ImmutableMap.of("success", false, "user", null);
-      } else {
-        vars = ImmutableMap.of("success", true, "user", r);
-      }
-      return GSON.toJson(vars);
-    }
-  }
-
-  /**
    * handles requests to delete a post
    */
   private static class DeletePostHandler implements Route {
@@ -350,6 +334,58 @@ public final class Main {
       String id = data.getString("id");
       boolean result = connection.deletePost(id);
       Map<String, Object> vars = ImmutableMap.of("success", result);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle adding pinned restaurants
+   */
+  private static class AddPinHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String restname = data.getString("restaurant");
+      String restID = connection.getRestByName(restname).getId();
+      boolean result = connection.addPinned(user, restID);
+      Map<String, Object> vars = ImmutableMap.of("success", result);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle removing pinned restaurants
+   */
+  private static class UnPinHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String restname = data.getString("restaurant");
+      String restID = connection.getRestByName(restname).getId();
+      connection.unPin(user, restID);
+      Map<String, Object> vars = ImmutableMap.of("success", true);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle returning pinned restaurants
+   */
+  private static class GetPinnedHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      User u = connection.getUserByUsername(user);
+      List<String> pinned = u.getPinned();
+      List<Restaurant> rests = new ArrayList<>();
+      for (String restID : pinned) {
+        Restaurant r = connection.getRestaurantByID(restID);
+        rests.add(r);
+      }
+      Map<String, Object> vars = ImmutableMap.of("pinned", rests);
       return GSON.toJson(vars);
     }
   }

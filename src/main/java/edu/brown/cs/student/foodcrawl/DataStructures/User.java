@@ -9,6 +9,7 @@ public class User {
   private final String password;
   private final List<String> following;
   private final List<String> followers;
+  private final List<String> pinned;
   private String bio;
   private String pic;
 
@@ -22,6 +23,7 @@ public class User {
     this.password = password;
     this.following = new ArrayList<>();
     this.followers = new ArrayList<>();
+    this.pinned = new ArrayList<>();
     this.bio = "";
   }
 
@@ -31,13 +33,15 @@ public class User {
    * @param password
    * @param followers
    * @param following
+   * @param pinned
    * @param bio
    */
-  public User(String username, String password, List<String> followers, List<String> following, String bio, String pic) {
+  public User(String username, String password, List<String> followers, List<String> following, List<String> pinned, String bio, String pic) {
     this.username = username;
     this.password = password;
     this.followers = followers;
     this.following = following;
+    this.pinned = pinned;
     this.bio = bio;
     this.pic = pic;
   }
@@ -63,4 +67,6 @@ public class User {
   public String getPic() {
     return pic;
   }
+
+  public List<String> getPinned() { return pinned; }
 }
