@@ -109,6 +109,8 @@ public final class Main {
     Spark.post("/unpin", new UnPinHandler());
     Spark.post("/getpinned", new GetPinnedHandler());
     Spark.post("/checkpin", new CheckPinnedHandler());
+    Spark.post("/bio", new BioHandler());
+    Spark.post("/profilepic", new ProfilePicHandler());
   }
 
   /**
@@ -388,7 +390,7 @@ public final class Main {
   }
 
   /**
-   * a class to handle checking if a restaurant is pinned
+   * a class to handle checking if a restaurant is pinned.
    */
   private static class CheckPinnedHandler implements Route {
     @Override
@@ -398,6 +400,36 @@ public final class Main {
       String restID = data.getString("restID");
       boolean pinned = connection.isPinned(user, restID);
       Map<String, Object> vars = ImmutableMap.of("ispinned", pinned);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle updating user bios.
+   */
+  private static class BioHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String bio = data.getString("bio");
+      connection.updateBio(user, bio);
+      Map<String, Object> vars = ImmutableMap.of("success", true);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle updating user profile pictures.
+   */
+  private static class ProfilePicHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String pic = data.getString("pic");
+      connection.updateProfilePic(user, pic);
+      Map<String, Object> vars = ImmutableMap.of("success", true);
       return GSON.toJson(vars);
     }
   }
