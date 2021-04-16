@@ -356,6 +356,9 @@ public final class Main {
     }
   }
 
+  /**
+   * a class to handle getting recommended restaurants
+   */
   private static class GetRecommendedHandler implements Route {
     public String handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
