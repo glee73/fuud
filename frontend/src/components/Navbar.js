@@ -13,7 +13,7 @@ function Navbar(props) {
     return (
         <div>
             <div className="header">
-                <Link to="/feed">
+                <Link to="/myfeed">
                     <img src={logo} alt={"fuud logo"} className={"logo"}/>
                 </Link>
                 <div className="link" onClick={logout}> logout </div>

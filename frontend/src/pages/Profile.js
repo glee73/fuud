@@ -33,6 +33,7 @@ function Profile(props) {
         )
             .then(response => {
                 let data = response.data["user"];
+                console.log(data)
                 setUserData(data);
                 return true;
             })

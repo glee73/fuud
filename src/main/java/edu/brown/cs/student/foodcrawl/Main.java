@@ -94,9 +94,10 @@ public final class Main {
     // Setup Spark Routes
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
     Spark.exception(Exception.class, new ExceptionPrinter());
-    Spark.post("/user", new UserHandler());
+    Spark.post("/searchforuser", new UserHandler());
+    Spark.post("/user", new ProfileHandler());
     Spark.post("/userposts", new UserPostsHandler());
-    Spark.post("/restaurant", new RestHandler());
+    Spark.post("/searchforrestaurants", new RestHandler());
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
     Spark.post("/addpost", new AddPostHandler());
@@ -114,6 +115,36 @@ public final class Main {
    * handles requests for a user by username
    */
   private static class UserHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("query");
+      User user = connection.getUserByUsername(username);
+      List<User> result = new ArrayList<>();
+      result.add(user);
+      Map<String, Object> vars = ImmutableMap.of("user", result);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * handles requests for restaurants by restaurant name
+   */
+  private static class RestHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String restName = data.getString("query");
+      List<Restaurant> rest = connection.getAllRestsWithName(restName);
+      Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * handles requests for a user's own profile
+   */
+  private static class ProfileHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
@@ -136,21 +167,6 @@ public final class Main {
       posts.sort(new TimestampComparator());
       Map<String, Object> vars = ImmutableMap.of("posts", posts);
       return GSON.toJson(vars);
-    }
-  }
-
-  /**
-   * handles requests for a restaurant by name
-   */
-  private static class RestHandler implements Route {
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      String name = data.getString("name");
-      Restaurant rest = connection.getRestByName(name);
-      Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
-      return GSON.toJson(vars);
-
     }
   }
 
@@ -312,18 +328,6 @@ public final class Main {
   }
 
   /**
-   * handles requests to add a new follower/following pair
-   */
-  private static class AddFollowerHandler implements Route {
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      connection.addFollower(data.getString("follower"), data.getString("followed"));
-      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "successfully followed");
-      return GSON.toJson(vars);
-    }
-  }
-
-  /**
    * handles requests for a restaurant by name
    */
   private static class SearchRestHandler implements Route {
@@ -336,6 +340,18 @@ public final class Main {
       } else {
         vars = ImmutableMap.of("success", true, "user", r);
       }
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * handles requests to add a new follower/following pair
+   */
+  private static class AddFollowerHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      connection.addFollower(data.getString("follower"), data.getString("followed"));
+      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "successfully followed");
       return GSON.toJson(vars);
     }
   }
