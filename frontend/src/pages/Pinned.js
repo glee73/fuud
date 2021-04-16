@@ -43,7 +43,7 @@ function Pinned(props) {
         pinned.map((rest, idx) => (
             content.push(
                 <RestaurantListing className={"recommendation"} address={rest.address}
-    key={idx} title={rest.name}/>
+    key={idx} name={rest.name}/>
             )
         ));
         return (<div className="recommendationsDisplay">
@@ -51,6 +51,9 @@ function Pinned(props) {
         </div>)
 
     }
+
+    props.redirect();
+
     return (
         <div>
             <Navbar logout={props.logout}/>

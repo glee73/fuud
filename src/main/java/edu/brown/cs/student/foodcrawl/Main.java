@@ -94,17 +94,17 @@ public final class Main {
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
     Spark.exception(Exception.class, new ExceptionPrinter());
     Spark.post("/searchforuser", new UserHandler());
+    Spark.post("/searchforrestaurants", new RestHandler());
+    Spark.post("/searchbytags", new RestTagsHandler());
     Spark.post("/user", new ProfileHandler());
     Spark.post("/userposts", new UserPostsHandler());
-    Spark.post("/searchforrestaurants", new RestHandler());
-    Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
     Spark.post("/addpost", new AddPostHandler());
     Spark.post("/login", new LoginHandler());
     Spark.post("/signup", new SignUpHandler());
     Spark.post("/logout", new LogoutHandler());
     Spark.post("/searchtopost", new SearchHandler());
-//    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
+    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
     Spark.post("/deletepost", new DeletePostHandler());
     Spark.post("/recommended", new GetRecommendedHandler());
@@ -148,6 +148,26 @@ public final class Main {
   }
 
   /**
+   * handles requests for a search by tags, returning all restaurants with at least one.
+   * of the requested tags
+   */
+  private static class RestTagsHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      JSONArray t = data.getJSONArray("tags");
+      List<String> tags = new ArrayList<>();
+      for (int i = 0; i < t.length(); i++) {
+        tags.add(t.getString(i));
+      }
+      List<Restaurant> rests = connection.searchByTags(tags);
+      Map<String, Object> vars = ImmutableMap.of("restaurants", rests);
+      return GSON.toJson(vars);
+    }
+  }
+
+
+  /**
    * handles requests for a user's own profile
    */
   private static class ProfileHandler implements Route {
@@ -177,25 +197,6 @@ public final class Main {
   }
 
   /**
-   * handles requests for a search by tags, returning all restaurants with at least one.
-   * of the requested tags
-   */
-  private static class RestTagsHandler implements Route {
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      JSONArray t = data.getJSONArray("tags");
-      List<String> tags = new ArrayList<>();
-      for (int i = 0; i < t.length(); i++) {
-        tags.add(t.getString(i));
-      }
-      List<Restaurant> rests = connection.searchByTags(tags);
-      Map<String, Object> vars = ImmutableMap.of("restaurants", rests);
-      return GSON.toJson(vars);
-    }
-  }
-
-  /**
    * handles requests for a user's feed/explore page, the posts of the people they follow.
    * ordered by timestamp
    */
@@ -211,19 +212,19 @@ public final class Main {
     }
   }
 
-//  /**
-//   * handles requests for a restaurant by ID.
-//   */
-//  private static class GetRestaurantByIDHandler implements Route {
-//    @Override
-//    public Object handle(Request request, Response response) throws Exception {
-//      JSONObject data = new JSONObject(request.body());
-//      String id = data.getString("id");
-//      Restaurant r = connection.getRestaurantByID(id);
-//      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
-//      return GSON.toJson(vars);
-//    }
-//  }
+  /**
+   * handles requests for a restaurant by ID.
+   */
+  private static class GetRestaurantByIDHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String id = data.getString("id");
+      Restaurant r = connection.getRestaurantByID(id);
+      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
+      return GSON.toJson(vars);
+    }
+  }
 
   /**
    * handles a request to add a post to the database.
