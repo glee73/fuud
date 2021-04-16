@@ -21,7 +21,7 @@ import com.mongodb.Block;
 import static com.mongodb.client.model.Filters.*;
 
 /**
- * a class to manage our database connection
+ * a class to manage our database connection.
  */
 public class MongoDBConnection {
 
@@ -30,7 +30,7 @@ public class MongoDBConnection {
   MongoCollection<Document> postsCollection;
 
   /**
-   * the constructor, which establishes a connection to our database
+   * the constructor, which establishes a connection to our database.
    */
   public MongoDBConnection() {
     MongoClientURI uri = new MongoClientURI(
@@ -53,6 +53,7 @@ public class MongoDBConnection {
         .append("password", password)
         .append("followers", Arrays.asList())
         .append("following", Arrays.asList())
+        .append("pinned", Arrays.asList())
         .append("bio", "");
     usersCollection.insertOne(doc);
   }
@@ -77,14 +78,93 @@ public class MongoDBConnection {
 
   /**
    * adds a follower to the userFollowed, and adds the userFollowed to the following list.
+   * will not add duplicate followers
    * @param follower the username of the follower, a string
    * @param userFollowed ther username of the user follower, a string
    */
   public void addFollower(String follower, String userFollowed) {
-    usersCollection.updateOne(eq("username", userFollowed),
+    if (!checkIfUserIsFollowingSomeone(follower, userFollowed)) {
+      usersCollection.updateOne(eq("username", userFollowed),
         Updates.addToSet("followers", follower));
-    usersCollection.updateOne(eq("username", follower),
+      usersCollection.updateOne(eq("username", follower),
         Updates.addToSet("following", userFollowed));
+    }
+  }
+
+  /**
+   * returns whether or not the follower is following the userFollowed already.
+   * @param follower
+   * @param userFollowed
+   * @return boolean
+   */
+  public boolean checkIfUserIsFollowingSomeone(String follower, String userFollowed) {
+    User u = getUserByUsername(follower);
+    List<String> following = u.getFollowing();
+    return following.contains(userFollowed);
+  }
+
+  /**
+   * updates the bio string.
+   * @param username
+   * @param bio
+   */
+  public void updateBio(String username, String bio) {
+    usersCollection.updateOne(eq("username", username), Updates.set("bio", bio));
+  }
+
+  /**
+   * a method to determine if a user has a restaurant pinned.
+   * @param username the user in question
+   * @param restID the restaurant id
+   * @return a boolean indicating if the user has the restaurant pinned
+   */
+  public boolean isPinned(String username, String restID) {
+    User u = getUserByUsername(username);
+    if (u.getPinned() == null) {
+      return false;
+    } else {
+      return u.getPinned().contains(restID);
+    }
+  }
+
+  /**
+   * a method to add a pinned restaurant for a user.
+   * @param username the user, a string
+   * @param restID the restaurant id, a string
+   */
+  public boolean addPinned(String username, String restID) {
+    if (!isPinned(username, restID)) {
+      usersCollection.updateOne(eq("username", username),
+        Updates.addToSet("pinned", restID));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * a method to unpin a restaurant from a user's pinned list.
+   * @param username the user, a string
+   * @param restID the restaurant id, a string
+   */
+  public void unPin(String username, String restID) {
+    User u = getUserByUsername(username);
+    List<String> rests = u.getPinned();
+    if (rests == null) {
+      return;
+    }
+    rests.remove(restID);
+
+    usersCollection.updateOne(eq("username", username), Updates.set("pinned", rests));
+  }
+
+  /**
+   * a method to update a user's profile picture.
+   * @param username the user
+   * @param pic the photo
+   */
+  public void updateProfilePic(String username, String pic) {
+    usersCollection.updateOne(eq("username", username), Updates.set("pic", pic));
   }
 
   /**
@@ -102,9 +182,11 @@ public class MongoDBConnection {
         String password = document.getString("password");
         List<String> following = (List<String>) document.get("following");
         List<String> followers = (List<String>) document.get("followers");
+        List<String> pinned = (List<String>) document.get("pinned");
         String bio = document.getString("bio");
+        String pic = document.getString("pic");
 
-        found[0] = new User(username, password, followers, following, bio);
+        found[0] = new User(username, password, followers, following, pinned, bio, pic);
       }
     };
     usersCollection.find(eq("username", username))
@@ -134,7 +216,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * get a restaurant by id
+   * get a restaurant by id.
    * @param id the id, a string
    * @return the corresponding restaurant
    */
@@ -216,7 +298,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to create a post
+   * a method to create a post.
    * @param text the text of the post, a string
    * @param reviewOutOfTen the review, an integer
    * @param pictures any pictures, a list of string links
@@ -228,13 +310,13 @@ public class MongoDBConnection {
   public void createPost(String text, int reviewOutOfTen, List<String> pictures,
                          String restaurantID, String username, String timestamp, String b) {
     Document doc = new Document("text", text)
-      .append("review", reviewOutOfTen)
-      .append("pictures", pictures)
-      .append("restaurantID", restaurantID)
-      .append("id", GenerateHashID.generateUUID())
-      .append("username", username)
-      .append("timestamp", timestamp)
-      .append("pic", b);
+        .append("review", reviewOutOfTen)
+        .append("pictures", pictures)
+        .append("restaurantID", restaurantID)
+        .append("id", GenerateHashID.generateUUID())
+        .append("username", username)
+        .append("timestamp", timestamp)
+        .append("pic", b);
     postsCollection.insertOne(doc);
   }
 
@@ -276,6 +358,10 @@ public class MongoDBConnection {
     return posts;
   }
 
+  /**
+   * a method to compute global ratings.
+   * @return a hashmap of restaurant ids to ratings
+   */
   public HashMap<String, Double> computeRatings() {
 
     Map<String, Integer> ratings = new HashMap<>();
@@ -312,8 +398,4 @@ public class MongoDBConnection {
     return avgRatings;
   }
 
-  public void checkRatings() {
-    HashMap<String, Double> s =  computeRatings();
-    System.out.println(s);
-  }
 }
