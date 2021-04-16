@@ -2,10 +2,7 @@ package edu.brown.cs.student.foodcrawl;
 
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.FeedPage;
 import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
@@ -111,6 +108,7 @@ public final class Main {
     Spark.post("/addpin", new AddPinHandler());
     Spark.post("/unpin", new UnPinHandler());
     Spark.post("/getpinned", new GetPinnedHandler());
+    Spark.post("/checkpin", new CheckPinnedHandler());
   }
 
   /**
