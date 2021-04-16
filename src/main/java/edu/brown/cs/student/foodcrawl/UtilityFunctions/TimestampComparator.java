@@ -12,7 +12,7 @@ import java.util.Date;
 public class TimestampComparator implements Comparator<Post> {
   @Override
   public int compare(Post p1, Post p2) {
-    SimpleDateFormat format = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
     try {
       Date date1 = format.parse(p1.getTimestamp());
       Date date2 = format.parse(p2.getTimestamp());
@@ -24,6 +24,7 @@ public class TimestampComparator implements Comparator<Post> {
         return 0;
       }
     } catch (Exception e) {
+      System.out.println("sorting error");
       return 0;
     }
   }

@@ -33,6 +33,10 @@ function Navbar(props) {
                 </div>
                 <div className="navLinkFlex">
                     <div className="orangeCircle"/>
+                    <Link className="navbarLink" to="/recommended">recommended</Link>
+                </div>
+                <div className="navLinkFlex">
+                    <div className="orangeCircle"/>
                     <Link className="navbarLink" to="/myprofile">my profile</Link>
                 </div>
             </div>
