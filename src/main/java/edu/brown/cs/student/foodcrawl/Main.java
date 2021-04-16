@@ -104,7 +104,7 @@ public final class Main {
     Spark.post("/signup", new SignUpHandler());
     Spark.post("/logout", new LogoutHandler());
     Spark.post("/searchtopost", new SearchHandler());
-    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
+//    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
     Spark.post("/deletepost", new DeletePostHandler());
     Spark.post("/recommended", new GetRecommendedHandler());
@@ -211,19 +211,19 @@ public final class Main {
     }
   }
 
-  /**
-   * handles requests for a restaurant by ID.
-   */
-  private static class GetRestaurantByIDHandler implements Route {
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      String id = data.getString("id");
-      Restaurant r = connection.getRestaurantByID(id);
-      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
-      return GSON.toJson(vars);
-    }
-  }
+//  /**
+//   * handles requests for a restaurant by ID.
+//   */
+//  private static class GetRestaurantByIDHandler implements Route {
+//    @Override
+//    public Object handle(Request request, Response response) throws Exception {
+//      JSONObject data = new JSONObject(request.body());
+//      String id = data.getString("id");
+//      Restaurant r = connection.getRestaurantByID(id);
+//      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
+//      return GSON.toJson(vars);
+//    }
+//  }
 
   /**
    * handles a request to add a post to the database.

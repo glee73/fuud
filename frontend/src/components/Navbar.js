@@ -41,7 +41,7 @@ function Navbar(props) {
                 </div>
             </div>
             <div className="newPostFixed">
-                <Link className="newPostButton" to="/newPost">+</Link>
+                <Link className="newPostButton" to="/newpost">+</Link>
             </div>
         </div>
 
