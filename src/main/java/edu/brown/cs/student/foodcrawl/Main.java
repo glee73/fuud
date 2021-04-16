@@ -114,7 +114,7 @@ public final class Main {
   }
 
   /**
-   * handles requests for a user by username
+   * handles requests for a user by username.
    */
   private static class UserHandler implements Route {
     @Override
@@ -128,7 +128,7 @@ public final class Main {
   }
 
   /**
-   * handles requests for the posts of a user by username, returned sorted by timestamp
+   * handles requests for the posts of a user by username, returned sorted by timestamp.
    */
   private static class UserPostsHandler implements Route {
     @Override
@@ -144,7 +144,7 @@ public final class Main {
   }
 
   /**
-   * handles requests for a restaurant by name
+   * handles requests for a restaurant by name.
    */
   private static class RestHandler implements Route {
     @Override
@@ -158,7 +158,7 @@ public final class Main {
   }
 
   /**
-   * handles requests for a search by tags, returning all restaurants with at least one
+   * handles requests for a search by tags, returning all restaurants with at least one.
    * of the requested tags
    */
   private static class RestTagsHandler implements Route {
@@ -177,7 +177,7 @@ public final class Main {
   }
 
   /**
-   * handles requests for a user's feed/explore page, the posts of the people they follow
+   * handles requests for a user's feed/explore page, the posts of the people they follow.
    * ordered by timestamp
    */
   private static class FeedHandler implements Route {
@@ -193,7 +193,7 @@ public final class Main {
   }
 
   /**
-   * handles requests for a restaurant by ID
+   * handles requests for a restaurant by ID.
    */
   private static class GetRestaurantByIDHandler implements Route {
     @Override
@@ -207,7 +207,7 @@ public final class Main {
   }
 
   /**
-   * handles a request to add a post to the database
+   * handles a request to add a post to the database.
    */
   private static class AddPostHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
@@ -233,7 +233,7 @@ public final class Main {
   }
 
   /**
-   * handles login requests
+   * handles login requests.
    */
   private static class LoginHandler implements Route {
     @Override
@@ -259,7 +259,7 @@ public final class Main {
   }
 
   /**
-   * handles signup requests
+   * handles signup requests.
    */
   private static class SignUpHandler implements Route {
     @Override
@@ -285,7 +285,7 @@ public final class Main {
   }
 
   /**
-   * handles logout requests
+   * handles logout requests.
    */
   private static class LogoutHandler implements Route {
     @Override
@@ -297,7 +297,7 @@ public final class Main {
   }
 
   /**
-   * handles searches for a restaurant by name (returning only ID)
+   * handles searches for a restaurant by name (returning only ID).
    */
   private static class SearchHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
@@ -315,7 +315,7 @@ public final class Main {
   }
 
   /**
-   * handles requests to add a new follower/following pair
+   * handles requests to add a new follower/following pair.
    */
   private static class AddFollowerHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
@@ -327,7 +327,7 @@ public final class Main {
   }
 
   /**
-   * handles requests to delete a post
+   * handles requests to delete a post.
    */
   private static class DeletePostHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
@@ -340,7 +340,7 @@ public final class Main {
   }
 
   /**
-   * a class to handle adding pinned restaurants
+   * a class to handle adding pinned restaurants.
    */
   private static class AddPinHandler implements Route {
     @Override
@@ -355,7 +355,7 @@ public final class Main {
   }
 
   /**
-   * a class to handle removing pinned restaurants
+   * a class to handle removing pinned restaurants.
    */
   private static class UnPinHandler implements Route {
     @Override
@@ -370,7 +370,7 @@ public final class Main {
   }
 
   /**
-   * a class to handle returning pinned restaurants
+   * a class to handle returning pinned restaurants.
    */
   private static class GetPinnedHandler implements Route {
     @Override

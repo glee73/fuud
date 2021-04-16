@@ -113,7 +113,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to determine if a user has a restaurant pinned
+   * a method to determine if a user has a restaurant pinned.
    * @param username the user in question
    * @param resID the restaurant id
    * @return a boolean indicating if the user has the restaurant pinned
@@ -136,7 +136,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to add a pinned restaurant for a user
+   * a method to add a pinned restaurant for a user.
    * @param username the user, a string
    * @param restID the restaurant id, a string
    */
@@ -151,7 +151,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to unpin a restaurant from a user's pinned list
+   * a method to unpin a restaurant from a user's pinned list.
    * @param username the user, a string
    * @param restID the restaurant id, a string
    */
@@ -382,7 +382,7 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to compute global ratings
+   * a method to compute global ratings.
    * @return a hashmap of restaurant ids to ratings
    */
   public HashMap<String, Double> computeRatings() {
