@@ -383,7 +383,13 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String username = data.getString("username");
       List<Restaurant> recommendedRests = RecommendationAlgo.recommend(username);
-      Map<String, Object> vars = ImmutableMap.of("recommended", recommendedRests);
+      List<Boolean> bools = new ArrayList<>();
+      for (Restaurant r : recommendedRests) {
+        boolean b = connection.isPinned(username, r.getId());
+        bools.add(b);
+      }
+
+      Map<String, Object> vars = ImmutableMap.of("recommended", recommendedRests, "bools", bools);
       return GSON.toJson(vars);
     }
   }
