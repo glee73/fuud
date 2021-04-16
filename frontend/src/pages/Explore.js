@@ -5,6 +5,7 @@ import UserListing from "../components/UserListing";
 import RestaurantListing from "../components/RestaurantListing";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import TagsGrid from "../components/TagsGrid";
 
 function Explore(props) {
 
@@ -167,41 +168,49 @@ function Explore(props) {
         }
     }
 
+    props.redirect();
+
     return (
         <div>
             <Navbar logout={props.logout}/>
-            <p> Looking for something? </p>
 
-            <Tabs>
-                <TabList>
-                    <Tab onClick={() => searchForUser()}>a user</Tab>
-                    <Tab onClick={() => searchForRest()}>a restaurant</Tab>
-                    <Tab onClick={() => searchByTag()}>restaurants by tag</Tab>
-                </TabList>
+            <div className={"explorePage"}>
+                <p className={"pageTitle"}> Looking for something? </p>
 
-                <TabPanel>
-                    <div>
+                <Tabs className={"tabs"}>
+                    <TabList>
+                        <Tab onClick={() => searchForUser()}>a user</Tab>
+                        <Tab onClick={() => searchForRest()}>a restaurant</Tab>
+                        <Tab onClick={() => searchByTag()}>restaurants by tag</Tab>
+                    </TabList>
+
+                    <TabPanel>
+                        <div>
+                            <form>
+                                <input id={"user-query"} className={"searchBar" +
+                                " shadow"} type={"text"} placeholder={"search for a user by username"}/>
+                                <button className={"submitButton searchButton"} type={"button"} onClick={getResults}>search</button>
+                            </form>
+                            {displayResults()}
+                        </div>
+                    </TabPanel>
+
+                    <TabPanel>
                         <form>
-                            <input id={"user-query"} className={"searchBar" +
-                            " shadow"} type={"text"} placeholder={"search for a user by username"}/>
+                            <input id={"rest-query"} className={"searchBar shadow"} type={"text"} placeholder={"search for a restaurant by restaurant name"}/>
                             <button className={"submitButton searchButton"} type={"button"} onClick={getResults}>search</button>
                         </form>
                         {displayResults()}
-                    </div>
-                </TabPanel>
+                    </TabPanel>
 
-                <TabPanel>
-                    <form>
-                        <input id={"rest-query"} className={"searchBar shadow"} type={"text"} placeholder={"search for a restaurant by restaurant name"}/>
-                        <button className={"submitButton searchButton"} type={"button"} onClick={getResults}>search</button>
-                    </form>
-                    {displayResults()}
-                </TabPanel>
+                    <TabPanel>
+                        select which tags you want to explore
+                        <TagsGrid/>
 
-                <TabPanel>
 
-                </TabPanel>
-            </Tabs>
+                    </TabPanel>
+                </Tabs>
+            </div>
         </div>
     );
 
