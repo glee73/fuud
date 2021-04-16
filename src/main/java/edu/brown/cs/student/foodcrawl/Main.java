@@ -390,6 +390,21 @@ public final class Main {
   }
 
   /**
+   * a class to handle checking if a restaurant is pinned
+   */
+  private static class CheckPinnedHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String restID = data.getString("restID");
+      boolean pinned = connection.isPinned(user, restID);
+      Map<String, Object> vars = ImmutableMap.of("ispinned", pinned);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
    * Display an error page when an exception occurs in the server.
    */
   private static class ExceptionPrinter implements ExceptionHandler {
