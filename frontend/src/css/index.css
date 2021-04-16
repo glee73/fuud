@@ -350,6 +350,10 @@ code {
   color: #b5b5b5;
   border-color: #b5b5b5;
 }
+.alreadyPinned {
+  color: #b5b5b5;
+  border-color: #b5b5b5;
+}
 .pinFlex {
   display: flex;
   align-items: center;
