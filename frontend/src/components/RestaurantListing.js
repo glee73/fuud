@@ -1,16 +1,38 @@
 import React from "react";
+import axios from "axios";
 
 function RestaurantListing(props) {
+    function sendPinned() {
+        const toSend = {
+            "username": props.user,
+            "restID": props.restID
+        };
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        };
+        axios.post(
+            'http://localhost:4567/addpin',
+            toSend,
+            config
+        )
+            .then(response => {
+                console.log(true);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     return (
         <div className="postContainer restaurantContainer shadow">
-            <img className="restaurantImage" src={props.imgURL} />
             <div className="restaurantContent">
-                <p className="restaurantTitle">{props.title}</p>
-                <img className="stars" src="https://ecodri.com.au/wp-content/uploads/2019/08/5-Star-rating.png" />
-                <p className="restaurantDesc">description of restaurant</p>
-                <p className="hours">hours: __ - __</p>
-                <p className="options">deliver/dining options</p>
-                <p className="review">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut!”</p>
+                <div className="pinFlex">
+                    <p className="restaurantTitle">{props.title}</p>
+                    <button className="pinButton" onClick={sendPinned}>+ pin</button>
+                </div>
+                <p className="restaurantAddress">{props.address}</p>
             </div>
         </div>
     );

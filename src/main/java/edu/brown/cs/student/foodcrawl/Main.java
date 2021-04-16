@@ -7,6 +7,7 @@ import java.util.*;
 import edu.brown.cs.student.foodcrawl.DBCommands.FeedPage;
 import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
+import edu.brown.cs.student.foodcrawl.DBCommands.RecommendationAlgo;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
@@ -105,6 +106,7 @@ public final class Main {
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
     Spark.post("/deletepost", new DeletePostHandler());
+    Spark.post("/recommended", new GetRecommendedHandler());
     Spark.post("/addpin", new AddPinHandler());
     Spark.post("/unpin", new UnPinHandler());
     Spark.post("/getpinned", new GetPinnedHandler());
@@ -354,6 +356,16 @@ public final class Main {
     }
   }
 
+  private static class GetRecommendedHandler implements Route {
+    public String handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("username");
+      List<Restaurant> recommendedRests = RecommendationAlgo.recommend(username);
+      Map<String, Object> vars = ImmutableMap.of("recommended", recommendedRests);
+      return GSON.toJson(vars);
+    }
+  }
+
   /**
    * a class to handle removing pinned restaurants.
    */
@@ -450,5 +462,6 @@ public final class Main {
       res.body(stacktrace.toString());
     }
   }
+
 
 }

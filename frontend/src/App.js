@@ -8,6 +8,7 @@ import Login from "./pages/Login.js"
 import Signup from "./pages/Signup.js"
 import Explore from "./pages/Explore.js"
 import Pinned from "./pages/Pinned.js"
+import Recommendations from "./pages/Recommendations";
 
 function App() {
 
@@ -54,6 +55,9 @@ function App() {
                            render={(props) => (
                                <RestaurantSearch {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/register" component={Signup}/>
+                    <Route exact path="/recommended"
+                           render={(props) => (
+                               <Recommendations {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                 </Switch>
             </div>
     );
