@@ -5,6 +5,7 @@ import RestaurantListing from "../components/RestaurantListing";
 
 function Pinned(props) {
     const userName = localStorage.getItem("user");
+    console.log(userName);
 
     let [pinned, setPinned] = useState(null);
 
@@ -18,7 +19,7 @@ function Pinned(props) {
         const toSend = {
             "username": userName
         };
-
+        console.log(toSend);
         let config = {
             headers: {
                 "Content-Type": "application/json",
@@ -47,18 +48,14 @@ function Pinned(props) {
         }
         pinned.map((rest, idx) => (
             content.push(
-                <RestaurantListing className={"recommendation"} address={rest.address}
+                <RestaurantListing user={userName} restID={rest.id} className={"recommendation"} address={rest.address}
     key={idx} name={rest.name}/>
             )
         ));
         return (<div className="recommendationsDisplay">
             {content}
         </div>)
-
     }
-
-
-
     return (
         <div>
             <Navbar logout={props.logout}/>
