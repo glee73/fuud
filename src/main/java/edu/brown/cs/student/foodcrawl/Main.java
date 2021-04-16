@@ -113,6 +113,7 @@ public final class Main {
     Spark.post("/checkpin", new CheckPinnedHandler());
     Spark.post("/bio", new BioHandler());
     Spark.post("/profilepic", new ProfilePicHandler());
+    Spark.post("/checkfollow", new CheckFollowingHandler());
   }
 
   /**
@@ -415,6 +416,21 @@ public final class Main {
       String restID = data.getString("restID");
       boolean pinned = connection.isPinned(user, restID);
       Map<String, Object> vars = ImmutableMap.of("ispinned", pinned);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle checking if a user is following someone.
+   */
+  private static class CheckFollowingHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String u1 = data.getString("follower");
+      String u2 = data.getString("following");
+      boolean isFollowing = connection.checkIfUserIsFollowingSomeone(u1, u2);
+      Map<String, Object> vars = ImmutableMap.of("isfollowing", isFollowing);
       return GSON.toJson(vars);
     }
   }
