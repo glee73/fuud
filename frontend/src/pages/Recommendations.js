@@ -48,7 +48,7 @@ function Recommendations(props) {
         recommendations.map((rec, idx) => (
             content.push(
                 <RestaurantListing className={"recommendation"} address={rec.address}
-    key={idx} restID={rec.id} title={rec.name} user={userName}/>
+    key={idx} restID={rec.id} name={rec.name} user={userName}/>
             )
         ));
         return (<div className="recommendationsDisplay">
