@@ -2,10 +2,7 @@ package edu.brown.cs.student.foodcrawl;
 
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.FeedPage;
 import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
@@ -113,6 +110,7 @@ public final class Main {
     Spark.post("/addpin", new AddPinHandler());
     Spark.post("/unpin", new UnPinHandler());
     Spark.post("/getpinned", new GetPinnedHandler());
+    Spark.post("/checkpin", new CheckPinnedHandler());
   }
 
   /**
@@ -397,6 +395,21 @@ public final class Main {
         rests.add(r);
       }
       Map<String, Object> vars = ImmutableMap.of("pinned", rests);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle checking if a restaurant is pinned
+   */
+  private static class CheckPinnedHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String restID = data.getString("restID");
+      boolean pinned = connection.isPinned(user, restID);
+      Map<String, Object> vars = ImmutableMap.of("ispinned", pinned);
       return GSON.toJson(vars);
     }
   }
