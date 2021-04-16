@@ -9,9 +9,11 @@ import TagsGrid from "../components/TagsGrid";
 
 function Explore(props) {
 
+    const userName = localStorage.getItem("user");
+
     useEffect(() => {
         props.getUser();
-    });
+    }, []);
 
     let [results, setResults] = useState(null);
     let userResults = null;
@@ -146,7 +148,7 @@ function Explore(props) {
             let toDisplay = [];
 
             toDisplay.push(
-                <UserListing searchedUser={results[0]} currUser={props.user}/>
+                <UserListing searchedUser={results[0]} currUser={userName}/>
             )
 
 

@@ -40,7 +40,7 @@ function UserListing(props) {
                 <p className="restaurantTitle">{searchedUser.username}</p>
                 <p> {searchedUser.followers.length} followers &emsp;|&emsp; {searchedUser.following.length} following
                 </p>
-                <button onClick={follow}>click to follow</button>
+                <button className="pinButton" onClick={follow}>click to follow</button>
             </div>
         </div>
     );

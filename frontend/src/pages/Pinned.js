@@ -40,32 +40,33 @@ function Pinned(props) {
                 console.log(error);
             });
     }
+
     const displayPinned = () => {
         console.log("data: " + pinned);
         let content = [];
         if (pinned === null) {
-            return <p>Getting your pinned restaurants ...  </p>
+            return <p>Getting your pinned restaurants ... </p>
         }
         pinned.map((rest, idx) => (
             content.push(
                 <RestaurantListing user={userName} restID={rest.id} className={"recommendation"} address={rest.address}
-    key={idx} name={rest.name}/>
+                                   key={idx} name={rest.name}/>
             )
         ));
         return (<div className="recommendationsDisplay">
             {content}
         </div>)
     }
-    return (
+return (
         <div>
-            <Navbar logout={props.logout}/>
-            <div className="restaurant">
-                <p className="pinnedTitle pageTitle">your pinned</p>
-                {displayPinned()}
-            </div>
-        </div>
+    <Navbar logout = {props.logout}/>
+    <div className="restaurant">
+        <p className="pinnedTitle pageTitle">your pinned</p>
+        {displayPinned()}
+    </div>
+</div>
 
-    );
+);
 
 
 }
