@@ -21,13 +21,9 @@ function MakeNewPost(props) {
 
     function sendRestaurantName(e) {
         e.preventDefault();
-        let restaurantName = document.getElementById('restaurantName');
 
-        if (restaurantName == null) {
-            return;
-        } else {
-            restaurantName = restaurantName.value;
-        }
+        let restaurantName = document.getElementById(
+            'restaurantName').value;
 
         const toSend = {
             "restaurantName": restaurantName
@@ -53,7 +49,6 @@ function MakeNewPost(props) {
             .catch(function (error) {
                 console.log(error);
             });
-        console.log("after");
     }
 
     function showSearchResult() {

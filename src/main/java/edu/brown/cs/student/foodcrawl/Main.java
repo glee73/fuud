@@ -93,9 +93,10 @@ public final class Main {
     // Setup Spark Routes
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
     Spark.exception(Exception.class, new ExceptionPrinter());
-    Spark.post("/user", new UserHandler());
+    Spark.post("/searchforuser", new UserHandler());
+    Spark.post("/user", new ProfileHandler());
     Spark.post("/userposts", new UserPostsHandler());
-    Spark.post("/restaurant", new RestHandler());
+    Spark.post("/searchforrestaurants", new RestHandler());
     Spark.post("/tags", new RestTagsHandler());
     Spark.post("/feed", new FeedHandler());
     Spark.post("/addpost", new AddPostHandler());
@@ -103,7 +104,7 @@ public final class Main {
     Spark.post("/signup", new SignUpHandler());
     Spark.post("/logout", new LogoutHandler());
     Spark.post("/searchtopost", new SearchHandler());
-    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
+//    Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
     Spark.post("/deletepost", new DeletePostHandler());
     Spark.post("/recommended", new GetRecommendedHandler());
@@ -111,12 +112,45 @@ public final class Main {
     Spark.post("/unpin", new UnPinHandler());
     Spark.post("/getpinned", new GetPinnedHandler());
     Spark.post("/checkpin", new CheckPinnedHandler());
+    Spark.post("/bio", new BioHandler());
+    Spark.post("/profilepic", new ProfilePicHandler());
+    Spark.post("/checkfollow", new CheckFollowingHandler());
   }
 
   /**
    * handles requests for a user by username.
    */
   private static class UserHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String username = data.getString("query");
+      User user = connection.getUserByUsername(username);
+      List<User> result = new ArrayList<>();
+      result.add(user);
+      Map<String, Object> vars = ImmutableMap.of("user", result);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * handles requests for restaurants by restaurant name
+   */
+  private static class RestHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String restName = data.getString("query");
+      List<Restaurant> rest = connection.getAllRestsWithName(restName);
+      Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * handles requests for a user's own profile
+   */
+  private static class ProfileHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
@@ -128,7 +162,7 @@ public final class Main {
   }
 
   /**
-   * handles requests for the posts of a user by username, returned sorted by timestamp.
+   * handles requests for the posts of a user by username, returned sorted by timestamp
    */
   private static class UserPostsHandler implements Route {
     @Override
@@ -137,22 +171,7 @@ public final class Main {
       String username = data.getString("username");
       List<Post> posts = connection.getPostsFromUser(username);
       posts.sort(new TimestampComparator());
-      Collections.reverse(posts);
       Map<String, Object> vars = ImmutableMap.of("posts", posts);
-      return GSON.toJson(vars);
-    }
-  }
-
-  /**
-   * handles requests for a restaurant by name.
-   */
-  private static class RestHandler implements Route {
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      String name = data.getString("name");
-      Restaurant rest = connection.getRestByName(name);
-      Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
       return GSON.toJson(vars);
     }
   }
@@ -192,19 +211,19 @@ public final class Main {
     }
   }
 
-  /**
-   * handles requests for a restaurant by ID.
-   */
-  private static class GetRestaurantByIDHandler implements Route {
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      String id = data.getString("id");
-      Restaurant r = connection.getRestaurantByID(id);
-      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
-      return GSON.toJson(vars);
-    }
-  }
+//  /**
+//   * handles requests for a restaurant by ID.
+//   */
+//  private static class GetRestaurantByIDHandler implements Route {
+//    @Override
+//    public Object handle(Request request, Response response) throws Exception {
+//      JSONObject data = new JSONObject(request.body());
+//      String id = data.getString("id");
+//      Restaurant r = connection.getRestaurantByID(id);
+//      Map<String, Object> vars = ImmutableMap.of("restaurant", r);
+//      return GSON.toJson(vars);
+//    }
+//  }
 
   /**
    * handles a request to add a post to the database.
@@ -315,18 +334,6 @@ public final class Main {
   }
 
   /**
-   * handles requests to add a new follower/following pair.
-   */
-  private static class AddFollowerHandler implements Route {
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      connection.addFollower(data.getString("follower"), data.getString("followed"));
-      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "successfully followed");
-      return GSON.toJson(vars);
-    }
-  }
-
-  /**
    * handles requests to delete a post.
    */
   private static class DeletePostHandler implements Route {
@@ -340,6 +347,19 @@ public final class Main {
   }
 
   /**
+   * handles requests to add a new follower/following pair
+   */
+  private static class AddFollowerHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      connection.addFollower(data.getString("follower"), data.getString("followed"));
+      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "successfully followed");
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   *
    * a class to handle adding pinned restaurants.
    */
   private static class AddPinHandler implements Route {
@@ -354,6 +374,9 @@ public final class Main {
     }
   }
 
+  /**
+   * a class to handle getting recommended restaurants.
+   */
   private static class GetRecommendedHandler implements Route {
     public String handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
@@ -400,7 +423,7 @@ public final class Main {
   }
 
   /**
-   * a class to handle checking if a restaurant is pinned
+   * a class to handle checking if a restaurant is pinned.
    */
   private static class CheckPinnedHandler implements Route {
     @Override
@@ -410,6 +433,51 @@ public final class Main {
       String restID = data.getString("restID");
       boolean pinned = connection.isPinned(user, restID);
       Map<String, Object> vars = ImmutableMap.of("ispinned", pinned);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle checking if a user is following someone.
+   */
+  private static class CheckFollowingHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String u1 = data.getString("follower");
+      String u2 = data.getString("following");
+      boolean isFollowing = connection.checkIfUserIsFollowingSomeone(u1, u2);
+      Map<String, Object> vars = ImmutableMap.of("isfollowing", isFollowing);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle updating user bios.
+   */
+  private static class BioHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String bio = data.getString("bio");
+      connection.updateBio(user, bio);
+      Map<String, Object> vars = ImmutableMap.of("success", true);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * a class to handle updating user profile pictures.
+   */
+  private static class ProfilePicHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      String pic = data.getString("pic");
+      connection.updateProfilePic(user, pic);
+      Map<String, Object> vars = ImmutableMap.of("success", true);
       return GSON.toJson(vars);
     }
   }

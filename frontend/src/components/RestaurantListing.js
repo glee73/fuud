@@ -25,20 +25,22 @@ function RestaurantListing(props) {
                 console.log(error);
             });
     }
-    function displayButton() {
-        console.log(props.isPinned);
-        if(props.isPinned) {
-            return (<button className="alreadyPinned" onClick={sendPinned}>pinned</button>);
-        } else {
-            return (<button className="pinButton" onClick={sendPinned}>+ pin</button>);
-        }
-    }
+    // function displayButton() {
+    //     console.log(props.isPinned);
+    //     if(props.isPinned) {
+    //         return (<button className="alreadyPinned" onClick={sendPinned}>pinned</button>);
+    //     } else {
+    //         return (<button className="pinButton" onClick={sendPinned}>+ pin</button>);
+    //     }
+    // }
     return (
         <div className="postContainer restaurantContainer shadow">
             <div className="restaurantContent">
                 <div className="pinFlex">
                     <p className="restaurantTitle">{props.title}</p>
-                    {displayButton()}
+                    {/*{displayButton()}*/}
+                    <p className="restaurantTitle">{props.name}</p>
+                    <button className="pinButton" onClick={sendPinned}>+ pin</button>
                 </div>
                 <p className="restaurantAddress">{props.address}</p>
             </div>

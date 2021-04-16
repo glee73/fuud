@@ -216,7 +216,28 @@ public class MongoDBConnection {
   }
 
   /**
-   * get a restaurant by id.
+   * gets the restaurant by name.
+   * @param name the name, a string
+   * @return the restaurant
+   */
+  public List<Restaurant> getAllRestsWithName(String name) {
+    final List<Restaurant> found = new ArrayList<>();
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String id = document.getString("id");
+        String name = document.getString("name");
+        String address = document.getString("address");
+        List<String> tags = (List<String>) document.get("tags");
+        found.add(new Restaurant(name, address, tags, id));
+      }
+    };
+    restaurantsCollection.find(eq("name", name)).forEach(existsBlock);
+    return found;
+  }
+
+  /**
+   * get a restaurant by id
    * @param id the id, a string
    * @return the corresponding restaurant
    */

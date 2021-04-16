@@ -45,7 +45,7 @@ function App() {
                     <Route exact path="/mypinned"
                            render={(props) => (
                                <Pinned {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
-                    <Route exact path="/newPost"
+                    <Route exact path="/newpost"
                            render={(props) => (
                                <MakeNewPost {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
                     <Route exact path="/"
