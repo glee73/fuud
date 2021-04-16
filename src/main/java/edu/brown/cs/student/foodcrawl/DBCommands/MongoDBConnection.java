@@ -113,30 +113,22 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to determine if a user has a restaurant pinned
+   * a method to determine if a user has a restaurant pinned.
    * @param username the user in question
-   * @param resID the restaurant id
+   * @param restID the restaurant id
    * @return a boolean indicating if the user has the restaurant pinned
    */
-  public boolean isPinned(String username, String resID) {
-    final List<String> rests = new ArrayList<>();
-    Block<Document> existsBlock = new Block<Document>() {
-      @Override
-      public void apply(final Document document) {
-        List<String> pinned = (List<String>) document.get("pinned");
-        rests.addAll(pinned);
-      }
-    };
-    usersCollection.find(eq("username", username)).forEach(existsBlock);
-    if (rests.contains(resID)) {
-      return true;
-    } else {
+  public boolean isPinned(String username, String restID) {
+    User u = getUserByUsername(username);
+    if (u.getPinned() == null) {
       return false;
+    } else {
+      return u.getPinned().contains(restID);
     }
   }
 
   /**
-   * a method to add a pinned restaurant for a user
+   * a method to add a pinned restaurant for a user.
    * @param username the user, a string
    * @param restID the restaurant id, a string
    */
@@ -151,34 +143,19 @@ public class MongoDBConnection {
   }
 
   /**
-   * a method to unpin a restaurant from a user's pinned list
+   * a method to unpin a restaurant from a user's pinned list.
    * @param username the user, a string
    * @param restID the restaurant id, a string
    */
   public void unPin(String username, String restID) {
-    final List<String> rests = new ArrayList<>();
-    Block<Document> existsBlock = new Block<Document>() {
-      @Override
-      public void apply(final Document document) {
-        List<String> pinned = (List<String>) document.get("pinned");
-        rests.addAll(pinned);
-      }
-    };
-    usersCollection.find(eq("username", username)).forEach(existsBlock);
+    User u = getUserByUsername(username);
+    List<String> rests = u.getPinned();
+    if (rests == null) {
+      return;
+    }
     rests.remove(restID);
-    Block<Document> existsBlock2 = new Block<Document>() {
-      @Override
-      public void apply(final Document document) {
-        document.put("pinned", rests);
-      }
-    };
-    usersCollection.find(eq("username", username)).forEach(existsBlock2);
-  }
 
-  public void checkPins() {
-    //unpin
-    //addPinned
-    //ispinned
+    usersCollection.updateOne(eq("username", username), Updates.set("pinned", rests));
   }
 
   /**
