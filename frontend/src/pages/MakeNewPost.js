@@ -8,7 +8,7 @@ function MakeNewPost(props) {
     let [searchResult, setSearchResult] = useState(null);
     let [msg, setMsg] = useState(null);
 
-    const userName = props.user;
+    const userName = localStorage.getItem("user");
 
     let history = useHistory();
 
@@ -124,7 +124,7 @@ function MakeNewPost(props) {
     }
 
     useEffect(() => {
-        props.redirect();
+        props.getUser();
     }, [])
 
     return (

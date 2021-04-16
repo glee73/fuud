@@ -10,7 +10,7 @@ function Profile(props) {
     let [userData, setUserData] = useState(null);
     let [userPosts, setUserPosts] = useState(null);
 
-    const userName = props.user;
+    const userName = localStorage.getItem("user");
 
     function getUserData() {
         console.log("getting user data");
@@ -73,6 +73,7 @@ function Profile(props) {
     }
 
     useEffect(() => {
+        props.getUser();
         getUserData();
         getUserPosts();
     }, [])
@@ -129,7 +130,7 @@ function Profile(props) {
         }
     }
 
-    props.redirect();
+
 
 
     return (

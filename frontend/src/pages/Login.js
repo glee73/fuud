@@ -12,9 +12,9 @@ function Login(props) {
     let [user, setUser] = useState(null);
     let [msg, setMsg] = useState("");
 
-    useEffect(() => {
-        props.getUser(user);
-    },[user]);
+    // useEffect(() => {
+    //     props.getUser();
+    // },[user]);
 
     function incomplete(e) {
         e.preventDefault();
@@ -53,6 +53,7 @@ function Login(props) {
             .then(response => {
                 if (response.data["success"]) {
                     console.log('success');
+                    localStorage.setItem('user', user);
                     setUser(user);
                     return (history.push("/myfeed"));
                 } else {

@@ -4,15 +4,16 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 
 function Recommendations(props) {
-    const userName = props.user;
+    const userName = localStorage.getItem("user");
     let [recommendations, setRecommendations] = useState(null);
+
     let [pinned, setPinned] = useState(null);
+
     useEffect(() => {
+        props.getUser();
         getRecommendedRestaurants();
     }, []);
-    useEffect(() => {
-        displayRecommendations()
-    }, [recommendations]);
+
     function getRecommendedRestaurants() {
         console.log("getting recommendations");
         const toSend = {
@@ -64,7 +65,6 @@ function Recommendations(props) {
                 {content}
             </div>)
         }
-
 
     }
     // props.redirect();
