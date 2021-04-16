@@ -77,14 +77,29 @@ public class MongoDBConnection {
 
   /**
    * adds a follower to the userFollowed, and adds the userFollowed to the following list.
+   * will not add duplicate followers
    * @param follower the username of the follower, a string
    * @param userFollowed ther username of the user follower, a string
    */
   public void addFollower(String follower, String userFollowed) {
-    usersCollection.updateOne(eq("username", userFollowed),
+    if (!checkIfUserIsFollowingSomeone(follower, userFollowed)) {
+      usersCollection.updateOne(eq("username", userFollowed),
         Updates.addToSet("followers", follower));
-    usersCollection.updateOne(eq("username", follower),
+      usersCollection.updateOne(eq("username", follower),
         Updates.addToSet("following", userFollowed));
+    }
+  }
+
+  /**
+   * returns whether or not the follower is following the userFollowed already.
+   * @param follower
+   * @param userFollowed
+   * @return boolean
+   */
+  public boolean checkIfUserIsFollowingSomeone(String follower, String userFollowed) {
+    User u = getUserByUsername(follower);
+    List<String> following = u.getFollowing();
+    return following.contains(userFollowed);
   }
 
   public void updateProfilePic(String username, String pic) {
