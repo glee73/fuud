@@ -9,6 +9,10 @@ import TagsGrid from "../components/TagsGrid";
 
 function Explore(props) {
 
+    useEffect(() => {
+        props.getUser();
+    });
+
     let [results, setResults] = useState(null);
     let userResults = null;
     let restResults = null;
@@ -168,7 +172,7 @@ function Explore(props) {
         }
     }
 
-    props.redirect();
+
 
     return (
         <div>

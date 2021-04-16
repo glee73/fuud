@@ -6,9 +6,7 @@ import Navbar from "../components/Navbar";
 
 function Feed(props) {
 
-        const userName = props.user;
-
-        console.log(userName);
+        let userName = localStorage.getItem("user");;
 
         let [posts, setPosts] = useState(null);
 
@@ -41,6 +39,7 @@ function Feed(props) {
 
 
         useEffect(() => {
+            props.getUser();
             getFeedPosts();
         }, [])
 
@@ -66,7 +65,7 @@ function Feed(props) {
             );
         }
 
-        props.redirect();
+
 
         if (posts === null) {
             return (

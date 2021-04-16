@@ -2,62 +2,58 @@ import './css/App.css';
 import Feed from './pages/Feed.js';
 import Profile from './pages/Profile';
 import MakeNewPost from "./pages/MakeNewPost.js";
-import {Route, Switch,useHistory} from 'react-router-dom';
-import RestaurantSearch from "./pages/RestaurantSearch.js";
+import {Route, Switch, useHistory} from 'react-router-dom';
 import Login from "./pages/Login.js"
 import Signup from "./pages/Signup.js"
 import Explore from "./pages/Explore.js"
 import Pinned from "./pages/Pinned.js"
 import Recommendations from "./pages/Recommendations";
+import {useEffect} from "react";
 
 function App() {
 
     let history = useHistory();
-    let user = null;
 
-    const getUser = (username) => {
-        user = username;
-    }
+    useEffect(() => {
+        getUser();
+    }, [])
 
-    const clearUser = () => {
-        user = null;
-    }
-
-    function redirect() {
-        if (user === null) {
-            return history.push("/");
+    const getUser = () => {
+        const loggedInUser = localStorage.getItem("user");
+        if (!loggedInUser) {
+            history.push("/")
         }
     }
 
+    const clearUser = () => {
+        localStorage.clear();
+    }
 
     return (
             <div className="App">
                 <Switch>
                     <Route exact path="/myprofile"
                            render={(props) => (
-                                <Profile {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                                <Profile {...props} getUser={getUser} logout={clearUser}/> )} />
                     <Route exact path="/explore"
                            render={(props) => (
-                               <Explore {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                               <Explore {...props} getUser={getUser} logout={clearUser} /> )} />
                     <Route exact path="/myfeed"
                            render={(props) => (
-                               <Feed {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                               <Feed {...props} getUser={getUser} logout={clearUser} /> )} />
                     <Route exact path="/mypinned"
                            render={(props) => (
-                               <Pinned {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                               <Pinned {...props} getUser={getUser} logout={clearUser} /> )} />
                     <Route exact path="/newpost"
                            render={(props) => (
-                               <MakeNewPost {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                               <MakeNewPost {...props} getUser={getUser} logout={clearUser} /> )} />
                     <Route exact path="/"
                            render={(props) => (
-                               <Login {...props} getUser={getUser} /> )} />
-                    <Route exact path="/search"
-                           render={(props) => (
-                               <RestaurantSearch {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                               <Login {...props} /> )} />
                     <Route exact path="/register" component={Signup}/>
                     <Route exact path="/recommended"
                            render={(props) => (
-                               <Recommendations {...props} user={user} logout={clearUser} redirect={redirect}/> )} />
+                               <Recommendations {...props}  getUser={getUser} logout={clearUser} /> )} />
                 </Switch>
             </div>
     );

@@ -4,11 +4,14 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 
 function Recommendations(props) {
-    const userName = props.user;
+    const userName = localStorage.getItem("user");
     let [recommendations, setRecommendations] = useState(null);
+
     useEffect(() => {
+        props.getUser();
         getRecommendedRestaurants();
     }, []);
+
     function getRecommendedRestaurants() {
         console.log("getting recommendations");
         const toSend = {

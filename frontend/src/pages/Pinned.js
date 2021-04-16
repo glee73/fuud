@@ -4,16 +4,21 @@ import React, {useEffect, useState} from "react";
 import RestaurantListing from "../components/RestaurantListing";
 
 function Pinned(props) {
-    const userName = props.user;
+    const userName = localStorage.getItem("user");
+
     let [pinned, setPinned] = useState(null);
+
     useEffect(() => {
+        props.getUser();
         getPinned();
     }, [])
+
     function getPinned() {
         console.log("getting pinned");
         const toSend = {
             "username": userName
         };
+
         let config = {
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +57,7 @@ function Pinned(props) {
 
     }
 
-    props.redirect();
+
 
     return (
         <div>
