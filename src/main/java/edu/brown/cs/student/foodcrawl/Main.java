@@ -3,6 +3,7 @@ package edu.brown.cs.student.foodcrawl;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -136,6 +137,7 @@ public final class Main {
       String username = data.getString("username");
       List<Post> posts = connection.getPostsFromUser(username);
       posts.sort(new TimestampComparator());
+      Collections.reverse(posts);
       Map<String, Object> vars = ImmutableMap.of("posts", posts);
       return GSON.toJson(vars);
     }
