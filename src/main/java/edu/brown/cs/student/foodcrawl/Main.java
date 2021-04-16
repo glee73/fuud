@@ -9,7 +9,6 @@ import java.util.Map;
 import edu.brown.cs.student.foodcrawl.DBCommands.FeedPage;
 import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
 import edu.brown.cs.student.foodcrawl.DBCommands.MongoDBConnection;
-import edu.brown.cs.student.foodcrawl.DBCommands.RecommendationAlgo;
 import edu.brown.cs.student.foodcrawl.DataStructures.Post;
 import edu.brown.cs.student.foodcrawl.DataStructures.Restaurant;
 import edu.brown.cs.student.foodcrawl.DataStructures.User;
@@ -346,8 +345,7 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String user = data.getString("username");
-      String restname = data.getString("restaurant");
-      String restID = connection.getRestByName(restname).getId();
+      String restID = data.getString("restID");
       boolean result = connection.addPinned(user, restID);
       Map<String, Object> vars = ImmutableMap.of("success", result);
       return GSON.toJson(vars);
@@ -362,8 +360,7 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String user = data.getString("username");
-      String restname = data.getString("restaurant");
-      String restID = connection.getRestByName(restname).getId();
+      String restID = data.getString("restID");
       connection.unPin(user, restID);
       Map<String, Object> vars = ImmutableMap.of("success", true);
       return GSON.toJson(vars);
