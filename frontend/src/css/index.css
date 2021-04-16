@@ -366,6 +366,7 @@ code {
 
 .tag {
   margin-bottom: 15px;
+  margin-right: 15px;
 }
 
 .tabs {
@@ -377,7 +378,7 @@ code {
   margin: auto;
   padding-top: 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-content: center;
   flex-wrap: wrap;
   width: 50%;

@@ -59,10 +59,19 @@ function TagsGrid(props) {
 
 
     function addTag(t) {
-        setSelected([...selected, t]);
+        if (!selected.includes(t)) {
+            setSelected([...selected, t]);
+        } else {
+            setSelected(selected.filter(elt => elt !== t));
+        }
     }
 
     function showTags() {
+
+        if (selected.length === 0) {
+            return "";
+        }
+
         let toDisplay = "Selected: ";
 
         selected.map((result, idx) => {
@@ -73,7 +82,9 @@ function TagsGrid(props) {
             }
         });
         return (
-            <p> {toDisplay} </p>
+            <div>
+                <p> {toDisplay} </p>
+            </div>
         )
     }
 
@@ -93,10 +104,10 @@ function TagsGrid(props) {
                 <button className={"tag"} onClick={() => addTag("Dessert")}> Dessert </button>
                 <button className={"tag"} onClick={() => addTag("Fast Food")}> Fast Food </button>
 
-                {showTags()}
-
                 <button className={"submitButton searchButton"} type={"button"} onClick={getResults}>go</button>
             </div>
+
+            {showTags()}
 
 
             {showResults()}
