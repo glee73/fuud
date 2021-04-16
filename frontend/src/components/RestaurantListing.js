@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 
 function RestaurantListing(props) {
-    console.log(props);
-    console.log(props.isPinned);
+    console.log("in rest listing: " + props.isPinned);
     function sendPinned() {
         const toSend = {
             "username": props.user,
@@ -28,11 +27,11 @@ function RestaurantListing(props) {
             });
     }
     function displayButton() {
-        console.log(props.isPinned);
-        console.log(props.address);
         if(props.isPinned) {
+            console.log("should be true");
             return (<button className="alreadyPinned" onClick={sendPinned}>pinned</button>);
         } else {
+            console.log("should be false");
             return (<button className="pinButton" onClick={sendPinned}>+ pin</button>);
         }
     }
@@ -40,7 +39,7 @@ function RestaurantListing(props) {
         <div className="postContainer restaurantContainer shadow">
             <div className="restaurantContent">
                 <div className="pinFlex">
-                    <p className="restaurantTitle">{props.title}</p>
+                    <p className="restaurantTitle">{props.name}</p>
                     {displayButton()}
                     {/*<p className="restaurantTitle">{props.name}</p>*/}
                     {/*<button className="pinButton" onClick={sendPinned}>+ pin</button>*/}

@@ -5,13 +5,14 @@ import React, {useEffect, useState} from "react";
 
 function Recommendations(props) {
     const userName = props.user;
-    console.log("username" + userName);
     let [recommendations, setRecommendations] = useState(null);
-    let [pinned, setPinned] = useState(false);
+    let [pinned, setPinned] = useState(null);
     useEffect(() => {
         getRecommendedRestaurants();
     }, []);
-
+    useEffect(() => {
+        displayRecommendations()
+    }, [recommendations]);
     function getRecommendedRestaurants() {
         console.log("getting recommendations");
         const toSend = {
@@ -29,57 +30,41 @@ function Recommendations(props) {
             config
         )
             .then(response => {
-                console.log(response.data["recommended"]);
+                console.log("recs: " + response.data["recommended"]);
+                console.log("bools: " + response.data["bools"]);
+                // recommendations = response.data["recommended"];
+                console.log("recc array: " + recommendations);
                 setRecommendations(response.data["recommended"]);
-                generatePinnedBools();
+                setPinned(response.data["bools"]);
+                // pinned = response.data["bools"];
+                console.log("pinned array " + pinned);
                 return response.data["recommended"];
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
-    function checkIfPinned(restID) {
-        const toSend = {
-            "username": userName,
-            "restID": restID
-        };
-        let config = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*',
-            }
-        };
-        axios.post(
-            'http://localhost:4567/checkpin',
-            toSend,
-            config
-        )
-            .then(response => {
-                console.log(response.data["ispinned"]);
-                // setPinned(response.data["ispinned"])
-                return response.data["ispinned"];
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-
     const displayRecommendations = () => {
         console.log("data: " + recommendations);
-        let content = [];
-        if (recommendations === null) {
+        if (recommendations === null || recommendations === "undefined") {
             return <p>Getting your recommendations ...  </p>
+        } else {
+            let content = [];
+            console.log("pinned bools: " + pinned);
+            // if (recommendations === null) {
+            //     return <p>Getting your recommendations ...  </p>
+            // }
+            recommendations.map((rec, idx) => (
+                content.push(
+                    <RestaurantListing className={"recommendation"} address={rec.address}
+                                       key={idx} restID={rec.id} name={rec.name} user={userName} isPinned={pinned[idx]}/>
+                )
+            ));
+            return (<div className="recommendationsDisplay">
+                {content}
+            </div>)
         }
-        recommendations.map((rec, idx) => (
-            content.push(
-                <RestaurantListing className={"recommendation"} address={rec.address}
-    key={idx} restID={rec.id} title={rec.name} user={userName} isPinned={pinnedBools}/>
-            )
-        ));
-        return (<div className="recommendationsDisplay">
-            {content}
-        </div>)
+
 
     }
     // props.redirect();
