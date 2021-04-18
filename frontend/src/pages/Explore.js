@@ -137,12 +137,14 @@ function Explore(props) {
     }
 
     function displayUserResults() {
+        console.log("hi")
+        console.log(results)
 
         if (results === null || activeIndex !== 0) {
             return null;
         }
 
-        if (results.length === 0) {
+        if (results[0] === null) {
             return (
                 <div>
                     <p> results: </p>
@@ -169,7 +171,6 @@ function Explore(props) {
     function displayResults() {
         console.log(activeIndex)
         if (activeIndex === 0) {
-            console.log(displayUserResults());
             return displayUserResults();
         } else if (activeIndex === 1) {
             console.log("restaurant call");
