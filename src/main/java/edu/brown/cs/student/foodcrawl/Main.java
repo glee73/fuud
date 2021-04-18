@@ -168,8 +168,15 @@ public final class Main {
       for (int i = 0; i < t.length(); i++) {
         tags.add(t.getString(i));
       }
+      String username = data.getString("username");
       List<Restaurant> rests = connection.searchByTags(tags);
-      Map<String, Object> vars = ImmutableMap.of("restaurants", rests);
+      List<Boolean> bools = new ArrayList<>();
+      for (Restaurant r : rests) {
+        boolean b = connection.isPinned(username, r.getId());
+        bools.add(b);
+      }
+      Map<String, Object> vars = ImmutableMap.of(
+              "restaurants", rests, "pinned", bools);
       return GSON.toJson(vars);
     }
   }

@@ -55,7 +55,8 @@ function Feed(props) {
                     <Post className={"profileItem"} key={idx}
                           user={post.user} rating={post.reviewOutOfTen}
                           desc={post.description} time={post.timestamp}
-                          resID={post.restaurantID} pic={post.pic}>
+                          resID={post.restaurantID} pic={post.pic}
+                          profPic={post.user}>
                     </Post>)
             ));
 

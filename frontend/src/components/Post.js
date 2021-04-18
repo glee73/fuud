@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
-import BinImage from "./BinImage";
+import ProfilePic from "./ProfilePic";
+import PostImage from "./PostImage";
 
 function Post(props) {
 
@@ -39,7 +40,7 @@ function Post(props) {
     return (
         <div className="postContainer shadow">
             <div className="postHeader">
-                <div className="greyCircle"/>
+                <ProfilePic data={props.profPic}/>
                 <div className="userInfo">
                     <p className="userName">
                         <em>{props.user} rates {resName.toLowerCase()} {props.rating} out of 10 </em>
@@ -48,7 +49,7 @@ function Post(props) {
                 </div>
             </div>
             <div className="postContent">
-                <BinImage data={props.pic}/>
+                <PostImage data={props.pic}/>
                 <p className="postDesc">{props.desc}</p>
             </div>
         </div>

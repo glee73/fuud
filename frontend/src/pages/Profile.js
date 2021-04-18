@@ -3,7 +3,7 @@ import Post from '../components/Post';
 import React, {useState, useEffect, useRef} from "react";
 import '../css/index.css';
 import Navbar from "../components/Navbar.js"
-import BinImage from "../components/BinImage";
+import ProfilePic from "../components/ProfilePic";
 
 function Profile(props) {
 
@@ -81,7 +81,7 @@ function Profile(props) {
     const displayProfileHeader = () => {
         return (
             <div className="profileHeader">
-                <div className="profilePic"/>
+                {<ProfilePic data={userData["pic"]}/>}
                 <p className="username">{userName}</p>
                 <p> {userData["followers"].length} followers &emsp;|&emsp; {userData["following"].length} following
                 </p>
@@ -105,7 +105,8 @@ function Profile(props) {
                 <Post className={"profileItem"} key={idx}
                       user={post.user} rating={post.reviewOutOfTen}
                       desc={post.description} time={post.timestamp}
-                      resID={post.restaurantID} pic={post.pic}>
+                      resID={post.restaurantID} pic={post.pic}
+                      profPic={userData["pic"]}>
                 </Post>
             )
         ));

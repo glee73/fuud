@@ -5,12 +5,15 @@ import UserListing from "./UserListing";
 
 function TagsGrid(props) {
 
+    let username = localStorage.getItem("user");
     let [selected, setSelected] = useState([]);
     let [results, setResults] = useState([]);
+    let [pinned, setPinned] = useState(null);
 
     function getResults() {
         const toSend = {
-            "tags": selected
+            "tags": selected,
+            "username": username
         }
 
         let config = {
@@ -27,7 +30,9 @@ function TagsGrid(props) {
         )
             .then(response => {
                 console.log(response.data["restaurants"]);
+                console.log(response.data["pinned"]);
                 setResults(response.data["restaurants"]);
+                setPinned(response.data["pinned"]);
             })
             .catch(function (error) {
                 console.log(error);
@@ -35,7 +40,7 @@ function TagsGrid(props) {
     }
 
     function showResults() {
-        if (results === null || results.length === 0) {
+        if (results === null || results.length === 0 || pinned === null) {
             return null;
         }
 
@@ -45,7 +50,7 @@ function TagsGrid(props) {
             toDisplay.push(
                 <RestaurantListing
                     name={result.name} address={result.address}
-                    key={idx}>
+                    key={idx} isPinned={pinned[idx]} restID={result.id}>
                 </RestaurantListing>)
         ));
 
