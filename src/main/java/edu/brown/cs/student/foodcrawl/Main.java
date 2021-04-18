@@ -353,8 +353,10 @@ public final class Main {
   private static class AddFollowerHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
-      connection.addFollower(data.getString("follower"), data.getString("followed"));
-      Map<String, Object> vars = ImmutableMap.of("success", true, "message", "successfully followed");
+      boolean result = connection.addFollower(data.getString("follower"),
+              data.getString(
+              "followed"));
+      Map<String, Object> vars = ImmutableMap.of("success", result);
       return GSON.toJson(vars);
     }
   }

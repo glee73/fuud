@@ -82,12 +82,15 @@ public class MongoDBConnection {
    * @param follower the username of the follower, a string
    * @param userFollowed ther username of the user follower, a string
    */
-  public void addFollower(String follower, String userFollowed) {
+  public boolean addFollower(String follower, String userFollowed) {
     if (!checkIfUserIsFollowingSomeone(follower, userFollowed)) {
       usersCollection.updateOne(eq("username", userFollowed),
         Updates.addToSet("followers", follower));
       usersCollection.updateOne(eq("username", follower),
         Updates.addToSet("following", userFollowed));
+      return true;
+    } else {
+      return false;
     }
   }
 
