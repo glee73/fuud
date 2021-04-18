@@ -12,7 +12,7 @@ import java.util.Date;
 public class TimestampComparator implements Comparator<Post> {
   @Override
   public int compare(Post p1, Post p2) {
-    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy, h:mm:ss a");
     try {
       Date date1 = format.parse(p1.getTimestamp());
       Date date2 = format.parse(p2.getTimestamp());

@@ -318,6 +318,22 @@ public class MongoDBConnection {
     }
   }
 
+  public boolean deleteFollower(String follower, String followed) {
+    try {
+      User u1 = getUserByUsername(follower);
+      User u2 = getUserByUsername(followed);
+      List<String> u1following = u1.getFollowing();
+      List<String> u2followers = u2.getFollowers();
+      u1following.remove(followed);
+      u2followers.remove(followed);
+      usersCollection.updateOne(eq("username", follower), Updates.set("following", u1following));
+      usersCollection.updateOne(eq("username", followed), Updates.set("followers", u2followers));
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
   /**
    * a method to create a post.
    * @param text the text of the post, a string
