@@ -321,6 +321,12 @@ public class MongoDBConnection {
     }
   }
 
+  /**
+   * a method to delete a follower.
+   * @param follower the username currently following, a string
+   * @param followed the username currently followed, a string
+   * @return a boolean indicating success
+   */
   public boolean deleteFollower(String follower, String followed) {
     try {
       User u1 = getUserByUsername(follower);
