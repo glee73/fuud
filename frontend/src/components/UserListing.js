@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 function UserListing(props) {
 
     let searchedUser = props.searchedUser;
     let currUser = props.currUser;
+    console.log(searchedUser.followers.length)
+    let [followers, setFollowers] = useState(searchedUser.followers.length);
+
+    useEffect(() => {
+        setFollowers(searchedUser.followers.length)
+    }, [searchedUser])
 
     function follow() {
         console.log("hi")
@@ -27,7 +33,10 @@ function UserListing(props) {
         )
             .then((response) => {
                 console.log(response.data)
-                return true;
+                if (response.data["success"]) {
+                    console.log(followers++)
+                    setFollowers(followers++);
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -38,9 +47,9 @@ function UserListing(props) {
         <div className="postContainer restaurantContainer shadow">
             <div className="restaurantContent">
                 <p className="restaurantTitle">{searchedUser.username}</p>
-                <p> {searchedUser.followers.length} followers &emsp;|&emsp; {searchedUser.following.length} following
+                <p> {followers} followers &emsp;|&emsp; {searchedUser.following.length} following
                 </p>
-                <button className="pinButton" onClick={follow}>click to follow</button>
+                <button className={"pinButton"} onClick={follow}>click to follow</button>
             </div>
         </div>
     );
