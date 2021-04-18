@@ -106,6 +106,7 @@ public final class Main {
     Spark.post("/searchtopost", new SearchHandler());
     Spark.post("/restaurantbyid", new GetRestaurantByIDHandler());
     Spark.post("/addfollower", new AddFollowerHandler());
+    Spark.post("/unfollow", new UnfollowHandler());
     Spark.post("/deletepost", new DeletePostHandler());
     Spark.post("/recommended", new GetRecommendedHandler());
     Spark.post("/addpin", new AddPinHandler());
@@ -141,8 +142,15 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String restName = data.getString("query");
+      String username = data.getString("username");
       List<Restaurant> rest = connection.getAllRestsWithName(restName);
-      Map<String, Object> vars = ImmutableMap.of("restaurant", rest);
+      List<Boolean> bools = new ArrayList<>();
+      for (Restaurant r : rest) {
+        boolean b = connection.isPinned(username, r.getId());
+        bools.add(b);
+      }
+      Map<String, Object> vars = ImmutableMap.of(
+              "restaurant", rest, "pinned", bools);
       return GSON.toJson(vars);
     }
   }
@@ -354,8 +362,20 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       boolean result = connection.addFollower(data.getString("follower"),
-              data.getString(
-              "followed"));
+              data.getString("followed"));
+      Map<String, Object> vars = ImmutableMap.of("success", result);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * handles requests to add a new follower/following pair
+   */
+  private static class UnfollowHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      boolean result = connection.deleteFollower(data.getString("follower"),
+              data.getString("followed"));
       Map<String, Object> vars = ImmutableMap.of("success", result);
       return GSON.toJson(vars);
     }

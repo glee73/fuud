@@ -85,9 +85,22 @@ public class MongoDBConnection {
   public boolean addFollower(String follower, String userFollowed) {
     if (!checkIfUserIsFollowingSomeone(follower, userFollowed)) {
       usersCollection.updateOne(eq("username", userFollowed),
-        Updates.addToSet("followers", follower));
+              Updates.addToSet("followers", follower));
       usersCollection.updateOne(eq("username", follower),
-        Updates.addToSet("following", userFollowed));
+              Updates.addToSet("following", userFollowed));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean deleteFollower(String follower, String followed) {
+
+    if (checkIfUserIsFollowingSomeone(follower, followed)) {
+      usersCollection.updateOne(eq("username", follower), Updates.pull(
+              "following", followed));
+      usersCollection.updateOne(eq("username", followed), Updates.pull(
+              "followers", follower));
       return true;
     } else {
       return false;
@@ -315,22 +328,6 @@ public class MongoDBConnection {
   public boolean deletePost(String id) {
     try {
       postsCollection.deleteOne(Filters.eq("id", id));
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
-  }
-
-  public boolean deleteFollower(String follower, String followed) {
-    try {
-      User u1 = getUserByUsername(follower);
-      User u2 = getUserByUsername(followed);
-      List<String> u1following = u1.getFollowing();
-      List<String> u2followers = u2.getFollowers();
-      u1following.remove(followed);
-      u2followers.remove(followed);
-      usersCollection.updateOne(eq("username", follower), Updates.set("following", u1following));
-      usersCollection.updateOne(eq("username", followed), Updates.set("followers", u2followers));
       return true;
     } catch (Exception e) {
       return false;

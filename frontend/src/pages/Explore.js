@@ -16,6 +16,7 @@ function Explore(props) {
     }, []);
 
     let [results, setResults] = useState(null);
+    let [pinned, setPinned] = useState(null);
     let userResults = null;
     let restResults = null;
     let [activeIndex, setActiveIndex] = useState(0);
@@ -54,10 +55,6 @@ function Explore(props) {
             query = getQuery().value;
         }
 
-        const toSend = {
-            "query": query
-        }
-
         let config = {
             headers: {
                 "Content-Type": "application/json",
@@ -66,6 +63,9 @@ function Explore(props) {
         };
 
         if (activeIndex === 0) {
+            const toSend = {
+                "query": query
+            }
             axios.post(
                 'http://localhost:4567/searchforuser',
                 toSend,
@@ -81,6 +81,10 @@ function Explore(props) {
                 });
 
         } else if (activeIndex === 1) {
+            const toSend = {
+                "query": query,
+                "username": userName
+            }
             axios.post(
                 'http://localhost:4567/searchforrestaurants',
                 toSend,
@@ -89,6 +93,7 @@ function Explore(props) {
                 .then(response => {
                     restResults = response.data["restaurant"];
                     setResults(response.data["restaurant"]);
+                    setPinned(response.data["pinned"]);
                     return response.data["restaurant"];
                 })
                 .catch(function (error) {
@@ -99,7 +104,7 @@ function Explore(props) {
 
     function displayRestResults() {
 
-        if (results === null || activeIndex !== 1) {
+        if (results === null || activeIndex !== 1 || pinned === null) {
             return null;
         }
 
@@ -117,7 +122,7 @@ function Explore(props) {
                     toDisplay.push(
                         <RestaurantListing
                             name={result.name} address={result.address}
-                            key={idx}>
+                            key={idx} isPinned={pinned[idx]} restID={result.id}>
                         </RestaurantListing>)
                 ));
 
@@ -169,8 +174,6 @@ function Explore(props) {
         } else if (activeIndex === 1) {
             console.log("restaurant call");
             return displayRestResults();
-        } else {
-            // display tag shit
         }
     }
 

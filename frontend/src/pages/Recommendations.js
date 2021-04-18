@@ -50,15 +50,15 @@ function Recommendations(props) {
         if (recommendations === null || recommendations === "undefined") {
             return <p>Getting your recommendations ...  </p>
         } else {
+            if (pinned === null) {
+                return;
+            }
             let content = [];
             console.log("pinned bools: " + pinned);
-            // if (recommendations === null) {
-            //     return <p>Getting your recommendations ...  </p>
-            // }
             recommendations.map((rec, idx) => (
                 content.push(
                     <RestaurantListing className={"recommendation"} address={rec.address}
-                                       key={idx} restID={rec.id} name={rec.name} user={userName} isPinned={pinned}/>
+                                       key={idx} restID={rec.id} name={rec.name} user={userName} isPinned={pinned[idx]}/>
                 )
             ));
             return (<div className="recommendationsDisplay">

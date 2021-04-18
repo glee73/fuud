@@ -50,7 +50,7 @@ function Pinned(props) {
         pinned.map((rest, idx) => (
             content.push(
                 <RestaurantListing user={userName} restID={rest.id} className={"recommendation"} address={rest.address}
-                                   key={idx} name={rest.name}/>
+                                   key={idx} name={rest.name} isPinned={true}/>
             )
         ));
         return (<div className="recommendationsDisplay">
