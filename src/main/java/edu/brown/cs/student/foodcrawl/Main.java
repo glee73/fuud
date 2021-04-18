@@ -115,6 +115,7 @@ public final class Main {
     Spark.post("/bio", new BioHandler());
     Spark.post("/profilepic", new ProfilePicHandler());
     Spark.post("/checkfollow", new CheckFollowingHandler());
+    Spark.post("deletefollow", new DeleteFollowerHandler());
   }
 
   /**
@@ -342,6 +343,20 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String id = data.getString("id");
       boolean result = connection.deletePost(id);
+      Map<String, Object> vars = ImmutableMap.of("success", result);
+      return GSON.toJson(vars);
+    }
+  }
+
+  /**
+   * handles requests to delete a follower.
+   */
+  private static class DeleteFollowerHandler implements Route {
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String follower = data.getString("follower");
+      String followed = data.getString("followed");
+      boolean result = connection.deleteFollower(follower, followed);
       Map<String, Object> vars = ImmutableMap.of("success", result);
       return GSON.toJson(vars);
     }
