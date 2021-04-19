@@ -153,7 +153,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String restName = data.getString("query");
       String username = data.getString("username");
-      List<Restaurant> rest = connection.getAllRestsWithName(restName);
+      List<Restaurant> rest = connection.searchRestaurantByName(restName);
       List<Boolean> bools = new ArrayList<>();
       for (Restaurant r : rest) {
         boolean b = connection.isPinned(username, r.getId());
@@ -361,13 +361,20 @@ public final class Main {
   private static class SearchHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
-      Restaurant r = connection.getRestByName(
-              data.getString("restaurantName"));
+      //Restaurant r = connection.getRestByName(
+              //data.getString("restaurantName"));
+      List<Restaurant> rs = connection.searchRestaurantByName(data.getString("restaurantName"));
       Map<String, Object> vars;
-      if (r == null) {
-        vars = ImmutableMap.of("success", false);
+      if (rs.isEmpty()) {
+        vars = ImmutableMap.of("success", false, "restaurant", false);
       } else {
-        vars = ImmutableMap.of("success", r.getId());
+        Restaurant r = rs.get(0);
+        if (r == null) {
+          vars = ImmutableMap.of("success", false, "restaurant", false);
+        } else {
+          vars = ImmutableMap.of("success", r.getId(), "restaurant", r);
+          // vars = ImmutableMap.of("success", r.getId());
+        }
       }
       return GSON.toJson(vars);
     }
