@@ -8,6 +8,7 @@ import Signup from "./pages/Signup.js"
 import Explore from "./pages/Explore.js"
 import Pinned from "./pages/Pinned.js"
 import Recommendations from "./pages/Recommendations";
+import EditProfile from "./pages/EditProfile";
 import {useEffect} from "react";
 
 function App() {
@@ -54,6 +55,9 @@ function App() {
                     <Route exact path="/recommended"
                            render={(props) => (
                                <Recommendations {...props}  getUser={getUser} logout={clearUser} /> )} />
+                    <Route exact path="/editprofile"
+                           render={(props) => (
+                               <EditProfile {...props} getUser={getUser} logout={clearUser}/> )} />
                 </Switch>
             </div>
     );
