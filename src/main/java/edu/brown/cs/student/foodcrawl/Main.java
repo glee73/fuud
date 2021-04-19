@@ -2,7 +2,10 @@ package edu.brown.cs.student.foodcrawl;
 
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import edu.brown.cs.student.foodcrawl.DBCommands.FeedPage;
 import edu.brown.cs.student.foodcrawl.DBCommands.Encryptor;
@@ -228,7 +231,15 @@ public final class Main {
       String username = data.getString("username");
       List<Post> news = FeedPage.getFeedPagePosts(username);
       news.sort(new TimestampComparator());
-      Map<String, Object> vars = ImmutableMap.of("feed", news);
+
+      HashMap<String, String> usernameToPicture = new HashMap<>();
+      for (Post p: news) {
+        String u = p.getUser();
+        String pic = connection.getUserByUsername(u).getPic();
+        usernameToPicture.put(u, pic);
+      }
+
+      Map<String, Object> vars = ImmutableMap.of("feed", news, "usernameToPic", usernameToPicture);
       return GSON.toJson(vars);
     }
   }
