@@ -374,7 +374,7 @@ public final class Main {
         if (r == null) {
           vars = ImmutableMap.of("success", false, "restaurant", false);
         } else {
-          vars = ImmutableMap.of("success", r.getId(), "restaurant", r);
+          vars = ImmutableMap.of("success", r.getId(), "restaurant", rs);
           // vars = ImmutableMap.of("success", r.getId());
         }
       }
