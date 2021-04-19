@@ -67,16 +67,22 @@ public final class Main {
     parser.accepts("port").withRequiredArg().ofType(Integer.class)
         .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
-
-    runSparkServer((int) options.valueOf("port"));
+    runSparkServer();
   }
 
+  private static int getHerokuAssignedPort() {
+    ProcessBuilder pb = new ProcessBuilder();
+    if (pb.environment().get("PORT") != null) {
+      return Integer.parseInt(pb.environment().get("PORT"));
+    }
+    return DEFAULT_PORT;
+  }
   /**
    * runs the spark server.
    * @param port given number
    */
-  private void runSparkServer(int port) {
-    Spark.port(port);
+  private void runSparkServer() {
+    Spark.port(getHerokuAssignedPort());
     Spark.externalStaticFileLocation("src/main/resources/static");
     Spark.options("/*", (request, response) -> {
       String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
