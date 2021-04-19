@@ -119,5 +119,16 @@ Also within DBCommands is our more complex functionality that handles things lik
 rendering the feedpage, and computing the users' recommended restaurants.
 
 
+## Testing Plan
+
+We did not implement any sort of testing because all of our BE functionality is tied to the database and the
+current state of what it contains. Ideally, we would have made our mongodb connection class take in a database name
+and we would feed it a test database. If we had more time we would have created a fake test database with fake
+user data and restaurant data and post data. This way we could consistently test for that qualities of the 
+results returned are maintained as we continue to develop.
+
+We felt that there wasn't enough time to do this and this wasnt necessary because we would test all of
+our backend functions as we wrote them by checking that the results we got were consistent with the current
+database.
 
 
