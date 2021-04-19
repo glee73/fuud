@@ -435,4 +435,26 @@ public class MongoDBConnection {
     return avgRatings;
   }
 
+  /**
+   * searches restaurant by name. case insensitive :)
+   * if there are spaces between words, Mongo performs and inclusive OR.
+   * @param name string
+   * @return list of restuarnats that match given name
+   */
+  public List<Restaurant> searchRestaurantByName(String name) {
+    final List<Restaurant> found = new ArrayList<>();
+    Block<Document> existsBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        String id = document.getString("id");
+        String name = document.getString("name");
+        String address = document.getString("address");
+        List<String> tags = (List<String>) document.get("tags");
+        found.add(new Restaurant(name, address, tags, id));
+      }
+    };
+    restaurantsCollection.find(new Document("$text", new Document("$search", name))).forEach(existsBlock);
+    return found;
+  }
+
 }
