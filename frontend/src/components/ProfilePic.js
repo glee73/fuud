@@ -9,6 +9,17 @@ function ProfilePic(props) {
         setPath(props.data);
     }, [props.data])
 
+    console.log(props.bigger)
+
+    if (props.bigger !== undefined) {
+        if (path === null || path === 'none' || path === undefined) {
+            return <div className={"profilePic avatar greyCircle"}/>
+        } else {
+            return (<img className={"profilePic avatar"} src={path} alt={"profile" +
+            " picture of poster"}/>);
+        }
+    }
+
     if (path === null || path === 'none' || path === undefined) {
         return <div className={"profilePic greyCircle"}/>
     } else {

@@ -136,7 +136,6 @@ function EditProfile(props) {
                     <p className="pageTitle">Change Profile Picture</p>
                     <div className="profPicFlex">
                         <div className="newProfPic">
-                            {/*{<ProfilePic data={userData["pic"]}/>}*/}
                             <ProfilePic data={newPic}/>
                             <div className="profPicFileUpload">
                                 <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload}/>

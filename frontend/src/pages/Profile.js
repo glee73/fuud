@@ -4,6 +4,7 @@ import React, {useState, useEffect, useRef} from "react";
 import '../css/index.css';
 import Navbar from "../components/Navbar.js"
 import ProfilePic from "../components/ProfilePic";
+import { Link } from 'react-router-dom';
 
 function Profile(props) {
 
@@ -80,11 +81,21 @@ function Profile(props) {
 
     const displayProfileHeader = () => {
         return (
-            <div className="profileHeader">
-                <ProfilePic data={userData["pic"]}/>
+            <div className="profileHeader shadow">
+                <ProfilePic data={userData["pic"]} bigger={true}/>
                 <p className="username">{userName}</p>
-                <p> {userData["followers"].length} followers &emsp;|&emsp; {userData["following"].length} following
-                </p>
+                <div className={"link"}>
+                    <Link to={"/followers"}>
+                        {userData["followers"].length} followers
+                    </Link>
+                </div>
+
+                <div className={"link"}>
+                    <Link to={"/following"}>
+                        {userData["following"].length} following
+                    </Link>
+                </div>
+
                 <p className="bio">{userData["bio"]}</p>
             </div>
         );
@@ -111,7 +122,7 @@ function Profile(props) {
             )
         ));
 
-        return (<div className="profileGrid">
+        return (<div>
                 <p className={"pageTitle"}> your posts </p>
                 {posts}
         </div>

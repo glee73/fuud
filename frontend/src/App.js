@@ -10,6 +10,8 @@ import Pinned from "./pages/Pinned.js"
 import Recommendations from "./pages/Recommendations";
 import EditProfile from "./pages/EditProfile";
 import {useEffect} from "react";
+import FollowersList from "./pages/FollowersList";
+import FollowingList from "./pages/FollowingList";
 
 function App() {
 
@@ -58,6 +60,12 @@ function App() {
                     <Route exact path="/editprofile"
                            render={(props) => (
                                <EditProfile {...props} getUser={getUser} logout={clearUser}/> )} />
+                    <Route exact path="/followers"
+                           render={(props) => (
+                               <FollowersList {...props} getUser={getUser} logout={clearUser}/> )} />
+                    <Route exact path="/following"
+                           render={(props) => (
+                               <FollowingList {...props} getUser={getUser} logout={clearUser}/> )} />
                 </Switch>
             </div>
     );
