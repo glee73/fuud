@@ -13,7 +13,7 @@ body {
 .link, .link:visited, .link:active {
   text-decoration: none;
   color: #FF6225;
-  font-size: 14px;
+  font-size: 17px;
   cursor: pointer;
 }
 
@@ -154,8 +154,8 @@ code {
 }
 /******** PROFILE ********/
 
-.profile {
-  margin-top: -100px;
+.profile, .editProfile {
+  margin-top: -300px;
 }
 .profileHeader {
   display: flex;
@@ -471,4 +471,33 @@ code {
   margin-top: -300px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/******** MAKE NEW POST ********/
+.profPicFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.newProfPic {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+.profPicFileUpload, .bioFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.changeProfPicButton {
+  width: 70%;
+}
+.changeBioButton {
+  width: 15%;
+}
+
+.topNavBar {
+  display: flex;
 }

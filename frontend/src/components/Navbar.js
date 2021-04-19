@@ -16,7 +16,11 @@ function Navbar(props) {
                 <Link to="/myfeed">
                     <img src={logo} alt={"fuud logo"} className={"logo"}/>
                 </Link>
-                <div className="link" onClick={logout}> logout </div>
+                <div className="topNavBar">
+                    <Link className="navbarLink" to={"/editprofile"}>edit profile</Link>
+                    <div className="link" onClick={logout}> logout </div>
+                </div>
+
             </div>
             <div className="navbarContainer">
                 <div className="navLinkFlex">
