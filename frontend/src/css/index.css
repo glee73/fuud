@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap');
 
 body {
   margin: auto;
@@ -55,7 +55,7 @@ em {
 }
 
 input {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
   background: #f0f2f5;
   border-radius: 15px;
   padding: 7px 15px;
@@ -110,7 +110,7 @@ code {
 }
 .navbarLink {
   padding: 0 20px;
-  color: #5A5858;
+  color: black;
   text-decoration: none;
   font-size: 17px;
   letter-spacing: 1px;
@@ -193,7 +193,7 @@ code {
 }
 
 .postTime {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 14px;
 }
 
@@ -225,36 +225,19 @@ code {
   align-items: flex-start;
 }
 
-/*.postContent {*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: space-between;*/
-/*  padding-bottom: 30px;*/
-/*}*/
-
-/*.postImage {*/
-/*  width: 25%;*/
-/*  margin-right: 30px;*/
-/*  border-radius: 15px;*/
-/*}*/
-
-/*.postDesc {*/
-/*  width: 75%;*/
-/*}*/
-
-.postHeader, .userIcon {
-  display: flex;
-  justify-content: space-between;
-}
-
 .userIcon {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  width: 15%;
+  width: 30%;
 }
 
 .postHeader {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   align-items: flex-end;
+  padding-bottom: 5px;
 }
 
 .postBody {
@@ -264,15 +247,11 @@ code {
 }
 
 .rating {
-  /*position: relative;*/
-  /*top: 0;*/
-  /*left: 0;*/
   border-radius: 15px;
   background: #FF6225;
   color: white;
   height: 70px;
   width: 55px;
-  /*margin-right: 10px;*/
   padding: 7px 4px 0 4px;
 }
 .numericRating{
@@ -283,6 +262,10 @@ code {
 }
 .postBody > div {
   margin: 5px;
+}
+
+.poster {
+  margin-left: 8px;
 }
 
 .deletePost {
@@ -396,7 +379,7 @@ code {
   border-radius: 15px;
   padding: 40px 60px;
   text-align: left;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
   width: 80%;
 }
 

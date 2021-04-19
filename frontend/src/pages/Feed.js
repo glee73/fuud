@@ -59,7 +59,7 @@ function Feed(props) {
                           user={post.user} rating={post.reviewOutOfTen}
                           desc={post.description} time={post.timestamp}
                           resID={post.restaurantID} pic={post.pic}
-                          profPic={pics[post.user]}>
+                          profPic={pics[post.user]} postID={post.id}>
                     </Post>)
             ));
 
