@@ -236,9 +236,6 @@ public final class Main {
       for (Post p: news) {
         String u = p.getUser();
         String pic = connection.getUserByUsername(u).getPic();
-        if (pic == null) {
-          pic = "";
-        }
         usernameToPicture.put(u, pic);
       }
 
