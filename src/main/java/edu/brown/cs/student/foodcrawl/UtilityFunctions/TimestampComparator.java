@@ -17,9 +17,9 @@ public class TimestampComparator implements Comparator<Post> {
       Date date1 = format.parse(p1.getTimestamp());
       Date date2 = format.parse(p2.getTimestamp());
       if (date1.before(date2))  {
-        return -1;
-      } else if (date1.after(date2)) {
         return 1;
+      } else if (date1.after(date2)) {
+        return -1;
       } else {
         return 0;
       }
