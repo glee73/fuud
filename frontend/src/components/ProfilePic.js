@@ -9,7 +9,7 @@ function ProfilePic(props) {
         setPath(props.data);
     }, [props.data])
 
-    if (path === null || path === 'none' || path === 'undefined') {
+    if (path === null || path === 'none' || path === undefined) {
         return <div className={"profilePic greyCircle"}/>
     } else {
         return (<img className={"profilePic"} src={path} alt={"profile" +

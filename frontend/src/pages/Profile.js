@@ -131,9 +131,6 @@ function Profile(props) {
         }
     }
 
-
-
-
     return (
         <div>
             <Navbar logout={props.logout}/>
