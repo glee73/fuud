@@ -164,26 +164,27 @@ code {
   flex-direction: column;
 }
 .profilePic {
-  width: 120px;
-  height: 120px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: #C4C4C4;
+  margin-right: 5px;
 }
 
 /******** NEW POST ********/
 .postContainer {
   background: #f5f8fc;
   border-radius: 15px;
-  margin: 20px 300px 40px;
-  padding: 15px 50px;
+  margin: 20px 200px 40px 325px;
+  padding: 15px 15px;
   text-align: left;
 }
-.postHeader {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  padding-bottom: 10px;
-}
+/*.postHeader {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: left;*/
+/*  padding-bottom: 10px;*/
+/*}*/
 .userName, .postTime {
   color: #5A5858;
 }
@@ -206,23 +207,104 @@ code {
   height: 20px;
   margin-left: 20px;
 }
-.postContent {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 30px;
+
+.postImg {
+  width: 50%;
+  height: 50%;
+  padding-right: 10px;
 }
 
-.postImage {
-  width: 25%;
-  margin-right: 30px;
+.postImg > img {
+  width: 100%;
   border-radius: 15px;
+  max-height: 300px;
 }
 
-.postDesc {
-  width: 75%;
+.contentSpecs {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
+/*.postContent {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: space-between;*/
+/*  padding-bottom: 30px;*/
+/*}*/
+
+/*.postImage {*/
+/*  width: 25%;*/
+/*  margin-right: 30px;*/
+/*  border-radius: 15px;*/
+/*}*/
+
+/*.postDesc {*/
+/*  width: 75%;*/
+/*}*/
+
+.postHeader, .userIcon {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userIcon {
+  align-items: center;
+  width: 15%;
+}
+
+.postHeader {
+  width: 100%;
+  align-items: flex-end;
+}
+
+.postBody {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.rating {
+  /*position: relative;*/
+  /*top: 0;*/
+  /*left: 0;*/
+  border-radius: 15px;
+  background: #FF6225;
+  color: white;
+  height: 70px;
+  width: 55px;
+  /*margin-right: 10px;*/
+  padding: 7px 4px 0 4px;
+}
+.numericRating{
+  font-size: 45px;
+}
+.outOf10{
+  font-size: 14px;
+}
+.postBody > div {
+  margin: 5px;
+}
+
+.deletePost {
+  margin-right: 10px;
+}
+.garbage {
+  height: 25px;
+}
+.postContent {
+  width: 40%;
+}
+.postInfo > p {
+  margin: 0;
+}
+.postDescContainer {
+  padding: 10px 0 10px 30px;
+}
+
+.restName {
+  font-size: 35px;
+}
 .feed {
   margin-top: -150px;
 }

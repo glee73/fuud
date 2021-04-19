@@ -18,6 +18,7 @@ import edu.brown.cs.student.foodcrawl.UtilityFunctions.TimestampComparator;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.json.JSONArray;
+import org.json.JSONException;
 import spark.ExceptionHandler;
 
 import spark.Response;
@@ -232,14 +233,20 @@ public final class Main {
       List<Post> news = FeedPage.getFeedPagePosts(username);
       news.sort(new TimestampComparator());
 
-      HashMap<String, String> usernameToPicture = new HashMap<>();
+      HashMap<String, String>  usernameToPicture = new HashMap<>();
       for (Post p: news) {
         String u = p.getUser();
         String pic = connection.getUserByUsername(u).getPic();
-        usernameToPicture.put(u, pic);
+        if (pic == null) {
+          usernameToPicture.put(u, "none");
+        } else {
+          usernameToPicture.put(u, pic);
+        }
       }
 
-      Map<String, Object> vars = ImmutableMap.of("feed", news, "usernameToPic", usernameToPicture);
+      System.out.println(usernameToPicture);
+
+      Map<String, Object> vars = ImmutableMap.of("feed", news, "usernameToPic", new JSONObject(usernameToPicture));
       return GSON.toJson(vars);
     }
   }

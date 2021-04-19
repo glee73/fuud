@@ -6,9 +6,10 @@ import Navbar from "../components/Navbar";
 
 function Feed(props) {
 
-        let userName = localStorage.getItem("user");;
+        let userName = localStorage.getItem("user");
 
         let [posts, setPosts] = useState(null);
+        let [pics, setPics] = useState(null);
 
         function getFeedPosts() {
                 const toSend = {
@@ -28,8 +29,9 @@ function Feed(props) {
                     config
                 )
                     .then(response => {
-                        console.log(response.data["feed"])
+                        console.log(response.data["usernameToPic"])
                         setPosts(response.data["feed"]);
+                        setPics(response.data["usernameToPic"]["nameValuePairs"]);
                         return response.data["feed"];
                     })
                     .catch(function (error) {
@@ -50,13 +52,14 @@ function Feed(props) {
             if (posts.length === 0) {
                 return <p> No posts to show. Find other users to follow by entering their username in the search bar above!</p>
             }
+
             posts.map((post, idx) => (
                 content.push(
                     <Post className={"profileItem"} key={idx}
                           user={post.user} rating={post.reviewOutOfTen}
                           desc={post.description} time={post.timestamp}
                           resID={post.restaurantID} pic={post.pic}
-                          profPic={post.user}>
+                          profPic={pics[post.user]}>
                     </Post>)
             ));
 
@@ -67,8 +70,7 @@ function Feed(props) {
         }
 
 
-
-        if (posts === null) {
+        if (posts === null || pics === null) {
             return (
                 <div>
                     <Navbar logout={props.logout}/>

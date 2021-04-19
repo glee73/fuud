@@ -33,7 +33,7 @@ function Profile(props) {
         )
             .then(response => {
                 let data = response.data["user"];
-                console.log(data)
+                console.log(data["pic"]);
                 setUserData(data);
                 return true;
             })
@@ -81,7 +81,7 @@ function Profile(props) {
     const displayProfileHeader = () => {
         return (
             <div className="profileHeader">
-                {<ProfilePic data={userData["pic"]}/>}
+                <ProfilePic data={userData["pic"]}/>
                 <p className="username">{userName}</p>
                 <p> {userData["followers"].length} followers &emsp;|&emsp; {userData["following"].length} following
                 </p>

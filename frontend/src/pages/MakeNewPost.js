@@ -156,7 +156,7 @@ function MakeNewPost(props) {
                 <div className="step step4">
                     <form className="formStyle caption">
                         <label htmlFor="fileUpload">Upload an image (optional):</label>
-                        <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload}/>
+                        <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload} required/>
                     </form>
                 </div>
                 {msg}
