@@ -17,30 +17,30 @@ function Navbar(props) {
                     <img src={logo} alt={"fuud logo"} className={"logo"}/>
                 </Link>
                 <div className="topNavBar">
-                    <Link className="navbarLink" to={"/editprofile"}>edit profile</Link>
+                    <Link className="edit" to={"/editprofile"}>edit profile</Link>
                     <div className="link" onClick={logout}> logout </div>
                 </div>
 
             </div>
             <div className="navbarContainer">
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"/>
+                    {/*<div className="orangeCircle"/>*/}
                     <Link className="navbarLink" to={"/myfeed"}>my feed</Link>
                 </div>
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"/>
+                    {/*<div className="orangeCircle"/>*/}
                     <Link className={"navbarLink"} to={"/explore"}> explore </Link>
                 </div>
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"/>
+                    {/*<div className="orangeCircle"/>*/}
                     <Link className={"navbarLink"} to={"/mypinned"}> my pinned </Link>
                 </div>
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"/>
+                    {/*<div className="orangeCircle"/>*/}
                     <Link className="navbarLink" to="/recommended">recommended</Link>
                 </div>
                 <div className="navLinkFlex">
-                    <div className="orangeCircle"/>
+                    {/*<div className="orangeCircle"/>*/}
                     <Link className="navbarLink" to="/myprofile">my profile</Link>
                 </div>
             </div>
