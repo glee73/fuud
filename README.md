@@ -5,7 +5,7 @@
 
 **Team Strengths and Weaknesses:**
 * Ethan: 
-  * Strengths - backend, familiarity with graphs
+  * Strengths - backend
   * Weaknesses - frontend, javascript, html
 * Ben: 
   * Strengths - backend (AI/ML)
@@ -98,6 +98,26 @@ _On your first meeting with your mentor TA, you should plan dates for at least t
 ## How to Build and Run
 _A necessary part of any README!_
 
+BE: run `mvn package`
+then run `./run`
+
+FE: run `npm start`
+
 ## Design
+Our Backend code is organized into packages: 
+DataStructures contains our 3 core data structures: restaurants, users, and the posts they make.
+
+DBCommands contains our necessary backend functionality. The MongoDBConnection file contains all of the
+mongodb/java driver code that updates, inserts, gets, and deletes data in our mongodb database. 
+For organization's sake, our MongoDB database contains 3 tables or "collections". One for each of our 3
+data structures. Because we structured it like this, and because MongoDB supports a flexible schema, we 
+are able to change the way we store/represent a user, restaurant or post as we go. This has proved incredibly
+useful as we developed our app because we were able to add or delete or modify fields and the structure of 
+our data as we went.
+
+Also within DBCommands is our more complex functionality that handles things like encrypting passwords,
+rendering the feedpage, and computing the users' recommended restaurants.
+
+
 
 
