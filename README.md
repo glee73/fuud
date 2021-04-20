@@ -120,6 +120,14 @@ our data as we went.
 Also within DBCommands is our more complex functionality that handles things like encrypting passwords,
 rendering the feedpage, and computing the users' recommended restaurants.
 
+## Division of Labor
+Ethan - Setting up the Database in mongodb, connecting to it and creating the collections. I worked mainly on the Backend by defining our data structures and writing the java functions that connect to our database and either get, set, insert, or delete data.
+Ben - data structures in backend, handlers to connect frontend and backend, 
+Handling images frontend and backend, login backend functionality, deployment
+Casey -- figma, styling, edit profile (bio and pic), recommendations page, confirm restaurant in make post search for restaurant, beginning of pin
+Grace  — figma, connected frontend to backend: basics of profile, explore, feed, following, follower, signup; buttons interaction, loading page
+
+
 
 ## Testing Plan
 
