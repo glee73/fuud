@@ -101,13 +101,8 @@ function Post(props) {
                 <div className={"postContent"}>
                     <div className={"contentSpecs"}>
                         <div className={"rating"}>
-                            {/*<div className="ratingFlex">*/}
-                            {/*    <span className="numericRating">{props.rating}</span>*/}
-                            {/*</div>*/}
-                            {/* <p className="outOf10">/ 10</p>*/}
                             <p className="numericRating">{props.rating}</p>
                             <p className="outOf">out of 10</p>
-                            {/*<p className="ten">10</p>*/}
                         </div>
                         <div className={"postInfo"}>
                             <p className="restName"> <em> {res.name.toLowerCase()} </em> </p>

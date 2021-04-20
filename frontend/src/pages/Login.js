@@ -72,7 +72,7 @@ function Login(props) {
 
             <div className={"login-graphics"}>
                 <div className={"login-logo"}>
-                    <img src={fuud}/>
+                    <img className="loginLogo" src={fuud}/>
                 </div>
 
                 <div className={"login shadow"}>
