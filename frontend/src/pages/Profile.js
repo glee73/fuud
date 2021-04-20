@@ -112,7 +112,7 @@ function Profile(props) {
             );
         }
 
-        userPosts.reverse().map((post, idx) => (
+        userPosts.map((post, idx) => (
             posts.push(
                 <Post className={"profileItem"} key={idx}
                       user={post.user} rating={post.reviewOutOfTen}

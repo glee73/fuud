@@ -10,7 +10,7 @@ function MakeNewPost(props) {
     let [confirmRestaurant, setConfirmRestaurant] = useState(null);
     let [confirmedStatus, setConfirmed] = useState(false);
     const userName = localStorage.getItem("user");
-    let restaurantName;
+    let [restaurantName, setRestaurantName] = useState(null);
     let history = useHistory();
 
     const img = document.createElement('img')
@@ -54,14 +54,15 @@ function MakeNewPost(props) {
                 console.log(error);
             });
     }
-    const confirmRestaurantName = (restName) => {
-        //document.getElementById("confirmButton").classList.add("confirmButtonClicked");
-        //document.getElementById("confirmButton").innerText = "confirmed";
-        console.log("confirm before");
+    const confirmRestaurantName = (restName, idx) => {
+        document.getElementById(idx).classList.add("confirmButtonClicked");
+        document.getElementById(idx).innerText = "confirmed";
         setConfirmed(true);
         console.log("confirm after");
         // restaurantName = restName;
         // console.log(restaurantName);
+        setRestaurantName(restName);
+        console.log(restaurantName);
 
     }
     function showSearchResult() {
@@ -76,10 +77,6 @@ function MakeNewPost(props) {
                 </div>
             );
         } else {
-            // return (
-            //     <div className="newPostResult">
-            //         Restaurant found! Please continue.
-            //     </div>);
             console.log(confirmRestaurant);
             if (confirmRestaurant === null) {
                 return (<p>Unable to find restaurant</p>);
@@ -98,7 +95,7 @@ function MakeNewPost(props) {
                 <div className="confirmRestaurant shadow" key={idx}>
                     <div className="confirmFlex">
                         <p className="confirmRestName">{rest.name}</p>
-                        <button className="confirmButton" id="confirmButton" type="button" onClick={() => confirmRestaurantName(rest.name)}>confirm</button>
+                        <button className="confirmButton" id={idx} type="button" onClick={() => confirmRestaurantName(rest.name, idx)}>confirm</button>
                     </div>
                     <p>{rest.address}</p>
                 </div>

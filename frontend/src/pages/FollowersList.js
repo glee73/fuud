@@ -1,17 +1,14 @@
-import axios from 'axios';
-import Post from '../components/Post';
-import React, {useState, useEffect, useRef} from "react";
-import '../css/index.css';
-import Navbar from "../components/Navbar.js"
-import ProfilePic from "../components/ProfilePic";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import UserListing from "../components/UserListing";
+import Navbar from "../components/Navbar";
+import Loading from "../components/Loading";
 
 function FollowersList(props) {
-
     let userName = localStorage.getItem("user");
-    let [userData, setUserData] = useState(null);
+    let [followers, setFollowing] = useState(null);
 
-    function getUserData() {
+    function getFollowing() {
         console.log("getting user data");
 
         const toSend = {
@@ -26,14 +23,14 @@ function FollowersList(props) {
         };
 
         axios.post(
-            'http://localhost:4567/user',
+            'http://localhost:4567/getfollowers',
             toSend,
             config
         )
             .then(response => {
-                let data = response.data["user"];
-                console.log(data["pic"]);
-                setUserData(data);
+                let data = response.data["followers"];
+                console.log(data);
+                setFollowing(data);
                 return true;
             })
             .catch(function (error) {
@@ -42,42 +39,47 @@ function FollowersList(props) {
 
     }
 
-    function displayFollowers() {
-        let followers = [];
+    function displayFollowing() {
+        let content = [];
 
-        if (userData.followers.length === 0) {
-            return <p> No followers to show.</p>
+        if (followers.length === 0) {
+            return <p> No users to show.</p>
         }
 
-        userData.followers.map((follower, idx) => {
-            followers.push(
-                <UserListing searchedUser={follower} currUser={userName}
-                key={idx}/>
-        )});
+        followers.map((usr, idx) => (
+            content.push(
+                <UserListing searchedUser={usr} currUser={userName}
+                             key={idx}/>
+            )));
 
         return (<div className="profileGrid">
-                {followers}
+                {content}
+            </div>
+        );
+    }
+
+    useEffect(() => {
+        getFollowing();
+        props.getUser();
+    },[]);
+
+
+    if (followers === null || followers === undefined) {
+        return (
+            <div>
+                <Navbar logout={props.logout}/>
+                <Loading text={<p className="pageTitle">followers</p>}/>
             </div>
         );
     }
 
 
-    useEffect(() => {
-        getUserData();
-        props.getUser();
-    },[]);
-
-
-    if (userData === null) {
-        return "";
-    }
-
     return (
         <div>
             <Navbar logout={props.logout}/>
             <div className="feed">
-                <p className="feedTitle pageTitle">your followers</p>
-                {displayFollowers()}
+                <p className="pageTitle">followers</p>
+                {displayFollowing()}
             </div>
         </div>
     );

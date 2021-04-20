@@ -196,8 +196,12 @@ code {
 }
 /******** PROFILE ********/
 
-.profile, .editProfile {
+editProfile {
   margin-top: -250px;
+}
+
+.profile {
+  margin-top: -200px;
 }
 .profileHeader {
   display: flex;

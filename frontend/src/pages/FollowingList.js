@@ -5,12 +5,13 @@ import '../css/index.css';
 import Navbar from "../components/Navbar.js"
 import ProfilePic from "../components/ProfilePic";
 import UserListing from "../components/UserListing";
+import Loading from "../components/Loading";
 
 function FollowingList(props) {
     let userName = localStorage.getItem("user");
-    let [userData, setUserData] = useState(null);
+    let [following, setFollowing] = useState(null);
 
-    function getUserData() {
+    function getFollowing() {
         console.log("getting user data");
 
         const toSend = {
@@ -25,14 +26,14 @@ function FollowingList(props) {
         };
 
         axios.post(
-            'http://localhost:4567/user',
+            'http://localhost:4567/getfollowing',
             toSend,
             config
         )
             .then(response => {
-                let data = response.data["user"];
+                let data = response.data["following"];
                 console.log(data);
-                setUserData(data);
+                setFollowing(data);
                 return true;
             })
             .catch(function (error) {
@@ -42,32 +43,37 @@ function FollowingList(props) {
     }
 
     function displayFollowing() {
-        let following = [];
+        let content = [];
 
-        if (userData.following.length === 0) {
-            return <p> No followers to show.</p>
+        if (following.length === 0) {
+            return <p> No users to show.</p>
         }
 
-        userData.following.map((usr, idx) => (
-            following.push(
+        following.map((usr, idx) => (
+            content.push(
                 <UserListing searchedUser={usr} currUser={userName}
                              key={idx}/>
             )));
 
         return (<div className="profileGrid">
-                {following}
+                {content}
             </div>
         );
     }
 
     useEffect(() => {
-        getUserData();
+        getFollowing();
         props.getUser();
     },[]);
 
 
-    if (userData === null || userData === undefined) {
-        return "";
+    if (following === null || following === undefined) {
+        return (
+            <div>
+                <Navbar logout={props.logout}/>
+                <Loading text={<p className="pageTitle">following</p>}/>
+            </div>
+        );
     }
 
 
@@ -75,7 +81,7 @@ function FollowingList(props) {
         <div>
             <Navbar logout={props.logout}/>
             <div className="feed">
-                <p className="feedTitle pageTitle">your followers</p>
+                <p className="pageTitle">following</p>
                 {displayFollowing()}
             </div>
         </div>
