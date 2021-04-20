@@ -126,6 +126,8 @@ public final class Main {
     Spark.post("/bio", new BioHandler());
     Spark.post("/profilepic", new ProfilePicHandler());
     Spark.post("/checkfollow", new CheckFollowingHandler());
+    Spark.post("/getfollowers", new GetFollowersUsers());
+    Spark.post("/getfollowing", new GetFollowingUsers());
   }
 
   /**
@@ -372,7 +374,7 @@ public final class Main {
         if (r == null) {
           vars = ImmutableMap.of("success", false, "restaurant", false);
         } else {
-          vars = ImmutableMap.of("success", r.getId(), "restaurant", r);
+          vars = ImmutableMap.of("success", r.getId(), "restaurant", rs);
           // vars = ImmutableMap.of("success", r.getId());
         }
       }
@@ -568,6 +570,40 @@ public final class Main {
         pw.println("</pre>");
       }
       res.body(stacktrace.toString());
+    }
+  }
+
+  private static class GetFollowersUsers implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      User u = connection.getUserByUsername(user);
+      List<String> followers = u.getFollowers();
+      List<User> followersToSend = new ArrayList<>();
+      for (String f : followers) {
+        User fu = connection.getUserByUsername(f);
+        followersToSend.add(fu);
+      }
+      Map<String, Object> vars = ImmutableMap.of("followers", followersToSend);
+      return GSON.toJson(vars);
+    }
+  }
+
+  private static class GetFollowingUsers implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String user = data.getString("username");
+      User u = connection.getUserByUsername(user);
+      List<String> following = u.getFollowing();
+      List<User> followingToSend = new ArrayList<>();
+      for (String f : following) {
+        User fu = connection.getUserByUsername(f);
+        followingToSend.add(fu);
+      }
+      Map<String, Object> vars = ImmutableMap.of("following", followingToSend);
+      return GSON.toJson(vars);
     }
   }
 
