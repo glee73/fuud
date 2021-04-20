@@ -103,7 +103,7 @@ then run `./run`
 
 FE: run `npm start`
 
-Or access [https://cs32test.herokuapp.com] to view the version we have hosted on Heroku (Note: there may be some issues on Heroku that aren't on localhost)!
+Or access https://cs32test.herokuapp.com to view the version we have hosted on Heroku (Note: there may be some issues on Heroku that aren't on localhost)!
 
 ## Design
 Our Backend code is organized into packages: 
