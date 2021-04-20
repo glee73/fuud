@@ -75,7 +75,7 @@ function Feed(props) {
             return (
                 <div>
                     <Navbar logout={props.logout} page={"myfeed"}/>
-                    <Loading text={<p className="restaurantTitle pageTitle">what your friends are saying</p>}/>
+                    <Loading text={<p className="feedTitle pageTitle">what your friends are saying</p>}/>
                 </div>
             );
         } else {
