@@ -246,8 +246,6 @@ public final class Main {
         }
       }
 
-      System.out.println(usernameToPicture);
-
       Map<String, Object> vars = ImmutableMap.of("feed", news, "usernameToPic", new JSONObject(usernameToPicture));
       return GSON.toJson(vars);
     }
