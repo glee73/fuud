@@ -361,6 +361,10 @@ editProfile {
 .garbage {
   height: 25px;
   cursor: pointer;
+  transition: all 2s ease-in-out;
+}
+.garbage:active {
+  transform: translateX(500px);
 }
 
 .garbage:hover {

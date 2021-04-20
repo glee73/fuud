@@ -58,6 +58,9 @@ function MakeNewPost(props) {
         document.getElementById(idx).classList.add("confirmButtonClicked");
         document.getElementById(idx).innerText = "confirmed";
         setConfirmed(true);
+        console.log("confirm after");
+        // restaurantName = restName;
+        // console.log(restaurantName);
         setRestaurantName(restName);
         console.log(restaurantName);
 
@@ -74,10 +77,6 @@ function MakeNewPost(props) {
                 </div>
             );
         } else {
-            // return (
-            //     <div className="newPostResult">
-            //         Restaurant found! Please continue.
-            //     </div>);
             console.log(confirmRestaurant);
             if (confirmRestaurant === null) {
                 return (<p>Unable to find restaurant</p>);
@@ -123,7 +122,7 @@ function MakeNewPost(props) {
         }
 
         // let restaurantName = document.getElementById('restaurantName').value;
-        // let restaurantName = confirmRestaurant.name;
+        let restaurantName = confirmRestaurant[0].name;
         let text = document.getElementById('caption').value;
         let review = document.getElementById('rating').value;
         let timestamp = new Date().toLocaleString();
@@ -203,7 +202,7 @@ function MakeNewPost(props) {
                 </div>
                 <div className="step step4">
                     <form className="formStyle caption">
-                        <label htmlFor="fileUpload">Upload an image (optional):</label>
+                        <label htmlFor="fileUpload">Upload an image:</label>
                         <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload} accept="image/jpeg, image/png" required/>
                     </form>
                 </div>
