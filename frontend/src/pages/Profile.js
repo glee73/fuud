@@ -5,6 +5,7 @@ import '../css/index.css';
 import Navbar from "../components/Navbar.js"
 import ProfilePic from "../components/ProfilePic";
 import { Link } from 'react-router-dom';
+import Loading from "../components/Loading";
 
 function Profile(props) {
 
@@ -85,13 +86,13 @@ function Profile(props) {
                 <ProfilePic data={userData["pic"]} bigger={true}/>
                 <p className="username">{userName}</p>
                 <div className={"link"}>
-                    <Link to={"/followers"}>
+                    <Link to={"/followers"} className={"link"}>
                         {userData["followers"].length} followers
                     </Link>
                 </div>
 
                 <div className={"link"}>
-                    <Link to={"/following"}>
+                    <Link to={"/following"} className={"link"}>
                         {userData["following"].length} following
                     </Link>
                 </div>
@@ -142,9 +143,19 @@ function Profile(props) {
         }
     }
 
+
+    if (userData === null || userPosts === null) {
+        return (
+            <div>
+                <Navbar logout={props.logout} page={"myprofile"}/>
+                <Loading text={""}/>
+            </div>
+        )
+    }
+
     return (
         <div>
-            <Navbar logout={props.logout}/>
+            <Navbar logout={props.logout} page={"myprofile"}/>
             {output()}
         </div>
     );

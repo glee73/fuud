@@ -182,7 +182,7 @@ function Explore(props) {
 
     return (
         <div>
-            <Navbar logout={props.logout}/>
+            <Navbar logout={props.logout} page={"explore"}/>
 
             <div className={"explorePage"}>
                 <p className={"pageTitle"}> Looking for something? </p>

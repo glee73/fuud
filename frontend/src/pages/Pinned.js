@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar.js";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import RestaurantListing from "../components/RestaurantListing";
+import Loading from "../components/Loading";
 
 function Pinned(props) {
     const userName = localStorage.getItem("user");
@@ -44,9 +45,7 @@ function Pinned(props) {
     const displayPinned = () => {
         console.log("data: " + pinned);
         let content = [];
-        if (pinned === null) {
-            return <p>Getting your pinned restaurants ... </p>
-        }
+
         pinned.map((rest, idx) => (
             content.push(
                 <RestaurantListing user={userName} restID={rest.id} className={"recommendation"} address={rest.address}
@@ -57,16 +56,26 @@ function Pinned(props) {
             {content}
         </div>)
     }
-return (
-        <div>
-    <Navbar logout = {props.logout}/>
-    <div className="restaurant">
-        <p className="pinnedTitle pageTitle">your pinned</p>
-        {displayPinned()}
-    </div>
-</div>
 
-);
+    if (pinned === null) {
+        return (
+            <div>
+                <Navbar logout={props.logout} page={"mypinned"}/>
+                <Loading text={<p className="pinnedTitle pageTitle">your
+                    pinned</p>}/>
+            </div>
+        );
+    }
+    return (
+            <div>
+        <Navbar logout = {props.logout} page={"mypinned"}/>
+        <div className="restaurant">
+            <p className="pinnedTitle pageTitle">your pinned</p>
+            {displayPinned()}
+        </div>
+    </div>
+
+    );
 
 
 }

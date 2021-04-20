@@ -13,7 +13,8 @@ function ProfilePic(props) {
 
     if (props.bigger !== undefined) {
         if (path === null || path === 'none' || path === undefined) {
-            return <div className={"profilePic avatar greyCircle"}/>
+            return (<img className={"profilePic avatar"} src={"https://img.icons8.com/plumpy/96/000000/user-male-circle.png"} alt={"profile" +
+                " picture of poster"}/>)
         } else {
             return (<img className={"profilePic avatar"} src={path} alt={"profile" +
             " picture of poster"}/>);
@@ -21,7 +22,8 @@ function ProfilePic(props) {
     }
 
     if (path === null || path === 'none' || path === undefined) {
-        return <div className={"profilePic greyCircle"}/>
+        return (<img className={"profilePic"} src={"https://img.icons8.com/plumpy/96/000000/user-male-circle.png"} alt={"profile" +
+        " picture of poster"}/>)
     } else {
         return (<img className={"profilePic"} src={path} alt={"profile" +
         " picture of poster"}/>);

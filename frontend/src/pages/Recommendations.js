@@ -2,6 +2,7 @@ import RestaurantListing from "../components/RestaurantListing";
 import Navbar from "../components/Navbar.js"
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import Loading from "../components/Loading";
 
 function Recommendations(props) {
     const userName = localStorage.getItem("user");
@@ -47,9 +48,6 @@ function Recommendations(props) {
     }
     const displayRecommendations = () => {
         console.log("data: " + recommendations);
-        if (recommendations === null || recommendations === "undefined") {
-            return <p>Getting your recommendations ...  </p>
-        } else {
             if (pinned === null) {
                 return;
             }
@@ -64,21 +62,31 @@ function Recommendations(props) {
             return (<div className="recommendationsDisplay">
                 {content}
             </div>)
-        }
 
     }
 
-    return (
-        <div>
-            <Navbar logout={props.logout}/>
-            <div className="restaurant">
-                <p className="restaurantTitle pageTitle">your recommendations</p>
-                {displayRecommendations()}
+    if (recommendations === null || recommendations === "undefined") {
+        return (
+            <div>
+                <Navbar logout={props.logout} page={"recommended"}/>
+                <Loading text={<p className="restaurantTitle pageTitle">your
+                    recommendations</p>}/>
             </div>
-        </div>
+        );
+    } else {
 
-    )
-        ;
+        return (
+            <div className={"content"}>
+                <Navbar logout={props.logout} page={"recommended"}/>
+                <div className="restaurant">
+                    <p className="restaurantTitle pageTitle">your
+                        recommendations</p>
+                    {displayRecommendations()}
+                </div>
+            </div>
+
+        );
+    }
 }
 
 export default Recommendations;
