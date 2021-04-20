@@ -3,6 +3,7 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import '../css/index.css';
 import Navbar from "../components/Navbar";
+import Loading from "../components/Loading";
 
 function Feed(props) {
 
@@ -73,13 +74,14 @@ function Feed(props) {
         if (posts === null || pics === null) {
             return (
                 <div>
-                    <Navbar logout={props.logout}/>
+                    <Navbar logout={props.logout} page={"myfeed"}/>
+                    <Loading text={<p className="restaurantTitle pageTitle">what your friends are saying</p>}/>
                 </div>
             );
         } else {
             return (
                 <div>
-                    <Navbar logout={props.logout}/>
+                    <Navbar logout={props.logout} page={"myfeed"}/>
                     <div className="feed">
                         <p className="feedTitle pageTitle">what your friends are saying</p>
                         {displayPosts()}

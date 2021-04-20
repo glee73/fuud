@@ -32,6 +32,18 @@ function App() {
         localStorage.clear();
     }
 
+    window.setInterval( function() {
+        let dots = document.getElementById("dots");
+        if (dots === null) {
+            return;
+        }
+        if (dots.innerHTML.length > 13) {
+            dots.innerHTML = "loading";
+        } else {
+            dots.innerHTML += ".";
+        }
+    }, 100);
+
     return (
             <div className="App">
                 <Switch>

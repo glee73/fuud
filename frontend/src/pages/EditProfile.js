@@ -136,7 +136,7 @@ function EditProfile(props) {
                     <p className="pageTitle">Change Profile Picture</p>
                     <div className="profPicFlex">
                         <div className="newProfPic">
-                            <ProfilePic data={newPic}/>
+                            <ProfilePic data={newPic} bigger={true}/>
                             <div className="profPicFileUpload">
                                 <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload}/>
                                 <button className="submitButton changeProfPicButton" type="submit" onClick={rerenderpic}>change photo</button>
