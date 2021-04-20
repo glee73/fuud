@@ -547,3 +547,34 @@ code {
 .topNavBar {
   display: flex;
 }
+.confirmRestaurant {
+  padding: 10px 20px;
+  background: #f5f8fc;
+  border-radius: 15px;
+  width: 60%;
+  margin-bottom: 20px;
+}
+.confirmFlex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.confirmButton {
+  border-radius: 5px;
+  border: 2px solid #FF6225;
+  color: #FF6225;
+  font-size: 18px;
+  padding: 4px 8px;
+}
+.confirmButton:hover {
+  color: #b5b5b5;
+  border-color: #b5b5b5;
+}
+.confirmButtonClicked {
+  color: #b5b5b5;
+  border-color: #b5b5b5;
+}
+.confirmRestName {
+  color: #ff6225;
+  font-size: 25px;
+}
