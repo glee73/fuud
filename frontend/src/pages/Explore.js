@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import UserListing from "../components/UserListing";
 import RestaurantListing from "../components/RestaurantListing";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import TagsGrid from "../components/TagsGrid";
 
@@ -21,7 +21,7 @@ function Explore(props) {
     let restResults = null;
     let [activeIndex, setActiveIndex] = useState(0);
 
-    
+
     function searchForUser() {
         setActiveIndex(0);
         setResults(null);
@@ -121,12 +121,12 @@ function Explore(props) {
             let toDisplay = [];
 
             results.map((result, idx) => (
-                    toDisplay.push(
-                        <RestaurantListing
-                            name={result.name} address={result.address}
-                            key={idx} isPinned={pinned[idx]} restID={result.id}>
-                        </RestaurantListing>)
-                ));
+                toDisplay.push(
+                    <RestaurantListing
+                        name={result.name} address={result.address}
+                        key={idx} isPinned={pinned[idx]} restID={result.id}>
+                    </RestaurantListing>)
+            ));
 
             return (
                 <div id={'restResults'}>
@@ -181,7 +181,6 @@ function Explore(props) {
     }
 
 
-
     return (
         <div>
             <Navbar logout={props.logout} page={"explore"}/>
@@ -202,7 +201,8 @@ function Explore(props) {
                                 <input id={"user-query"} className={"searchBar" +
                                 " shadow"} type={"text"} placeholder={"search for a user by username"}/>
                                 <button className={"submitButton" +
-                                " searchButton"} type={"submit"} onClick={getResults}>search</button>
+                                " searchButton"} type={"submit"} onClick={getResults}>search
+                                </button>
                             </form>
                             {displayResults()}
                         </div>
@@ -210,8 +210,11 @@ function Explore(props) {
 
                     <TabPanel>
                         <form>
-                            <input id={"rest-query"} className={"searchBar shadow"} type={"text"} placeholder={"search for a restaurant by restaurant name"}/>
-                            <button className={"submitButton searchButton"} type={"submit"} onClick={getResults}>search</button>
+                            <input id={"rest-query"} className={"searchBar shadow"} type={"text"}
+                                   placeholder={"search for a restaurant by restaurant name"}/>
+                            <button className={"submitButton searchButton"} type={"submit"}
+                                    onClick={getResults}>search
+                            </button>
                         </form>
                         {displayResults()}
                     </TabPanel>

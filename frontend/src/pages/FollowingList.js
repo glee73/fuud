@@ -1,9 +1,7 @@
 import axios from 'axios';
-import Post from '../components/Post';
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import '../css/index.css';
-import Navbar from "../components/Navbar.js"
-import ProfilePic from "../components/ProfilePic";
+import Navbar from "../components/Navbar.js";
 import UserListing from "../components/UserListing";
 import Loading from "../components/Loading";
 
@@ -64,7 +62,7 @@ function FollowingList(props) {
     useEffect(() => {
         getFollowing();
         props.getUser();
-    },[]);
+    }, []);
 
 
     if (following === null || following === undefined) {

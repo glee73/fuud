@@ -46,7 +46,8 @@ function Pinned(props) {
         console.log(pinned);
         let content = [];
         if (pinned.length === 0) {
-            return <p>No pinned restaurants. Find restaurants you want to save through the recommended and explore page!</p>
+            return <p>No pinned restaurants. Find restaurants you want to save through the recommended and explore
+                page!</p>
         }
         pinned.map((rest, idx) => (
             content.push(
@@ -69,13 +70,13 @@ function Pinned(props) {
         );
     }
     return (
-            <div>
-        <Navbar logout = {props.logout} page={"mypinned"}/>
-        <div className="restaurant">
-            <p className="pinnedTitle pageTitle">your pinned</p>
-            {displayPinned()}
+        <div>
+            <Navbar logout={props.logout} page={"mypinned"}/>
+            <div className="restaurant">
+                <p className="pinnedTitle pageTitle">your pinned</p>
+                {displayPinned()}
+            </div>
         </div>
-    </div>
 
     );
 

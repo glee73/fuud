@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Post from '../components/Post';
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import '../css/index.css';
 import Navbar from "../components/Navbar.js"
 import ProfilePic from "../components/ProfilePic";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Loading from "../components/Loading";
 
 function Profile(props) {
@@ -126,7 +126,7 @@ function Profile(props) {
         return (<div>
                 <p className={"pageTitle"}> your posts </p>
                 {posts}
-        </div>
+            </div>
         );
     }
 

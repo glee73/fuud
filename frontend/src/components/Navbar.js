@@ -1,12 +1,10 @@
-import { Link, useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import logo from "../imgs/fuud.svg";
 import React, {useEffect, useState} from "react";
 
 function Navbar(props) {
 
     let history = useHistory();
-
-
     let [page, setPage] = useState("myfeed");
 
     function logout() {
@@ -15,10 +13,10 @@ function Navbar(props) {
     }
 
     useEffect(() => {
-       if (document.getElementById(page) === null ||
-           document.getElementById(props.page) === null) {
+        if (document.getElementById(page) === null ||
+            document.getElementById(props.page) === null) {
             return;
-       }
+        }
 
         document.getElementById(page).classList.remove("navbarLinkClicked");
         document.getElementById(props.page).classList.add("navbarLinkClicked");
@@ -33,7 +31,7 @@ function Navbar(props) {
                 </Link>
                 <div className="topNavBar">
                     <Link className="edit" to={"/editprofile"}>edit profile</Link>
-                    <div className="link" onClick={logout}> logout </div>
+                    <div className="link" onClick={logout}> logout</div>
                 </div>
 
             </div>
@@ -56,7 +54,7 @@ function Navbar(props) {
             </div>
             <div className="newPostFixed">
                 <Link className="newPostButton" to="/newpost">+</Link>
-                <div className={"newPostTag"}> new post </div>
+                <div className={"newPostTag"}> new post</div>
             </div>
         </div>
 

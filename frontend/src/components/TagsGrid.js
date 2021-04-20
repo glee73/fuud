@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import RestaurantListing from "./RestaurantListing";
-import UserListing from "./UserListing";
 
 function TagsGrid(props) {
 
@@ -97,24 +96,22 @@ function TagsGrid(props) {
         <div>
 
             <div className="tagsGrid">
-                <button className={"tag"} onClick={() => addTag("American")}> American </button>
-                <button className={"tag"} onClick={() => addTag("Asian")}> Asian </button>
-                <button className={"tag"} onClick={() => addTag("Healthy")}> Healthy </button>
-                <button className={"tag"} onClick={() => addTag("Lunch")}> Lunch </button>
-                <button className={"tag"} onClick={() => addTag("Dinner")}> Dinner </button>
-                <button className={"tag"} onClick={() => addTag("Italian")}> Italian </button>
-                <button className={"tag"} onClick={() => addTag("Drinks")}> Drinks  </button>
-                <button className={"tag"} onClick={() => addTag("Breakfast")}> Breakfast </button>
-                <button className={"tag"} onClick={() => addTag("Mexican")}> Mexican </button>
-                <button className={"tag"} onClick={() => addTag("Dessert")}> Dessert </button>
-                <button className={"tag"} onClick={() => addTag("Fast Food")}> Fast Food </button>
+                <button className={"tag"} onClick={() => addTag("American")}> American</button>
+                <button className={"tag"} onClick={() => addTag("Asian")}> Asian</button>
+                <button className={"tag"} onClick={() => addTag("Healthy")}> Healthy</button>
+                <button className={"tag"} onClick={() => addTag("Lunch")}> Lunch</button>
+                <button className={"tag"} onClick={() => addTag("Dinner")}> Dinner</button>
+                <button className={"tag"} onClick={() => addTag("Italian")}> Italian</button>
+                <button className={"tag"} onClick={() => addTag("Drinks")}> Drinks</button>
+                <button className={"tag"} onClick={() => addTag("Breakfast")}> Breakfast</button>
+                <button className={"tag"} onClick={() => addTag("Mexican")}> Mexican</button>
+                <button className={"tag"} onClick={() => addTag("Dessert")}> Dessert</button>
+                <button className={"tag"} onClick={() => addTag("Fast Food")}> Fast Food</button>
 
                 <button className={"submitButton searchButton"} type={"button"} onClick={getResults}>go</button>
             </div>
 
             {showTags()}
-
-
             {showResults()}
 
         </div>

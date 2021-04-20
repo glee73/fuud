@@ -74,7 +74,7 @@ function Signup() {
             <button className="submitButton" type="submit" onClick={submitCreds}>sign up</button>
             {msg}
         </div>
-);
+    );
 
 }
 
