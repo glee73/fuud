@@ -109,7 +109,6 @@ function Post(props) {
                     <div className="postDescContainer">
                         <p className="postDesc">{props.desc}</p>
                     </div>
-                    {displayTags()}
                 </div>
             </div>
         </div>
