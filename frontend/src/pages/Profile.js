@@ -86,13 +86,13 @@ function Profile(props) {
                 <ProfilePic data={userData["pic"]} bigger={true}/>
                 <p className="username">{userName}</p>
                 <div className={"link"}>
-                    <Link to={"/followers"}>
+                    <Link to={"/followers"} className={"link"}>
                         {userData["followers"].length} followers
                     </Link>
                 </div>
 
                 <div className={"link"}>
-                    <Link to={"/following"}>
+                    <Link to={"/following"} className={"link"}>
                         {userData["following"].length} following
                     </Link>
                 </div>
