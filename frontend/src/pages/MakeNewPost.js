@@ -26,6 +26,7 @@ function MakeNewPost(props) {
 
         if (button !== null) {
             button.classList.remove("confirmButtonClicked");
+            button.innerHTML = "confirm";
         }
 
         let restaurantName = document.getElementById(
