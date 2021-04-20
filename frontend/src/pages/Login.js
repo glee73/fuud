@@ -4,17 +4,13 @@ import {useHistory, Link} from "react-router-dom";
 import '../css/index.css';
 import graph from '../imgs/gray-graph.gif';
 import fuud from '../imgs/fuud.svg';
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
-function Login(props) {
+function Login() {
 
     let history = useHistory();
     let [user, setUser] = useState(null);
     let [msg, setMsg] = useState("");
-
-    // useEffect(() => {
-    //     props.getUser();
-    // },[user]);
 
     function incomplete(e) {
         e.preventDefault();

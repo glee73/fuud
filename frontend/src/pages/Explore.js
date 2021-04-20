@@ -46,7 +46,9 @@ function Explore(props) {
         }
     }
 
-    function getResults() {
+    function getResults(e) {
+        console.log("hello")
+        e.preventDefault();
         let query = getQuery();
 
         if (query === null) {
@@ -199,7 +201,8 @@ function Explore(props) {
                             <form>
                                 <input id={"user-query"} className={"searchBar" +
                                 " shadow"} type={"text"} placeholder={"search for a user by username"}/>
-                                <button className={"submitButton searchButton"} type={"button"} onClick={getResults}>search</button>
+                                <button className={"submitButton" +
+                                " searchButton"} type={"submit"} onClick={getResults}>search</button>
                             </form>
                             {displayResults()}
                         </div>
@@ -208,7 +211,7 @@ function Explore(props) {
                     <TabPanel>
                         <form>
                             <input id={"rest-query"} className={"searchBar shadow"} type={"text"} placeholder={"search for a restaurant by restaurant name"}/>
-                            <button className={"submitButton searchButton"} type={"button"} onClick={getResults}>search</button>
+                            <button className={"submitButton searchButton"} type={"submit"} onClick={getResults}>search</button>
                         </form>
                         {displayResults()}
                     </TabPanel>
