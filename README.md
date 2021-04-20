@@ -103,6 +103,8 @@ then run `./run`
 
 FE: run `npm start`
 
+Or access https://cs32test.herokuapp.com to view the version we have hosted on Heroku (Note: there may be some issues on Heroku that aren't on localhost)!
+
 ## Design
 Our Backend code is organized into packages: 
 DataStructures contains our 3 core data structures: restaurants, users, and the posts they make.
@@ -118,6 +120,15 @@ our data as we went.
 Also within DBCommands is our more complex functionality that handles things like encrypting passwords,
 rendering the feedpage, and computing the users' recommended restaurants.
 
+## Division of Labor
+#### Ethan ####
+Setting up the Database in mongodb, connecting to it and creating the collections. I worked mainly on the Backend by defining our data structures and writing the java functions that connect to our database and either get, set, insert, or delete data.
+#### Ben ####
+Data structures in backend, handlers to connect frontend and backend, handling images frontend and backend, login backend functionality, deployment
+#### Casey ####
+figma, styling, edit profile (bio and pic), recommendations page, confirm restaurant in make post search for restaurant, beginning of pin
+#### Grace ####
+figma, connected frontend to backend: basics of profile, explore, feed, following, follower, signup; buttons interaction, loading page
 
 ## Testing Plan
 
