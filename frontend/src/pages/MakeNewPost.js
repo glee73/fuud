@@ -134,6 +134,11 @@ function MakeNewPost(props) {
         let review = document.getElementById('rating').value;
         let timestamp = new Date().toLocaleString();
 
+        if (review <= 0 || review > 10) {
+            setMsg(<p className="newPostResult"> rating must be between 1 and 10 </p>)
+            return;
+        }
+
         canvas.height = img.height
         canvas.width = img.width
         const ctx = canvas.getContext('2d')
@@ -197,7 +202,7 @@ function MakeNewPost(props) {
                 <div className="step step2">
                     <form className="formStyle ratingForm">
                         <label htmlFor="rating">Rating (out of 10):</label>
-                        <input className={"shadow"} type="number" id="rating" name="rating" min="0" max="10" required/>
+                        <input className={"shadow"} type="number" id="rating" name="rating" required/>
                     </form>
                 </div>
                 <div className="step step3">
