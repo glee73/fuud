@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* term-project-bfiske1-ckim60-glee74.src.main.java.edu.brown.cs.student.foodcrawl
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* edu.brown.cs.student.foodcrawl
