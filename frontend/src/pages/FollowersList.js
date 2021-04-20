@@ -61,7 +61,7 @@ function FollowersList(props) {
     useEffect(() => {
         getFollowing();
         props.getUser();
-    },[]);
+    }, []);
 
 
     if (followers === null || followers === undefined) {

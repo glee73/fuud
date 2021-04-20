@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 function MakeNewPost(props) {
@@ -59,6 +59,7 @@ function MakeNewPost(props) {
                 console.log(error);
             });
     }
+
     const confirmRestaurantName = (restName, idx) => {
         let clicked = document.getElementById(idx);
         clicked.classList.add("confirmButtonClicked");
@@ -66,9 +67,8 @@ function MakeNewPost(props) {
         setButton(clicked);
         setConfirmed(true);
         setRestaurantName(restName);
-        console.log(restaurantName);
-
     }
+
     function showSearchResult() {
         if (searchResult === null) {
             return;
@@ -88,30 +88,33 @@ function MakeNewPost(props) {
                 console.log(restaurantName);
                 console.log("1: " + confirmedStatus);
                 return displaySearchResults();
-                console.log("hi");
             }
         }
     }
+
     const displaySearchResults = () => {
         let content = [];
         confirmRestaurant.map((rest, idx) => (
-            content.push(
-                <div className="confirmRestaurant shadow" key={idx}>
-                    <div className="confirmFlex">
-                        <p className="confirmRestName">{rest.name}</p>
-                        <button className="confirmButton" id={idx} type="button" onClick={() => confirmRestaurantName(rest.name, idx)}>confirm</button>
+                content.push(
+                    <div className="confirmRestaurant shadow" key={idx}>
+                        <div className="confirmFlex">
+                            <p className="confirmRestName">{rest.name}</p>
+                            <button className="confirmButton" id={idx} type="button"
+                                    onClick={() => confirmRestaurantName(rest.name, idx)}>confirm
+                            </button>
+                        </div>
+                        <p>{rest.address}</p>
                     </div>
-                    <p>{rest.address}</p>
-                </div>
-            )
+                )
             )
         );
         console.log(content);
         return (<div className="makeNewPostSearchResults">
-            {content}
-        </div>
+                {content}
+            </div>
         );
     }
+
     function makePost(e) {
 
         e.preventDefault();
@@ -125,7 +128,6 @@ function MakeNewPost(props) {
             return;
         }
 
-        // let restaurantName = document.getElementById('restaurantName').value;
         let restaurantName = confirmRestaurant[0].name;
         let text = document.getElementById('caption').value;
         let review = document.getElementById('rating').value;
@@ -163,9 +165,6 @@ function MakeNewPost(props) {
                 } else {
                     console.log("3: " + confirmedStatus);
                     console.log(restaurantName);
-                    // if (!confirmedStatus) {
-                    //     setMsg(<p className="newPostResult"> please confirm restaurant. </p>)
-                    // }
                     setMsg(<p className="newPostResult"> post failed. please try again. </p>)
                 }
             })
@@ -188,7 +187,9 @@ function MakeNewPost(props) {
                     <form className="formStyle restaurantNameForm" onSubmit={sendRestaurantName}>
                         <label htmlFor="restaurantName">Restaurant Name:</label>
                         <input className={"shadow"} type="text" id="restaurantName" name="restaurantName" required/>
-                        <button className="submitButton searchButton" type="button" onClick={sendRestaurantName}>search</button>
+                        <button className="submitButton searchButton" type="button"
+                                onClick={sendRestaurantName}>search
+                        </button>
                     </form>
                     {showSearchResult()}
                 </div>
@@ -207,7 +208,8 @@ function MakeNewPost(props) {
                 <div className="step step4">
                     <form className="formStyle caption">
                         <label htmlFor="fileUpload">Upload an image:</label>
-                        <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload} accept="image/jpeg, image/png" required/>
+                        <input className={"shadow"} type="file" id="fileUpload" name="fileUpload"
+                               onChange={handleImageUpload} accept="image/jpeg, image/png" required/>
                     </form>
                 </div>
                 {msg}

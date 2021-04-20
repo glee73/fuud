@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import FollowButton from "./FollowButton";
 
 function UserListing(props) {
@@ -23,7 +22,6 @@ function UserListing(props) {
         }
     }
 
-
     return (
         <div className="postContainer restaurantContainer shadow">
             <div className="restaurantContent">
@@ -31,7 +29,7 @@ function UserListing(props) {
                 <p> {followers} followers &emsp;|&emsp; {searchedUser.following.length} following
                 </p>
                 <FollowButton following={following} update={updateFollowers}
-                    currUser={currUser} searchedUser={searchedUser}/>
+                              currUser={currUser} searchedUser={searchedUser}/>
             </div>
         </div>
     );

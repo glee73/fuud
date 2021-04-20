@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "./Navbar";
 
 function Loading(props) {
 
@@ -10,7 +9,8 @@ function Loading(props) {
                     {props.text}
                 </div>
                 <div className={"loading"}>
-                    <img src={"https://media.giphy.com/media/KfxPgR9Xb6lRvlFa8x/giphy.gif"} alt={"dancing taco loading page"}/>
+                    <img src={"https://media.giphy.com/media/KfxPgR9Xb6lRvlFa8x/giphy.gif"}
+                         alt={"dancing taco loading page"}/>
                     <p id={"dots"}>loading</p>
                 </div>
             </div>

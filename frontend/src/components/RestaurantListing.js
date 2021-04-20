@@ -1,4 +1,3 @@
-import axios from "axios";
 import PinButton from "./PinButton";
 import React, {useState, useEffect} from "react";
 

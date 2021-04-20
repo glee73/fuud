@@ -37,6 +37,7 @@ function PinButton(props) {
                 console.log(error);
             });
     }
+
     function unpin() {
         const toSend = {
             "username": userName,
@@ -64,7 +65,7 @@ function PinButton(props) {
     }
 
 
-    if(pinned) {
+    if (pinned) {
         return (<button className="alreadyPinned" onClick={unpin}>pinned</button>);
     } else {
         return (<button className="pinButton" onClick={pin}>+ pin</button>);

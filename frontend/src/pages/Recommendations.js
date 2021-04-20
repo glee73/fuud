@@ -34,11 +34,9 @@ function Recommendations(props) {
             .then(response => {
                 console.log("recs: " + response.data["recommended"]);
                 console.log("bools: " + response.data["bools"]);
-                // recommendations = response.data["recommended"];
                 console.log("recc array: " + recommendations);
                 setRecommendations(response.data["recommended"]);
                 setPinned(response.data["bools"]);
-                // pinned = response.data["bools"];
                 console.log("pinned array " + pinned);
                 return response.data["recommended"];
             })
@@ -46,22 +44,23 @@ function Recommendations(props) {
                 console.log(error);
             });
     }
+
     const displayRecommendations = () => {
         console.log("data: " + recommendations);
-            if (pinned === null) {
-                return;
-            }
-            let content = [];
-            console.log("pinned bools: " + pinned);
-            recommendations.map((rec, idx) => (
-                content.push(
-                    <RestaurantListing className={"recommendation"} address={rec.address}
-                                       key={idx} restID={rec.id} name={rec.name} user={userName} isPinned={pinned[idx]}/>
-                )
-            ));
-            return (<div className="recommendationsDisplay">
-                {content}
-            </div>)
+        if (pinned === null) {
+            return;
+        }
+        let content = [];
+        console.log("pinned bools: " + pinned);
+        recommendations.map((rec, idx) => (
+            content.push(
+                <RestaurantListing className={"recommendation"} address={rec.address}
+                                   key={idx} restID={rec.id} name={rec.name} user={userName} isPinned={pinned[idx]}/>
+            )
+        ));
+        return (<div className="recommendationsDisplay">
+            {content}
+        </div>)
 
     }
 

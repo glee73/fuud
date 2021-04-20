@@ -44,6 +44,7 @@ function EditProfile(props) {
             });
 
     }
+
     function sendProfPic() {
         console.log("sending profile pic");
         canvas.height = img.height
@@ -80,6 +81,7 @@ function EditProfile(props) {
             });
 
     }
+
     function sendBio() {
         let newBio = document.getElementById('newBio').value;
         console.log("sending bio");
@@ -109,12 +111,13 @@ function EditProfile(props) {
             });
 
     }
+
     useEffect(() => {
         props.getUser();
         getUserData();
     }, []);
     const rerenderpic = () => {
-        if(img.getAttribute('src') !== null) {
+        if (img.getAttribute('src') !== null) {
             sendProfPic();
         }
     }
@@ -140,8 +143,11 @@ function EditProfile(props) {
                         <div className="newProfPic">
                             <ProfilePic data={newPic} bigger={true}/>
                             <div className="profPicFileUpload">
-                                <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload}/>
-                                <button className="submitButton changeProfPicButton" type="submit" onClick={rerenderpic}>change photo</button>
+                                <input className={"shadow"} type="file" id="fileUpload" name="fileUpload"
+                                       onChange={handleImageUpload}/>
+                                <button className="submitButton changeProfPicButton" type="submit"
+                                        onClick={rerenderpic}>change photo
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -150,9 +156,11 @@ function EditProfile(props) {
                     <div className="bioFlex">
                         <div className="newBioInput">
                             <label htmlFor="bio">New Bio: </label>
-                            <input className={"shadow"} type="text" id="newBio" name="bio" placeholder={userData["bio"]}/>
+                            <input className={"shadow"} type="text" id="newBio" name="bio"
+                                   placeholder={userData["bio"]}/>
                         </div>
-                        <button className="submitButton changeBioButton" type="submit" onClick={changeBio}>change bio</button>
+                        <button className="submitButton changeBioButton" type="submit" onClick={changeBio}>change bio
+                        </button>
                     </div>
                 </div>
 
