@@ -191,6 +191,7 @@ code {
 
 .profile {
   margin-top: -200px;
+  margin-left: -50px;
 }
 .profileHeader {
   display: flex;

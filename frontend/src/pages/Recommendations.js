@@ -69,7 +69,7 @@ function Recommendations(props) {
         return (
             <div>
                 <Navbar logout={props.logout} page={"recommended"}/>
-                <Loading text={<p className="restaurantTitle pageTitle">your
+                <Loading text={<p className="pageTitle">your
                     recommendations</p>}/>
             </div>
         );
@@ -79,7 +79,7 @@ function Recommendations(props) {
             <div className={"content"}>
                 <Navbar logout={props.logout} page={"recommended"}/>
                 <div className="restaurant">
-                    <p className="restaurantTitle pageTitle">your
+                    <p className="pageTitle">your
                         recommendations</p>
                     {displayRecommendations()}
                 </div>
