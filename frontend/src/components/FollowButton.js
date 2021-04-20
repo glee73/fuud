@@ -7,12 +7,16 @@ function FollowButton(props) {
     let currUser = props.currUser;
     let searchedUser = props.searchedUser;
 
+
+    useEffect(() => {
+        setFollowing(props.following)
+    }, [searchedUser])
+
     useEffect(() => {
         props.update(following);
     }, [following]);
 
     function follow() {
-        console.log("hi")
         const toSend = {
             "follower": currUser,
             "followed": searchedUser.username

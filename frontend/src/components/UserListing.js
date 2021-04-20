@@ -9,8 +9,8 @@ function UserListing(props) {
     let [followers, setFollowers] = useState(searchedUser.followers.length);
 
     useEffect(() => {
-        setFollowers(searchedUser.followers.length)
-        setFollowing(searchedUser.followers.includes(currUser));
+        setFollowers(searchedUser.followers.length);
+        // setFollowing(searchedUser.followers.includes(currUser));
     }, [searchedUser])
 
     function updateFollowers(status) {
@@ -28,7 +28,7 @@ function UserListing(props) {
                 <p className="restaurantTitle">{searchedUser.username}</p>
                 <p> {followers} followers &emsp;|&emsp; {searchedUser.following.length} following
                 </p>
-                <FollowButton following={following} update={updateFollowers}
+                <FollowButton following={searchedUser.followers.includes(currUser)} update={updateFollowers}
                               currUser={currUser} searchedUser={searchedUser}/>
             </div>
         </div>

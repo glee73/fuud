@@ -4,19 +4,9 @@ import React, {useState, useEffect} from "react";
 function RestaurantListing(props) {
 
     let [pinned, setPinned] = useState(props.isPinned);
-    console.log("in rest listing: " + props.isPinned);
-
-    useEffect(() => {
-        setPinned(props.isPinned)
-    }, [props.restID])
-
 
     function updatePinned(status) {
-        if (status) {
-            setPinned(true);
-        } else {
-            setPinned(false);
-        }
+        setPinned(status);
     }
 
     return (

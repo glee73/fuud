@@ -6,11 +6,11 @@ function PinButton(props) {
     const userName = localStorage.getItem("user");
     let [pinned, setPinned] = useState(props.isPinned);
 
+
     useEffect(() => {
-        props.update();
+        props.update(pinned);
     }, [pinned]);
 
-    console.log("in rest listing: " + props.isPinned);
 
     function pin() {
         const toSend = {
