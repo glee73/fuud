@@ -11,6 +11,7 @@ function MakeNewPost(props) {
     let [confirmedStatus, setConfirmed] = useState(false);
     const userName = localStorage.getItem("user");
     let [restaurantName, setRestaurantName] = useState(null);
+    let [button, setButton] = useState(null);
     let history = useHistory();
 
     const img = document.createElement('img')
@@ -22,6 +23,10 @@ function MakeNewPost(props) {
 
     function sendRestaurantName(e) {
         e.preventDefault();
+
+        if (button !== null) {
+            button.classList.remove("confirmButtonClicked");
+        }
 
         let restaurantName = document.getElementById(
             'restaurantName').value;
@@ -55,12 +60,11 @@ function MakeNewPost(props) {
             });
     }
     const confirmRestaurantName = (restName, idx) => {
-        document.getElementById(idx).classList.add("confirmButtonClicked");
-        document.getElementById(idx).innerText = "confirmed";
+        let clicked = document.getElementById(idx);
+        clicked.classList.add("confirmButtonClicked");
+        clicked.innerText = "confirmed";
+        setButton(clicked);
         setConfirmed(true);
-        console.log("confirm after");
-        // restaurantName = restName;
-        // console.log(restaurantName);
         setRestaurantName(restName);
         console.log(restaurantName);
 
@@ -81,7 +85,7 @@ function MakeNewPost(props) {
             if (confirmRestaurant === null) {
                 return (<p>Unable to find restaurant</p>);
             } else {
-                console.log(confirmRestaurant);
+                console.log(restaurantName);
                 console.log("1: " + confirmedStatus);
                 return displaySearchResults();
                 console.log("hi");
@@ -172,7 +176,7 @@ function MakeNewPost(props) {
 
     useEffect(() => {
         props.getUser();
-    }, [])
+    }, []);
 
     return (
 
