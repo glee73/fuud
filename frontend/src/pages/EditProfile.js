@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import '../css/index.css';
 import Navbar from "../components/Navbar.js"
 import ProfilePic from "../components/ProfilePic";
+import Loading from "../components/Loading";
 
 function EditProfile(props) {
 
@@ -132,7 +133,12 @@ function EditProfile(props) {
     }
 
     if (userData === null) {
-        return <Navbar logout={props.logout}/>
+        return (
+            <div>
+                <Navbar logout={props.logout}/>
+                <Loading/>
+            </div>
+        );
     } else {
         return (
             <div>
