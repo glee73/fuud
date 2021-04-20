@@ -102,7 +102,6 @@ function EditProfile(props) {
         )
             .then(response => {
                 console.log("sent bio")
-                sendConfirmation();
                 return true;
             })
             .catch(function (error) {
@@ -115,15 +114,18 @@ function EditProfile(props) {
         getUserData();
     }, []);
     const rerenderpic = () => {
-        sendProfPic();
-        // getUserData();
-        sendConfirmation();
+        if(img.getAttribute('src') !== null) {
+            sendProfPic();
+        }
+    }
+    const changeBio = () => {
+        console.log(document.getElementById('newBio').value);
+        if (document.getElementById('newBio').value !== "") {
+            sendBio();
+        }
     }
     const handleImageUpload = (event) => {
         img.setAttribute('src', URL.createObjectURL(event.target.files[0]))
-    }
-    const sendConfirmation = () => {
-        return <p>Successfully updated!</p>
     }
 
     if (userData === null) {
@@ -150,7 +152,7 @@ function EditProfile(props) {
                             <label htmlFor="bio">New Bio: </label>
                             <input className={"shadow"} type="text" id="newBio" name="bio" placeholder={userData["bio"]}/>
                         </div>
-                        <button className="submitButton changeBioButton" type="submit" onClick={sendBio}>change bio</button>
+                        <button className="submitButton changeBioButton" type="submit" onClick={changeBio}>change bio</button>
                     </div>
                 </div>
 

@@ -43,9 +43,11 @@ function Pinned(props) {
     }
 
     const displayPinned = () => {
-        console.log("data: " + pinned);
+        console.log(pinned);
         let content = [];
-
+        if (pinned.length === 0) {
+            return <p>No pinned restaurants. Find restaurants you want to save through the recommended and explore page!</p>
+        }
         pinned.map((rest, idx) => (
             content.push(
                 <RestaurantListing user={userName} restID={rest.id} className={"recommendation"} address={rest.address}

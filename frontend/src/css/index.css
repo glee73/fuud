@@ -111,23 +111,10 @@ code {
 
 .searchBar {
   width: 50%;
+  outline: none;
+  box-shadow: none;
 }
 
-.orangeCircle{
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #FF6225;
-}
-.greyCircle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #C4C4C4;
-  position: relative;
-  top: 0;
-  left: 0;
-}
 .navbarLink {
   color: #5A5858;
   text-decoration: none;
@@ -190,13 +177,15 @@ code {
   margin-right: 30px;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+  outline: none;
+  box-shadow: none;
 }
 .newPostLabel {
   color: #5A5858;
 }
 /******** PROFILE ********/
 
-editProfile {
+.editProfile {
   margin-top: -250px;
 }
 
@@ -255,11 +244,6 @@ editProfile {
 
 .userInfo {
   text-align: left;
-  margin-left: 20px;
-}
-
-.stars {
-  height: 20px;
   margin-left: 20px;
 }
 
@@ -327,25 +311,6 @@ editProfile {
 .outOf, .ten {
   font-size: 13px;
 }
-.ten{
-
-}
-/*.ratingFlex {*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*}*/
-/*.numericRating{*/
-/*  font-size: 45px;*/
-/*  !*margin: 30px 0 0 13px;*!*/
-/*  margin-left: -15px;*/
-/*}*/
-/*.outOf10{*/
-/*  font-size: 13px;*/
-/*  text-align: right;*/
-/*  margin-top: -3px;*/
-/*  width: 76px;*/
-/*}*/
 .postBody > div {
   margin: 5px;
 }
@@ -362,15 +327,10 @@ editProfile {
   cursor: pointer;
   transition: all 2s ease-in-out;
 }
-.garbage:active {
-  transform: translateX(500px);
-}
-
 .garbage:hover {
   transition: all .2s ease-in-out;
   transform: scale(1.1);
 }
-
 .postContent {
   width: 40%;
 }
@@ -419,7 +379,6 @@ editProfile {
   padding: 0px 300px 100px 300px;
   margin-top: -250px;
 }
-
 .newPostHeader {
   font-size: 40px;
   color: #FF6225;
@@ -443,9 +402,13 @@ editProfile {
   border-radius: 15px;
   font-family: 'Quicksand', sans-serif;
   border: 1px solid #f0f2f5;
+  outline: none;
+  box-shadow: none;
 }
 .searchButton {
   width: 30%;
+  outline: none;
+  box-shadow: none;
 }
 
 .newPostResult {
@@ -506,6 +469,8 @@ editProfile {
   color: #FF6225;
   font-size: 18px;
   padding: 5px 10px;
+  outline: none;
+  box-shadow: none;
 }
 .pinButton:hover,.tag:hover {
   color: #b5b5b5;
@@ -573,9 +538,13 @@ editProfile {
 }
 .changeProfPicButton {
   width: 70%;
+  outline: none;
+  box-shadow: none;
 }
 .changeBioButton {
   width: 15%;
+  outline: none;
+  box-shadow: none;
 }
 
 .topNavBar {
@@ -599,6 +568,8 @@ editProfile {
   color: #FF6225;
   font-size: 18px;
   padding: 4px 8px;
+  outline: none;
+  box-shadow: none;
 }
 .confirmButton:hover {
   color: #b5b5b5;
@@ -607,6 +578,8 @@ editProfile {
 .confirmButtonClicked {
   color: #b5b5b5;
   border-color: #b5b5b5;
+  outline: none;
+  box-shadow: none;
 }
 .confirmRestName {
   color: #ff6225;

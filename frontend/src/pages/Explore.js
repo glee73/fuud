@@ -185,7 +185,7 @@ function Explore(props) {
             <Navbar logout={props.logout} page={"explore"}/>
 
             <div className={"explorePage"}>
-                <p className={"pageTitle"}> Looking for something? </p>
+                <p className={"pageTitle"}> looking for something? </p>
 
                 <Tabs className={"tabs"}>
                     <TabList>
