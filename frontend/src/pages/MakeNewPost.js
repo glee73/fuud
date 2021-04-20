@@ -60,8 +60,8 @@ function MakeNewPost(props) {
         console.log("confirm before");
         setConfirmed(true);
         console.log("confirm after");
-        restaurantName = restName;
-        console.log(restaurantName);
+        // restaurantName = restName;
+        // console.log(restaurantName);
 
     }
     function showSearchResult() {
@@ -125,7 +125,7 @@ function MakeNewPost(props) {
         }
 
         // let restaurantName = document.getElementById('restaurantName').value;
-        // let restaurantName = confirmRestaurant.name;
+        let restaurantName = confirmRestaurant[0].name;
         let text = document.getElementById('caption').value;
         let review = document.getElementById('rating').value;
         let timestamp = new Date().toLocaleString();
@@ -205,7 +205,7 @@ function MakeNewPost(props) {
                 </div>
                 <div className="step step4">
                     <form className="formStyle caption">
-                        <label htmlFor="fileUpload">Upload an image (optional):</label>
+                        <label htmlFor="fileUpload">Upload an image:</label>
                         <input className={"shadow"} type="file" id="fileUpload" name="fileUpload" onChange={handleImageUpload} accept="image/jpeg, image/png" required/>
                     </form>
                 </div>
