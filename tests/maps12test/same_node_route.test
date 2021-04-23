@@ -1,7 +1,0 @@
-INPUT
-map data/maps/smallMaps.sqlite3
-route 41.8 -71.4 41.8 -71.4
-OUTPUT
-map set to data/maps/smallMaps.sqlite3
-/n/0 -/- /n/0
-END

@@ -1,7 +1,0 @@
-INPUT
-map data/maps/smallMaps.sqlite3
-nearest 51.6 53.5 78.9
-OUTPUT
-map set to data/maps/smallMaps.sqlite3
-ERROR:
-END

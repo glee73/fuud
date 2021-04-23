@@ -1,5 +1,0 @@
-INPUT
-route "Waterman Street" "Prospect Street" "Thayer Street" "Angell Street"
-OUTPUT
-ERROR:
-END

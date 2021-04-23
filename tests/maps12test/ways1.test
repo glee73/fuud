@@ -1,8 +1,0 @@
-INPUT
-map data/maps/maps.sqlite3
-ways 40.1799868 -73.7412014 40.1799866 73.7412012
-OUTPUT
-map set to data/maps/maps.sqlite3
-/w/4017.7374.42295268.7.1
-/w/4018.7374.42295268.8.2
-END

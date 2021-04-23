@@ -1,7 +1,0 @@
-INPUT
-map data/maps/smallMaps.sqlite3
-nearest 50 notanumber
-OUTPUT
-map set to data/maps/smallMaps.sqlite3
-ERROR:
-END

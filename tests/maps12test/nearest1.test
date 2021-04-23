@@ -1,7 +1,0 @@
-INPUT
-map data/maps/maps.sqlite3
-nearest 41.494003 -71.651253
-OUTPUT
-map set to data/maps/maps.sqlite3
-/n/4149.7165.201448952
-END
