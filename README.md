@@ -1,5 +1,4 @@
 # cs0320 Term Project 2021
-#frontend repo
 
 **Team Members:** Ben Fiske, Casey Kim, Ethan Chung, Grace Lee
 
